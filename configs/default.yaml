@@ -1,0 +1,78 @@
+# NEST-DRUG Default Configuration
+# ================================
+
+# Model Architecture
+# ------------------
+num_programs: 5
+num_assays: 50
+num_rounds: 150
+
+hidden_dim: 256
+num_mpnn_layers: 6
+program_dim: 128
+assay_dim: 64
+round_dim: 32
+dropout: 0.1
+
+# Endpoints (null = use default ADMET panel)
+endpoints: null
+
+# Phase 1: Portfolio Pretraining
+# ------------------------------
+pretrain_data: "data/portfolio.parquet"
+pretrain_val_data: null
+pretrain_batch_size: 256
+pretrain_epochs: 100
+pretrain_lr: 0.0001
+pretrain_warmup_ratio: 0.1
+pretrain_weight_decay: 0.00001
+pretrain_checkpoint_dir: "checkpoints/pretrain"
+
+# Phase 2: Program Initialization
+# -------------------------------
+program_data: "data/programs/program_{program_id}.parquet"
+program_batch_size: 64
+program_epochs: 50
+seed_rounds: [0, 1, 2]
+backbone_lr: 0.00001
+context_lr: 0.001
+head_lr: 0.0001
+drift_weight: 0.01
+program_checkpoint_dir: "checkpoints/program"
+
+# Phase 3: Continual Learning
+# ---------------------------
+continual_epochs_per_round: 20
+continual_batch_size: 32
+l1_lr: 0.0005
+l2_lr: 0.0005
+l3_lr: 0.001
+continual_head_lr: 0.00005
+lr_decay_per_round: 0.95
+replay_fraction: 0.2
+continual_drift_weight: 0.1
+continual_checkpoint_dir: "checkpoints/continual"
+
+# DMTA Replay Evaluation
+# ----------------------
+target_endpoint: "pActivity"
+activity_threshold: 6.0
+max_rounds: null  # null = use all rounds
+selection_budget: 50
+selection_policy: "ucb"  # greedy, ucb, random, diverse
+ucb_lambda: 0.5
+update_model: true
+use_scaffold_diversity: true
+max_per_scaffold: 5
+results_dir: "results/replay"
+
+# Ensemble Configuration
+# ----------------------
+use_ensemble: true
+ensemble_members: 5
+
+# Hardware Settings
+# -----------------
+use_amp: true  # Automatic mixed precision
+num_workers: 4
+pin_memory: true

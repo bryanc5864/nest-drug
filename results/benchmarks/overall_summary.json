@@ -1,0 +1,37 @@
+{
+  "timestamp": "2026-01-21T08:24:07.605308",
+  "checkpoint": "results/v2_full/best_model.pt",
+  "benchmarks_run": [
+    "dude",
+    "herg",
+    "hts"
+  ],
+  "run_results": [
+    {
+      "benchmark": "dude",
+      "success": true,
+      "duration_seconds": 978.611167,
+      "output_dir": "results/benchmarks/dude"
+    },
+    {
+      "benchmark": "herg",
+      "success": true,
+      "duration_seconds": 33.23902,
+      "output_dir": "results/benchmarks/herg"
+    },
+    {
+      "benchmark": "hts",
+      "success": true,
+      "duration_seconds": 2736.243953,
+      "output_dir": "results/benchmarks/hts"
+    }
+  ],
+  "metrics": {
+    "dude": {
+      "mean_roc_auc": 0.5527601924250367,
+      "mean_bedroc": 0.06507324793753166,
+      "mean_ef_1pct": 3.1704086313061097,
+      "n_targets": 10
+    }
+  }
+}

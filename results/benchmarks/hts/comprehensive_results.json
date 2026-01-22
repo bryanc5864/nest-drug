@@ -1,0 +1,172 @@
+{
+  "library_stats": {
+    "n_total": 693267,
+    "n_actives": 10297,
+    "baseline_rate": 0.014852863326827902
+  },
+  "enrichment_factors": {
+    "EF_0.1%": {
+      "percentage": 0.1,
+      "n_selected": 693,
+      "hits": 177,
+      "hit_rate": 0.2554112554112554,
+      "enrichment_factor": 17.19609544577982,
+      "max_possible_ef": 67.32708555890065,
+      "normalized_ef": 0.2554112554112554
+    },
+    "EF_0.5%": {
+      "percentage": 0.5,
+      "n_selected": 3466,
+      "hits": 539,
+      "hit_rate": 0.15551067512983266,
+      "enrichment_factor": 10.470080529788648,
+      "max_possible_ef": 67.32708555890065,
+      "normalized_ef": 0.1555106751298327
+    },
+    "EF_1%": {
+      "percentage": 1,
+      "n_selected": 6932,
+      "hits": 798,
+      "hit_rate": 0.11511829197922678,
+      "enrichment_factor": 7.750579093479908,
+      "max_possible_ef": 67.32708555890065,
+      "normalized_ef": 0.1151182919792268
+    },
+    "EF_2%": {
+      "percentage": 2,
+      "n_selected": 13865,
+      "hits": 1327,
+      "hit_rate": 0.09570861882437794,
+      "enrichment_factor": 6.443782368313103,
+      "max_possible_ef": 50.001226108907325,
+      "normalized_ef": 0.12887248713217442
+    },
+    "EF_5%": {
+      "percentage": 5,
+      "n_selected": 34663,
+      "hits": 2188,
+      "hit_rate": 0.0631220609872198,
+      "enrichment_factor": 4.2498244007406925,
+      "max_possible_ef": 20.000201944436434,
+      "normalized_ef": 0.21248907448771484
+    },
+    "EF_10%": {
+      "percentage": 10,
+      "n_selected": 69326,
+      "hits": 3428,
+      "hit_rate": 0.049447537720335805,
+      "enrichment_factor": 3.329158602774016,
+      "max_possible_ef": 10.000100972218217,
+      "normalized_ef": 0.33291249878605417
+    },
+    "EF_20%": {
+      "percentage": 20,
+      "n_selected": 138653,
+      "hits": 5055,
+      "hit_rate": 0.03645792013155143,
+      "enrichment_factor": 2.4546055079965297,
+      "max_possible_ef": 5.000014424498569,
+      "normalized_ef": 0.4909196853452462
+    }
+  },
+  "roc": {
+    "roc_auc": 0.7319602879191583,
+    "partial_auc_10": 0.21543399962786428,
+    "partial_auc_5": 0.1395482440688812
+  },
+  "bedroc": {
+    "bedroc_alpha_20": 0.1747905105920951,
+    "bedroc_alpha_80.5": 0.11991787693282173,
+    "rie_alpha_20": 3.8496348776783935
+  },
+  "precision_recall": {
+    "average_precision": 0.05242544576590344,
+    "baseline_ap": 0.014852863326827902,
+    "ap_lift": 3.5296524725444867,
+    "best_f1": 0.1100970472358589
+  },
+  "enrichment_curve": {
+    "auac": 0.7285054249908426,
+    "recovery_points": {
+      "recovery_0.1%": 1.718947266194037,
+      "recovery_0.5%": 5.234534330387492,
+      "recovery_1%": 7.749830047586675,
+      "recovery_2%": 12.887248713217442,
+      "recovery_5%": 21.248907448771487,
+      "recovery_10%": 33.29124987860542,
+      "recovery_20%": 49.091968534524625
+    }
+  },
+  "hit_rate_curve": [
+    {
+      "budget": 50,
+      "hits": 3,
+      "hit_rate": 0.06,
+      "enrichment_factor": 4.039625133534039,
+      "pct_library": 0.007212228477628388
+    },
+    {
+      "budget": 100,
+      "hits": 17,
+      "hit_rate": 0.17,
+      "enrichment_factor": 11.445604545013111,
+      "pct_library": 0.014424456955256775
+    },
+    {
+      "budget": 200,
+      "hits": 39,
+      "hit_rate": 0.195,
+      "enrichment_factor": 13.128781683985627,
+      "pct_library": 0.02884891391051355
+    },
+    {
+      "budget": 500,
+      "hits": 142,
+      "hit_rate": 0.284,
+      "enrichment_factor": 19.120892298727785,
+      "pct_library": 0.0721222847762839
+    },
+    {
+      "budget": 1000,
+      "hits": 233,
+      "hit_rate": 0.233,
+      "enrichment_factor": 15.687210935223852,
+      "pct_library": 0.1442445695525678
+    },
+    {
+      "budget": 2000,
+      "hits": 339,
+      "hit_rate": 0.1695,
+      "enrichment_factor": 11.411941002233661,
+      "pct_library": 0.2884891391051356
+    },
+    {
+      "budget": 5000,
+      "hits": 653,
+      "hit_rate": 0.1306,
+      "enrichment_factor": 8.792917373992426,
+      "pct_library": 0.7212228477628388
+    },
+    {
+      "budget": 10000,
+      "hits": 1016,
+      "hit_rate": 0.1016,
+      "enrichment_factor": 6.840431892784307,
+      "pct_library": 1.4424456955256777
+    },
+    {
+      "budget": 20000,
+      "hits": 1595,
+      "hit_rate": 0.07975,
+      "enrichment_factor": 5.369335073322327,
+      "pct_library": 2.8848913910513554
+    },
+    {
+      "budget": 50000,
+      "hits": 2868,
+      "hit_rate": 0.05736,
+      "enrichment_factor": 3.8618816276585415,
+      "pct_library": 7.212228477628388
+    }
+  ]
+}

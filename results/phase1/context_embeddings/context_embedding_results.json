@@ -1,0 +1,474 @@
+{
+  "L0": {
+    "config": {
+      "use_l1": false,
+      "use_l2": false,
+      "use_l3": false,
+      "n_programs": 10,
+      "n_assays": 50,
+      "n_rounds": 20
+    },
+    "statistics": {
+      "L1_program": {
+        "n_contexts": 10,
+        "embedding_dim": 128,
+        "mean_norm": 0.1156819611787796,
+        "std_norm": 0.006145862862467766,
+        "mean_cosine_sim": 0.02360083139481452,
+        "std_cosine_sim": 0.08484077426899597,
+        "min_cosine_sim": -0.21640765209868018,
+        "max_cosine_sim": 0.1722913912745836,
+        "mean_euclidean_dist": 0.1616604511610224,
+        "std_euclidean_dist": 0.0091555954213245
+      },
+      "L2_assay": {
+        "n_contexts": 50,
+        "embedding_dim": 64,
+        "mean_norm": 0.08108982443809509,
+        "std_norm": 0.005504719913005829,
+        "mean_cosine_sim": 0.0014263016652899063,
+        "std_cosine_sim": 0.12280521894143134,
+        "min_cosine_sim": -0.37734067345276556,
+        "max_cosine_sim": 0.38162200406311075,
+        "mean_euclidean_dist": 0.11452628883543509,
+        "std_euclidean_dist": 0.009101738715463678
+      },
+      "L3_round": {
+        "n_contexts": 20,
+        "embedding_dim": 32,
+        "mean_norm": 0.057276248931884766,
+        "std_norm": 0.005082782823592424,
+        "mean_cosine_sim": -0.023842661876021416,
+        "std_cosine_sim": 0.1854788535164864,
+        "min_cosine_sim": -0.4130673074902327,
+        "max_cosine_sim": 0.42955304748835366,
+        "mean_euclidean_dist": 0.08177186819816666,
+        "std_euclidean_dist": 0.009037307722106841
+      }
+    },
+    "l1_analysis": {
+      "pca_explained_variance": [
+        0.1563301384449005,
+        0.14542630314826965,
+        0.13058429956436157
+      ],
+      "clustering": {
+        "2_clusters": [
+          1,
+          2,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "3_clusters": [
+          1,
+          2,
+          2,
+          1,
+          3,
+          2,
+          2,
+          3,
+          3,
+          3
+        ],
+        "4_clusters": [
+          1,
+          2,
+          2,
+          1,
+          4,
+          2,
+          2,
+          3,
+          3,
+          3
+        ],
+        "5_clusters": [
+          1,
+          2,
+          2,
+          1,
+          5,
+          2,
+          2,
+          3,
+          3,
+          4
+        ]
+      }
+    },
+    "cross_level": {
+      "variance_per_level": {
+        "L1_program": 9.217239858116955e-05,
+        "L2_assay": 0.00010105570254381746,
+        "L3_round": 0.0001004671212285757
+      },
+      "L1_program_effective_dim_90": 8,
+      "L1_program_effective_dim_95": 9,
+      "L2_assay_effective_dim_90": 29,
+      "L2_assay_effective_dim_95": 34,
+      "L3_round_effective_dim_90": 12,
+      "L3_round_effective_dim_95": 14
+    }
+  },
+  "L0_L1": {
+    "config": {
+      "use_l1": true,
+      "use_l2": false,
+      "use_l3": false,
+      "n_programs": 10,
+      "n_assays": 50,
+      "n_rounds": 20
+    },
+    "statistics": {
+      "L1_program": {
+        "n_contexts": 10,
+        "embedding_dim": 128,
+        "mean_norm": 0.20296768844127655,
+        "std_norm": 0.03802506625652313,
+        "mean_cosine_sim": -0.06553042312685502,
+        "std_cosine_sim": 0.1647587482014144,
+        "min_cosine_sim": -0.46574575575868704,
+        "max_cosine_sim": 0.28566950233652466,
+        "mean_euclidean_dist": 0.2982329722891347,
+        "std_euclidean_dist": 0.04507316417248405
+      },
+      "L2_assay": {
+        "n_contexts": 50,
+        "embedding_dim": 64,
+        "mean_norm": 0.08059441298246384,
+        "std_norm": 0.006402882281690836,
+        "mean_cosine_sim": 0.0012202730766390077,
+        "std_cosine_sim": 0.12303313044607722,
+        "min_cosine_sim": -0.37734067345276556,
+        "max_cosine_sim": 0.38162200406311075,
+        "mean_euclidean_dist": 0.11389082280922812,
+        "std_euclidean_dist": 0.009550737298881654
+      },
+      "L3_round": {
+        "n_contexts": 20,
+        "embedding_dim": 32,
+        "mean_norm": 0.05683763697743416,
+        "std_norm": 0.006173658650368452,
+        "mean_cosine_sim": -0.027762922142047054,
+        "std_cosine_sim": 0.18383374445923473,
+        "min_cosine_sim": -0.41667248991033157,
+        "max_cosine_sim": 0.42955304748835366,
+        "mean_euclidean_dist": 0.08138390603801818,
+        "std_euclidean_dist": 0.009360564711842231
+      }
+    },
+    "l1_analysis": {
+      "pca_explained_variance": [
+        0.2645590007305145,
+        0.17928066849708557,
+        0.12846258282661438
+      ],
+      "clustering": {
+        "2_clusters": [
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1,
+          2,
+          2
+        ],
+        "3_clusters": [
+          1,
+          1,
+          2,
+          2,
+          3,
+          2,
+          2,
+          1,
+          2,
+          2
+        ],
+        "4_clusters": [
+          1,
+          1,
+          3,
+          3,
+          4,
+          2,
+          2,
+          1,
+          3,
+          3
+        ],
+        "5_clusters": [
+          2,
+          1,
+          4,
+          4,
+          5,
+          3,
+          3,
+          1,
+          4,
+          4
+        ]
+      }
+    },
+    "cross_level": {
+      "variance_per_level": {
+        "L1_program": 0.00031983223743736744,
+        "L2_assay": 0.00010000851762015373,
+        "L3_round": 9.96158123598434e-05
+      },
+      "L1_program_effective_dim_90": 7,
+      "L1_program_effective_dim_95": 8,
+      "L2_assay_effective_dim_90": 28,
+      "L2_assay_effective_dim_95": 34,
+      "L3_round_effective_dim_90": 12,
+      "L3_round_effective_dim_95": 14
+    }
+  },
+  "L0_L1_L2": {
+    "config": {
+      "use_l1": true,
+      "use_l2": true,
+      "use_l3": false,
+      "n_programs": 10,
+      "n_assays": 50,
+      "n_rounds": 20
+    },
+    "statistics": {
+      "L1_program": {
+        "n_contexts": 10,
+        "embedding_dim": 128,
+        "mean_norm": 0.17292192578315735,
+        "std_norm": 0.009206055663526058,
+        "mean_cosine_sim": -0.03435037713960165,
+        "std_cosine_sim": 0.11694588567816992,
+        "min_cosine_sim": -0.23698977769167362,
+        "max_cosine_sim": 0.18700175914055017,
+        "mean_euclidean_dist": 0.2484144554135762,
+        "std_euclidean_dist": 0.015549367547426127
+      },
+      "L2_assay": {
+        "n_contexts": 50,
+        "embedding_dim": 64,
+        "mean_norm": 0.1616707593202591,
+        "std_norm": 0.018495256081223488,
+        "mean_cosine_sim": -0.009720703094186633,
+        "std_cosine_sim": 0.20359738692628904,
+        "min_cosine_sim": -0.584779385374282,
+        "max_cosine_sim": 0.64758000865155,
+        "mean_euclidean_dist": 0.22933473429957568,
+        "std_euclidean_dist": 0.02989084120591226
+      },
+      "L3_round": {
+        "n_contexts": 20,
+        "embedding_dim": 32,
+        "mean_norm": 0.05771872401237488,
+        "std_norm": 0.004566663410514593,
+        "mean_cosine_sim": -0.02674821200555097,
+        "std_cosine_sim": 0.18672632599757008,
+        "min_cosine_sim": -0.4130673074902327,
+        "max_cosine_sim": 0.42955304748835366,
+        "mean_euclidean_dist": 0.08247697422811671,
+        "std_euclidean_dist": 0.008887420364236755
+      }
+    },
+    "l1_analysis": {
+      "pca_explained_variance": [
+        0.1863502860069275,
+        0.13803395628929138,
+        0.13631947338581085
+      ],
+      "clustering": {
+        "2_clusters": [
+          2,
+          2,
+          1,
+          1,
+          1,
+          2,
+          1,
+          2,
+          2,
+          2
+        ],
+        "3_clusters": [
+          2,
+          3,
+          1,
+          1,
+          1,
+          2,
+          1,
+          3,
+          3,
+          3
+        ],
+        "4_clusters": [
+          2,
+          3,
+          1,
+          1,
+          1,
+          2,
+          1,
+          3,
+          3,
+          4
+        ],
+        "5_clusters": [
+          3,
+          4,
+          1,
+          1,
+          2,
+          3,
+          1,
+          4,
+          4,
+          5
+        ]
+      }
+    },
+    "cross_level": {
+      "variance_per_level": {
+        "L1_program": 0.00021779831149615347,
+        "L2_assay": 0.00040951656410470605,
+        "L3_round": 0.00010214633221039549
+      },
+      "L1_program_effective_dim_90": 8,
+      "L1_program_effective_dim_95": 9,
+      "L2_assay_effective_dim_90": 22,
+      "L2_assay_effective_dim_95": 28,
+      "L3_round_effective_dim_90": 12,
+      "L3_round_effective_dim_95": 14
+    }
+  },
+  "L0_L1_L2_L3": {
+    "config": {
+      "use_l1": true,
+      "use_l2": true,
+      "use_l3": true,
+      "n_programs": 10,
+      "n_assays": 50,
+      "n_rounds": 20
+    },
+    "statistics": {
+      "L1_program": {
+        "n_contexts": 10,
+        "embedding_dim": 128,
+        "mean_norm": 0.1631825566291809,
+        "std_norm": 0.010709237307310104,
+        "mean_cosine_sim": -0.0192514081928891,
+        "std_cosine_sim": 0.12425946946649882,
+        "min_cosine_sim": -0.27680863027302594,
+        "max_cosine_sim": 0.2277008782135851,
+        "mean_euclidean_dist": 0.23281671159600686,
+        "std_euclidean_dist": 0.017538425017222973
+      },
+      "L2_assay": {
+        "n_contexts": 50,
+        "embedding_dim": 64,
+        "mean_norm": 0.1583814173936844,
+        "std_norm": 0.0173261146992445,
+        "mean_cosine_sim": -0.009754020662942035,
+        "std_cosine_sim": 0.19625825234391983,
+        "min_cosine_sim": -0.6116994217750058,
+        "max_cosine_sim": 0.6050413581867576,
+        "mean_euclidean_dist": 0.2246784884896457,
+        "std_euclidean_dist": 0.028202786408019386
+      },
+      "L3_round": {
+        "n_contexts": 20,
+        "embedding_dim": 32,
+        "mean_norm": 0.11326799541711807,
+        "std_norm": 0.014377251267433167,
+        "mean_cosine_sim": -0.03514723075565835,
+        "std_cosine_sim": 0.1870648571890736,
+        "min_cosine_sim": -0.6340628026968047,
+        "max_cosine_sim": 0.36962428898951516,
+        "mean_euclidean_dist": 0.1629811097416585,
+        "std_euclidean_dist": 0.020624536281894416
+      }
+    },
+    "l1_analysis": {
+      "pca_explained_variance": [
+        0.2128390222787857,
+        0.1402837336063385,
+        0.1300075501203537
+      ],
+      "clustering": {
+        "2_clusters": [
+          2,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2
+        ],
+        "3_clusters": [
+          2,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          3
+        ],
+        "4_clusters": [
+          2,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          3,
+          4
+        ],
+        "5_clusters": [
+          3,
+          3,
+          1,
+          1,
+          2,
+          1,
+          1,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    "cross_level": {
+      "variance_per_level": {
+        "L1_program": 0.00019164098193868995,
+        "L2_assay": 0.00039258049218915403,
+        "L3_round": 0.0004006063099950552
+      },
+      "L1_program_effective_dim_90": 8,
+      "L1_program_effective_dim_95": 9,
+      "L2_assay_effective_dim_90": 23,
+      "L2_assay_effective_dim_95": 29,
+      "L3_round_effective_dim_90": 12,
+      "L3_round_effective_dim_95": 14
+    }
+  }
+}

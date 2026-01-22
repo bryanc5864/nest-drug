@@ -1,17 +1,5 @@
-# Data files
-data/
-*.parquet
-*.csv
-*.pkl
-*.pickle
-
-# Model checkpoints
-*.pt
-*.pth
-checkpoints/
-
-# Results (large files)
-results/
+# Exclude large raw ChEMBL data (can be re-downloaded)
+data/raw/chembl/
 
 # Python
 __pycache__/

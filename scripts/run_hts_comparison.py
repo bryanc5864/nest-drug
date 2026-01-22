@@ -1148,10 +1148,16 @@ def main():
     endpoints = {name: {'type': 'regression', 'weight': 1.0} for name in endpoint_names}
     print(f"Endpoints: {endpoint_names}")
 
+    # Get model config from checkpoint if available, otherwise use defaults
+    config = checkpoint.get('config', {})
+    num_programs = config.get('n_programs', config.get('num_programs', 5))
+    num_assays = config.get('n_assays', config.get('num_assays', 50))
+    num_rounds = config.get('n_rounds', config.get('num_rounds', 150))
+
     model = create_nest_drug(
-        num_programs=5,
-        num_assays=50,
-        num_rounds=150,
+        num_programs=num_programs,
+        num_assays=num_assays,
+        num_rounds=num_rounds,
         endpoints=endpoints,
     )
     model.load_state_dict(state_dict)

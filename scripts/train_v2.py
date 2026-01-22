@@ -353,14 +353,16 @@ def main():
                         help='Use L2 (assay) context')
     parser.add_argument('--use-l3', action='store_true', default=False,
                         help='Use L3 (round) context')
+    # Note: DataParallel doesn't work with PyTorch Geometric (graph batching issue)
+    # Use single GPU training - it's fast enough with mixed precision
     args = parser.parse_args()
 
     print("="*60)
-    print("NEST-DRUG V2 Training")
+    print("NEST-DRUG V3 Training (Fine-tuned from V1)")
     print("="*60)
     print(f"Batch size: {args.batch_size}")
 
-    # Device
+    # Device (single GPU - DataParallel incompatible with PyTorch Geometric)
     if torch.cuda.is_available():
         device = torch.device(f'cuda:{args.gpu}')
     else:
@@ -412,13 +414,46 @@ def main():
     )
     model = model.to(device)
 
-    # Load checkpoint if provided
+    # Load checkpoint if provided (only MPNN backbone, not heads or context)
     start_epoch = 0
     if args.checkpoint:
         print(f"Loading checkpoint: {args.checkpoint}")
         checkpoint = torch.load(args.checkpoint, map_location=device)
-        model.load_state_dict(checkpoint['model_state_dict'])
-        start_epoch = checkpoint.get('epoch', 0) + 1
+
+        # Filter to only load MPNN backbone weights (compatible across models)
+        pretrained_dict = checkpoint['model_state_dict']
+        model_dict = model.state_dict()
+
+        # Only load weights that:
+        # 1. Are in the MPNN backbone (not prediction_heads or context_module)
+        # 2. Have matching shapes
+        compatible_dict = {}
+        skipped_keys = []
+        for k, v in pretrained_dict.items():
+            if k in model_dict:
+                if v.shape == model_dict[k].shape:
+                    compatible_dict[k] = v
+                else:
+                    skipped_keys.append(f"{k} (shape mismatch: {v.shape} vs {model_dict[k].shape})")
+            else:
+                skipped_keys.append(f"{k} (not in model)")
+
+        # Load compatible weights
+        model_dict.update(compatible_dict)
+        model.load_state_dict(model_dict)
+
+        print(f"  Loaded {len(compatible_dict)} weight tensors from checkpoint")
+        print(f"  Skipped {len(skipped_keys)} incompatible tensors")
+        if len(skipped_keys) <= 10:
+            for sk in skipped_keys:
+                print(f"    - {sk}")
+        else:
+            print(f"    (showing first 5)")
+            for sk in skipped_keys[:5]:
+                print(f"    - {sk}")
+
+        # Don't resume epoch - we're fine-tuning, not resuming
+        # start_epoch = checkpoint.get('epoch', 0) + 1
 
     # Count parameters
     total_params = sum(p.numel() for p in model.parameters())
@@ -473,11 +508,12 @@ def main():
         print(f"  Val Pearson: {val_metrics['pearson']:.4f}")
         print(f"  Val R²: {val_metrics['r2']:.4f}")
 
-        # Save best model
+        # Save best model (handle DataParallel)
         if val_metrics['roc_auc'] > best_val_auc:
             best_val_auc = val_metrics['roc_auc']
+            model_to_save = model.module if hasattr(model, 'module') else model
             torch.save({
-                'model_state_dict': model.state_dict(),
+                'model_state_dict': model_to_save.state_dict(),
                 'epoch': epoch,
                 'val_auc': val_metrics['roc_auc'],
                 'config': {
@@ -494,16 +530,18 @@ def main():
 
         # Periodic checkpoint
         if (epoch + 1) % 10 == 0:
+            model_to_save = model.module if hasattr(model, 'module') else model
             torch.save({
-                'model_state_dict': model.state_dict(),
+                'model_state_dict': model_to_save.state_dict(),
                 'epoch': epoch,
                 'optimizer_state_dict': optimizer.state_dict(),
                 'history': history,
             }, output_dir / f'checkpoint_epoch_{epoch+1}.pt')
 
     # Final save
+    model_to_save = model.module if hasattr(model, 'module') else model
     torch.save({
-        'model_state_dict': model.state_dict(),
+        'model_state_dict': model_to_save.state_dict(),
         'epoch': args.epochs - 1,
         'history': history,
         'config': {

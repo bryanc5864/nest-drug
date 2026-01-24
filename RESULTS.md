@@ -94,12 +94,15 @@ Higher Fisher ratio = better separation between actives and inactives in embeddi
 
 | Metric | V1 | V2 | V3 |
 |--------|-----|-----|-----|
-| ROC-AUC | **0.912** | - | 0.843 |
-| R² | **0.689** | - | 0.388 |
-| Correlation | **0.830** | - | 0.692 |
-| RMSE | **0.744** | - | 1.043 |
+| ROC-AUC | **0.912** | 0.644 | 0.843 |
+| R² | **0.689** | -0.676 | 0.388 |
+| Correlation | **0.830** | 0.302 | 0.692 |
+| RMSE | **0.744** | 1.726 | 1.043 |
 
-**Interpretation**: V1 shows strong temporal generalization to future chemistry (2020+).
+**Interpretation**:
+- V1 shows strong temporal generalization to future chemistry (2020+)
+- V2 has negative R² indicating predictions worse than mean baseline
+- V3 maintains reasonable generalization but underperforms V1
 
 ---
 
@@ -109,15 +112,15 @@ Higher Fisher ratio = better separation between actives and inactives in embeddi
 |------------|----|----|-----|
 | 1B: FiLM Deviation Analysis | ✓ | ✓ | ✓ |
 | 1C: Context Embedding Visualization | ✓ | ✓ | ✓ |
-| 2A: Integrated Gradients | ✓ | ✓ | ✓ |
-| 2B: Context-Conditional Attribution | ✓ | ✓ | ✓ |
+| 2A: Integrated Gradients | ⚠ | ⚠ | ⚠ |
+| 2B: Context-Conditional Attribution | ⚠ | ⚠ | ⚠ |
 | 2C: Decision Boundary Visualization | ✓ | ✓ | ✓ |
 | 3A: TDC Benchmark | ✓ | ✓ | ✓ |
 | 3B: Temporal Split | ✓ | ✓ | ✓ |
 | 3C: Cross-Target Zero-Shot | ⏱ | ⏱ | ⏱ |
 | 4A: Few-Shot Adaptation | ⏱ | ⏱ | ⏱ |
 
-(⏱ = timeout during batch run)
+(✓ = success, ⚠ = ran but empty results, ⏱ = timeout)
 
 ---
 

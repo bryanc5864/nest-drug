@@ -1,0 +1,59 @@
+{
+  "checkpoint": "checkpoints/pretrain/best_model.pt",
+  "config": {
+    "data_path": "/tmp/nest_train_split.parquet",
+    "batch_size": 512,
+    "num_workers": 4,
+    "max_samples": null,
+    "num_epochs": 100,
+    "learning_rate": 0.0001,
+    "weight_decay": 1e-05,
+    "warmup_ratio": 0.1,
+    "gradient_clip": 1.0,
+    "use_amp": true,
+    "checkpoint_dir": "checkpoints/pretrain",
+    "save_every": 10,
+    "log_every": 50,
+    "log_gradients": true,
+    "validate_every": 1
+  },
+  "program_mapping": {},
+  "statistics": {
+    "L1_program": {
+      "n_embeddings": 5,
+      "embedding_dim": 128,
+      "mean_norm": 0.13028877973556519,
+      "std_norm": 0.03236370533704758,
+      "min_norm": 0.11014442890882492,
+      "max_norm": 0.1948079913854599,
+      "mean_cosine_sim": 0.02555895410478115,
+      "mean_distance": 0.1852638444675151,
+      "variance_explained_by_pc1": 0.49162742495536804,
+      "variance_explained_top5": 0.999999985098841
+    },
+    "L2_assay": {
+      "n_embeddings": 50,
+      "embedding_dim": 64,
+      "mean_norm": 0.0816536694765091,
+      "std_norm": 0.011920797638595104,
+      "min_norm": 0.06679777801036835,
+      "max_norm": 0.1497376561164856,
+      "mean_cosine_sim": 0.005340939853340387,
+      "mean_distance": 0.11546425547418471,
+      "variance_explained_by_pc1": 0.08833282440900803,
+      "variance_explained_top5": 0.30361323803663254
+    },
+    "L3_round": {
+      "n_embeddings": 150,
+      "embedding_dim": 32,
+      "mean_norm": 0.05653466656804085,
+      "std_norm": 0.007393697742372751,
+      "min_norm": 0.03719372674822807,
+      "max_norm": 0.07503974437713623,
+      "mean_cosine_sim": -0.002174779772758484,
+      "mean_distance": 0.08005789661429173,
+      "variance_explained_by_pc1": 0.06930050253868103,
+      "variance_explained_top5": 0.285170316696167
+    }
+  }
+}

@@ -1,0 +1,297 @@
+{
+  "checkpoint": "checkpoints/pretrain/best_model.pt",
+  "config": {
+    "data_path": "/tmp/nest_train_split.parquet",
+    "batch_size": 512,
+    "num_workers": 4,
+    "max_samples": null,
+    "num_epochs": 100,
+    "learning_rate": 0.0001,
+    "weight_decay": 1e-05,
+    "warmup_ratio": 0.1,
+    "gradient_clip": 1.0,
+    "use_amp": true,
+    "checkpoint_dir": "checkpoints/pretrain",
+    "save_every": 10,
+    "log_every": 50,
+    "log_gradients": true,
+    "validate_every": 1
+  },
+  "baseline_results": {
+    "egfr": {
+      "roc_auc": 0.942562056868465,
+      "n_actives": 4032,
+      "n_decoys": 201600,
+      "n_total": 205632
+    },
+    "drd2": {
+      "roc_auc": 0.9596032626573143,
+      "n_actives": 3223,
+      "n_decoys": 161150,
+      "n_total": 164373
+    },
+    "adrb2": {
+      "roc_auc": 0.7453638628036284,
+      "n_actives": 447,
+      "n_decoys": 15255,
+      "n_total": 15702
+    },
+    "bace1": {
+      "roc_auc": 0.6717209156535706,
+      "n_actives": 485,
+      "n_decoys": 18221,
+      "n_total": 18706
+    },
+    "esr1": {
+      "roc_auc": 0.8639012858918709,
+      "n_actives": 627,
+      "n_decoys": 20818,
+      "n_total": 21445
+    },
+    "hdac2": {
+      "roc_auc": 0.8662446070459826,
+      "n_actives": 238,
+      "n_decoys": 10366,
+      "n_total": 10604
+    },
+    "jak2": {
+      "roc_auc": 0.8654646076943676,
+      "n_actives": 153,
+      "n_decoys": 6590,
+      "n_total": 6743
+    },
+    "pparg": {
+      "roc_auc": 0.7866415259237443,
+      "n_actives": 723,
+      "n_decoys": 25866,
+      "n_total": 26589
+    },
+    "cyp3a4": {
+      "roc_auc": 0.49741687633579523,
+      "n_actives": 333,
+      "n_decoys": 16650,
+      "n_total": 16983
+    },
+    "fxa": {
+      "roc_auc": 0.8332279257669487,
+      "n_actives": 445,
+      "n_decoys": 22250,
+      "n_total": 22695
+    }
+  },
+  "baseline_mean_auc": 0.8032146926641689,
+  "zeroshot_results": {
+    "egfr_holdout_egfr_jak2": {
+      "roc_auc": 0.942562056868465,
+      "n_actives": 4032,
+      "n_decoys": 201600,
+      "n_total": 205632,
+      "family": "kinase",
+      "is_zeroshot": true
+    },
+    "jak2_holdout_egfr_jak2": {
+      "roc_auc": 0.8654641117954516,
+      "n_actives": 153,
+      "n_decoys": 6590,
+      "n_total": 6743,
+      "family": "kinase",
+      "is_zeroshot": true
+    },
+    "drd2_holdout_drd2_adrb2": {
+      "roc_auc": 0.9596032722840575,
+      "n_actives": 3223,
+      "n_decoys": 161150,
+      "n_total": 164373,
+      "family": "gpcr",
+      "is_zeroshot": true
+    },
+    "adrb2_holdout_drd2_adrb2": {
+      "roc_auc": 0.7453638628036283,
+      "n_actives": 447,
+      "n_decoys": 15255,
+      "n_total": 15702,
+      "family": "gpcr",
+      "is_zeroshot": true
+    },
+    "esr1_holdout_esr1_pparg": {
+      "roc_auc": 0.863901170974756,
+      "n_actives": 627,
+      "n_decoys": 20818,
+      "n_total": 21445,
+      "family": "nuclear_receptor",
+      "is_zeroshot": true
+    },
+    "pparg_holdout_esr1_pparg": {
+      "roc_auc": 0.7866413655055274,
+      "n_actives": 723,
+      "n_decoys": 25866,
+      "n_total": 26589,
+      "family": "nuclear_receptor",
+      "is_zeroshot": true
+    },
+    "bace1_holdout_bace1_fxa": {
+      "roc_auc": 0.6717208024953647,
+      "n_actives": 485,
+      "n_decoys": 18221,
+      "n_total": 18706,
+      "family": "protease",
+      "is_zeroshot": true
+    },
+    "fxa_holdout_bace1_fxa": {
+      "roc_auc": 0.8332279257669486,
+      "n_actives": 445,
+      "n_decoys": 22250,
+      "n_total": 22695,
+      "family": "protease",
+      "is_zeroshot": true
+    },
+    "hdac2_holdout_hdac2_cyp3a4": {
+      "roc_auc": 0.8662444043795409,
+      "n_actives": 238,
+      "n_decoys": 10366,
+      "n_total": 10604,
+      "family": "enzyme",
+      "is_zeroshot": true
+    },
+    "cyp3a4_holdout_hdac2_cyp3a4": {
+      "roc_auc": 0.4974169665160656,
+      "n_actives": 333,
+      "n_decoys": 16650,
+      "n_total": 16983,
+      "family": "cyp",
+      "is_zeroshot": true
+    }
+  },
+  "target_comparison": {
+    "egfr": {
+      "baseline_auc": 0.942562056868465,
+      "zeroshot_auc": 0.942562056868465,
+      "delta": 0.0,
+      "family": "kinase"
+    },
+    "drd2": {
+      "baseline_auc": 0.9596032626573143,
+      "zeroshot_auc": 0.9596032722840575,
+      "delta": 9.626743180390918e-09,
+      "family": "gpcr"
+    },
+    "adrb2": {
+      "baseline_auc": 0.7453638628036284,
+      "zeroshot_auc": 0.7453638628036283,
+      "delta": -1.1102230246251565e-16,
+      "family": "gpcr"
+    },
+    "bace1": {
+      "baseline_auc": 0.6717209156535706,
+      "zeroshot_auc": 0.6717208024953647,
+      "delta": -1.1315820591661918e-07,
+      "family": "protease"
+    },
+    "esr1": {
+      "baseline_auc": 0.8639012858918709,
+      "zeroshot_auc": 0.863901170974756,
+      "delta": -1.1491711482403133e-07,
+      "family": "nuclear_receptor"
+    },
+    "hdac2": {
+      "baseline_auc": 0.8662446070459826,
+      "zeroshot_auc": 0.8662444043795409,
+      "delta": -2.026664417398294e-07,
+      "family": "enzyme"
+    },
+    "jak2": {
+      "baseline_auc": 0.8654646076943676,
+      "zeroshot_auc": 0.8654641117954516,
+      "delta": -4.958989160419591e-07,
+      "family": "kinase"
+    },
+    "pparg": {
+      "baseline_auc": 0.7866415259237443,
+      "zeroshot_auc": 0.7866413655055274,
+      "delta": -1.6041821682133417e-07,
+      "family": "nuclear_receptor"
+    },
+    "cyp3a4": {
+      "baseline_auc": 0.49741687633579523,
+      "zeroshot_auc": 0.4974169665160656,
+      "delta": 9.018027036233889e-08,
+      "family": "cyp"
+    },
+    "fxa": {
+      "baseline_auc": 0.8332279257669487,
+      "zeroshot_auc": 0.8332279257669486,
+      "delta": -1.1102230246251565e-16,
+      "family": "protease"
+    }
+  },
+  "family_results": {
+    "kinase": {
+      "mean_auc": 0.9040130843319583,
+      "targets": [
+        "egfr",
+        "jak2"
+      ],
+      "n_targets": 2
+    },
+    "gpcr": {
+      "mean_auc": 0.8524835675438429,
+      "targets": [
+        "drd2",
+        "adrb2"
+      ],
+      "n_targets": 2
+    },
+    "nuclear_receptor": {
+      "mean_auc": 0.8252712682401417,
+      "targets": [
+        "esr1",
+        "pparg"
+      ],
+      "n_targets": 2
+    },
+    "protease": {
+      "mean_auc": 0.7524743641311566,
+      "targets": [
+        "bace1",
+        "fxa"
+      ],
+      "n_targets": 2
+    },
+    "enzyme": {
+      "mean_auc": 0.8662444043795409,
+      "targets": [
+        "hdac2"
+      ],
+      "n_targets": 1
+    },
+    "cyp": {
+      "mean_auc": 0.4974169665160656,
+      "targets": [
+        "cyp3a4"
+      ],
+      "n_targets": 1
+    }
+  },
+  "held_out_pairs": [
+    [
+      "egfr",
+      "jak2"
+    ],
+    [
+      "drd2",
+      "adrb2"
+    ],
+    [
+      "esr1",
+      "pparg"
+    ],
+    [
+      "bace1",
+      "fxa"
+    ],
+    [
+      "hdac2",
+      "cyp3a4"
+    ]
+  ]
+}

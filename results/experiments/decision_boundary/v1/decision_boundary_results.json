@@ -1,0 +1,57 @@
+{
+  "checkpoint": "checkpoints/pretrain/best_model.pt",
+  "config": {
+    "data_path": "/tmp/nest_train_split.parquet",
+    "batch_size": 512,
+    "num_workers": 4,
+    "max_samples": null,
+    "num_epochs": 100,
+    "learning_rate": 0.0001,
+    "weight_decay": 1e-05,
+    "warmup_ratio": 0.1,
+    "gradient_clip": 1.0,
+    "use_amp": true,
+    "checkpoint_dir": "checkpoints/pretrain",
+    "save_every": 10,
+    "log_every": 50,
+    "log_gradients": true,
+    "validate_every": 1
+  },
+  "program_id": 0,
+  "method": "tsne",
+  "results": {
+    "egfr": {
+      "n_actives": 1000,
+      "n_decoys": 1000,
+      "embedding_dim": 512,
+      "metrics": {
+        "centroid_distance": 2.1345858573913574,
+        "active_variance": 0.02356865257024765,
+        "inactive_variance": 0.042717814445495605,
+        "fisher_ratio": 68.73886904576068
+      }
+    },
+    "drd2": {
+      "n_actives": 1000,
+      "n_decoys": 1000,
+      "embedding_dim": 512,
+      "metrics": {
+        "centroid_distance": 2.087717294692993,
+        "active_variance": 0.032406993210315704,
+        "inactive_variance": 0.04249177128076553,
+        "fisher_ratio": 58.192728896882734
+      }
+    },
+    "bace1": {
+      "n_actives": 485,
+      "n_decoys": 1000,
+      "embedding_dim": 512,
+      "metrics": {
+        "centroid_distance": 1.4409321546554565,
+        "active_variance": 0.023556847125291824,
+        "inactive_variance": 0.02873070538043976,
+        "fisher_ratio": 39.70898179105865
+      }
+    }
+  }
+}

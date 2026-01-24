@@ -1,0 +1,73 @@
+{
+  "checkpoint": "checkpoints/pretrain/best_model.pt",
+  "config": {
+    "data_path": "/tmp/nest_train_split.parquet",
+    "batch_size": 512,
+    "num_workers": 4,
+    "max_samples": null,
+    "num_epochs": 100,
+    "learning_rate": 0.0001,
+    "weight_decay": 1e-05,
+    "warmup_ratio": 0.1,
+    "gradient_clip": 1.0,
+    "use_amp": true,
+    "checkpoint_dir": "checkpoints/pretrain",
+    "save_every": 10,
+    "log_every": 50,
+    "log_gradients": true,
+    "validate_every": 1
+  },
+  "split_year": 2020,
+  "train_size": 763466,
+  "test_size": 10000,
+  "overall_metrics": {
+    "n_samples": 10000,
+    "rmse": 0.7437128063969154,
+    "r2": 0.6888312889055821,
+    "correlation": 0.829966695341199,
+    "mae": 0.5620639571695328,
+    "roc_auc": 0.9119803137857637
+  },
+  "per_year_metrics": {
+    "2020": {
+      "n_samples": 2486,
+      "rmse": 0.7297084151529403,
+      "r2": 0.696789623643062,
+      "correlation": 0.834995538347272,
+      "mae": 0.554167998805702,
+      "roc_auc": 0.9057060556464812
+    },
+    "2021": {
+      "n_samples": 2588,
+      "rmse": 0.7333312655683584,
+      "r2": 0.705687615019511,
+      "correlation": 0.8401291262349749,
+      "mae": 0.544190506585046,
+      "roc_auc": 0.9235536903440621
+    },
+    "2022": {
+      "n_samples": 1427,
+      "rmse": 0.7474100694376589,
+      "r2": 0.6720357028358492,
+      "correlation": 0.8199038686852932,
+      "mae": 0.5734661152150635,
+      "roc_auc": 0.9045023874403139
+    },
+    "2023": {
+      "n_samples": 1633,
+      "rmse": 0.7509069262213902,
+      "r2": 0.6553170114460243,
+      "correlation": 0.809543516511773,
+      "mae": 0.5733767409129006,
+      "roc_auc": 0.9001115519730035
+    },
+    "2024": {
+      "n_samples": 1866,
+      "rmse": 0.7669682427675516,
+      "r2": 0.6591710246657412,
+      "correlation": 0.8122064226020954,
+      "mae": 0.5787526963020316,
+      "roc_auc": 0.9101583515200731
+    }
+  }
+}

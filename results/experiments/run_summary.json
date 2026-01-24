@@ -1,0 +1,131 @@
+{
+  "timestamp": "2026-01-23T16:33:06.224642",
+  "duration_seconds": 15083.741566,
+  "models": [
+    "v1",
+    "v2",
+    "v3"
+  ],
+  "experiments": [
+    "film",
+    "context_embedding",
+    "integrated_gradients",
+    "context_attribution",
+    "decision_boundary",
+    "tdc_benchmark",
+    "temporal_split",
+    "cross_target",
+    "few_shot"
+  ],
+  "quick_test": false,
+  "results": {
+    "v1": {
+      "film": {
+        "status": "success",
+        "output_dir": "results/experiments/film/v1"
+      },
+      "context_embedding": {
+        "status": "success",
+        "output_dir": "results/experiments/context_embedding/v1"
+      },
+      "integrated_gradients": {
+        "status": "success",
+        "output_dir": "results/experiments/integrated_gradients/v1"
+      },
+      "context_attribution": {
+        "status": "success",
+        "output_dir": "results/experiments/context_attribution/v1"
+      },
+      "decision_boundary": {
+        "status": "success",
+        "output_dir": "results/experiments/decision_boundary/v1"
+      },
+      "tdc_benchmark": {
+        "status": "success",
+        "output_dir": "results/experiments/tdc_benchmark/v1"
+      },
+      "temporal_split": {
+        "status": "success",
+        "output_dir": "results/experiments/temporal_split/v1"
+      },
+      "cross_target": {
+        "status": "timeout"
+      },
+      "few_shot": {
+        "status": "timeout"
+      }
+    },
+    "v2": {
+      "film": {
+        "status": "success",
+        "output_dir": "results/experiments/film/v2"
+      },
+      "context_embedding": {
+        "status": "success",
+        "output_dir": "results/experiments/context_embedding/v2"
+      },
+      "integrated_gradients": {
+        "status": "success",
+        "output_dir": "results/experiments/integrated_gradients/v2"
+      },
+      "context_attribution": {
+        "status": "success",
+        "output_dir": "results/experiments/context_attribution/v2"
+      },
+      "decision_boundary": {
+        "status": "success",
+        "output_dir": "results/experiments/decision_boundary/v2"
+      },
+      "tdc_benchmark": {
+        "status": "success",
+        "output_dir": "results/experiments/tdc_benchmark/v2"
+      },
+      "temporal_split": {
+        "status": "success",
+        "output_dir": "results/experiments/temporal_split/v2"
+      },
+      "cross_target": {
+        "status": "timeout"
+      },
+      "few_shot": {
+        "status": "timeout"
+      }
+    },
+    "v3": {
+      "film": {
+        "status": "success",
+        "output_dir": "results/experiments/film/v3"
+      },
+      "context_embedding": {
+        "status": "success",
+        "output_dir": "results/experiments/context_embedding/v3"
+      },
+      "integrated_gradients": {
+        "status": "success",
+        "output_dir": "results/experiments/integrated_gradients/v3"
+      },
+      "context_attribution": {
+        "status": "success",
+        "output_dir": "results/experiments/context_attribution/v3"
+      },
+      "decision_boundary": {
+        "status": "success",
+        "output_dir": "results/experiments/decision_boundary/v3"
+      },
+      "tdc_benchmark": {
+        "status": "success",
+        "output_dir": "results/experiments/tdc_benchmark/v3"
+      },
+      "temporal_split": {
+        "status": "success",
+        "output_dir": "results/experiments/temporal_split/v3"
+      },
+      "cross_target": {
+        "status": "timeout"
+      },
+      "few_shot": {
+        "status": "timeout"
+      }
+    }
+  }
+}

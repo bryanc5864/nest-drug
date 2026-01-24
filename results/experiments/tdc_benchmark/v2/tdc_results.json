@@ -1,0 +1,48 @@
+{
+  "checkpoint": "results/v2_full/best_model.pt",
+  "config": {
+    "n_programs": 5123,
+    "n_assays": 100,
+    "n_rounds": 20,
+    "use_l1": true,
+    "use_l2": true,
+    "use_l3": true
+  },
+  "program_id": 0,
+  "summary": {
+    "passed": 0,
+    "total": 3
+  },
+  "results": {
+    "hERG": {
+      "task": "classification",
+      "target": 0.85,
+      "metrics": {
+        "roc_auc": 0.45024129385678885,
+        "accuracy": 0.46259541984732827,
+        "n_samples": 655
+      },
+      "meets_target": false
+    },
+    "AMES": {
+      "task": "classification",
+      "target": 0.83,
+      "metrics": {
+        "roc_auc": 0.5477774496088985,
+        "accuracy": 0.5340752954108271,
+        "n_samples": 7278
+      },
+      "meets_target": false
+    },
+    "BBB": {
+      "task": "classification",
+      "target": 0.9,
+      "metrics": {
+        "roc_auc": 0.3711081408856028,
+        "accuracy": 0.4187192118226601,
+        "n_samples": 2030
+      },
+      "meets_target": false
+    }
+  }
+}

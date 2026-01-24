@@ -1,0 +1,48 @@
+{
+  "checkpoint": "results/v3/best_model.pt",
+  "config": {
+    "n_programs": 5123,
+    "n_assays": 100,
+    "n_rounds": 20,
+    "use_l1": true,
+    "use_l2": false,
+    "use_l3": false
+  },
+  "program_id": 0,
+  "method": "tsne",
+  "results": {
+    "egfr": {
+      "n_actives": 1000,
+      "n_decoys": 1000,
+      "embedding_dim": 512,
+      "metrics": {
+        "centroid_distance": 1.4439408779144287,
+        "active_variance": 0.01011110283434391,
+        "inactive_variance": 0.021257203072309494,
+        "fisher_ratio": 66.46725311418318
+      }
+    },
+    "drd2": {
+      "n_actives": 1000,
+      "n_decoys": 1000,
+      "embedding_dim": 512,
+      "metrics": {
+        "centroid_distance": 1.5136467218399048,
+        "active_variance": 0.015883343294262886,
+        "inactive_variance": 0.021188359707593918,
+        "fisher_ratio": 61.80256345723943
+      }
+    },
+    "bace1": {
+      "n_actives": 485,
+      "n_decoys": 1000,
+      "embedding_dim": 512,
+      "metrics": {
+        "centroid_distance": 0.9284197092056274,
+        "active_variance": 0.009650876745581627,
+        "inactive_variance": 0.012452995404601097,
+        "fisher_ratio": 38.9960250713237
+      }
+    }
+  }
+}

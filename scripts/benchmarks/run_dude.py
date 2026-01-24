@@ -263,7 +263,7 @@ def main():
     print("LOADING MODEL")
     print("="*70)
 
-    checkpoint = torch.load(args.checkpoint, map_location=device)
+    checkpoint = torch.load(args.checkpoint, map_location=device, weights_only=False)
     state_dict = checkpoint['model_state_dict']
 
     endpoint_names = []
@@ -274,11 +274,18 @@ def main():
 
     endpoints = {name: {'type': 'regression', 'weight': 1.0} for name in endpoint_names}
 
-    # Get model config from checkpoint if available, otherwise use defaults
+    # Get model config from checkpoint if available, otherwise infer from weights
     config = checkpoint.get('config', {})
-    num_programs = config.get('n_programs', config.get('num_programs', 5))
-    num_assays = config.get('n_assays', config.get('num_assays', 50))
-    num_rounds = config.get('n_rounds', config.get('num_rounds', 150))
+    if config:
+        num_programs = config.get('n_programs', config.get('num_programs', 5))
+        num_assays = config.get('n_assays', config.get('num_assays', 50))
+        num_rounds = config.get('n_rounds', config.get('num_rounds', 150))
+    else:
+        # Infer from embedding weight shapes
+        num_programs = state_dict['context_module.program_embeddings.embeddings.weight'].shape[0]
+        num_assays = state_dict['context_module.assay_embeddings.embeddings.weight'].shape[0]
+        num_rounds = state_dict['context_module.round_embeddings.embeddings.weight'].shape[0]
+        print(f"Inferred config: programs={num_programs}, assays={num_assays}, rounds={num_rounds}")
 
     model = create_nest_drug(
         num_programs=num_programs,

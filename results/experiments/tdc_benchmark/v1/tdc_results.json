@@ -1,0 +1,57 @@
+{
+  "checkpoint": "checkpoints/pretrain/best_model.pt",
+  "config": {
+    "data_path": "/tmp/nest_train_split.parquet",
+    "batch_size": 512,
+    "num_workers": 4,
+    "max_samples": null,
+    "num_epochs": 100,
+    "learning_rate": 0.0001,
+    "weight_decay": 1e-05,
+    "warmup_ratio": 0.1,
+    "gradient_clip": 1.0,
+    "use_amp": true,
+    "checkpoint_dir": "checkpoints/pretrain",
+    "save_every": 10,
+    "log_every": 50,
+    "log_gradients": true,
+    "validate_every": 1
+  },
+  "program_id": 0,
+  "summary": {
+    "passed": 0,
+    "total": 3
+  },
+  "results": {
+    "hERG": {
+      "task": "classification",
+      "target": 0.85,
+      "metrics": {
+        "roc_auc": 0.7271259945219773,
+        "accuracy": 0.6366412213740458,
+        "n_samples": 655
+      },
+      "meets_target": false
+    },
+    "AMES": {
+      "task": "classification",
+      "target": 0.83,
+      "metrics": {
+        "roc_auc": 0.5088744971857022,
+        "accuracy": 0.5129156361637812,
+        "n_samples": 7278
+      },
+      "meets_target": false
+    },
+    "BBB": {
+      "task": "classification",
+      "target": 0.9,
+      "metrics": {
+        "roc_auc": 0.6053182740208014,
+        "accuracy": 0.5724137931034483,
+        "n_samples": 2030
+      },
+      "meets_target": false
+    }
+  }
+}

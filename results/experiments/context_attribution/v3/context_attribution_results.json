@@ -1,0 +1,39 @@
+{
+  "checkpoint": "results/v3/best_model.pt",
+  "config": {
+    "num_programs": 5123,
+    "num_assays": 100,
+    "num_rounds": 20
+  },
+  "program_ids": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "summary": {
+    "mean_kl_divergence": 0,
+    "mean_cosine_similarity": 0
+  },
+  "results": [
+    {
+      "name": "Celecoxib",
+      "smiles": "CC1=CC=C(C=C1)C2=CC(=NN2C3=CC=C(C=C3)S(=O)(=O)N)C(F)(F)F",
+      "attributions": {},
+      "divergences": []
+    },
+    {
+      "name": "Imatinib",
+      "smiles": "CC1=C(C=C(C=C1)NC(=O)C2=CC=C(C=C2)CN3CCN(CC3)C)NC4=NC=CC(=N4)C5=CN=CC=C5",
+      "attributions": {},
+      "divergences": []
+    },
+    {
+      "name": "Gefitinib",
+      "smiles": "COC1=C(C=C2C(=C1)N=CN=C2NC3=CC(=C(C=C3)F)Cl)OCCCN4CCOCC4",
+      "attributions": {},
+      "divergences": []
+    }
+  ]
+}

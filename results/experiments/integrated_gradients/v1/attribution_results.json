@@ -1,0 +1,11 @@
+{
+  "checkpoint": "checkpoints/pretrain/best_model.pt",
+  "config": {
+    "num_programs": 5,
+    "num_assays": 50,
+    "num_rounds": 150
+  },
+  "program_id": 0,
+  "n_steps": 50,
+  "results": []
+}

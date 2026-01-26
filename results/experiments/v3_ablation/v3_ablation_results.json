@@ -1,0 +1,91 @@
+{
+  "checkpoint": "results/v3/best_model.pt",
+  "config": {
+    "n_programs": 5123,
+    "n_assays": 100,
+    "n_rounds": 20,
+    "use_l1": true,
+    "use_l2": false,
+    "use_l3": false
+  },
+  "per_target": {
+    "egfr": {
+      "with_l1": 0.825588,
+      "without_l1": 0.825588,
+      "delta": 0.0,
+      "n_samples": 2000,
+      "n_actives": 1000
+    },
+    "drd2": {
+      "with_l1": 0.871114,
+      "without_l1": 0.905376,
+      "delta": -0.034261999999999904,
+      "n_samples": 2000,
+      "n_actives": 1000
+    },
+    "adrb2": {
+      "with_l1": 0.5566286353467562,
+      "without_l1": 0.7149463087248321,
+      "delta": -0.1583176733780759,
+      "n_samples": 1447,
+      "n_actives": 447
+    },
+    "bace1": {
+      "with_l1": 0.44544948453608246,
+      "without_l1": 0.775839175257732,
+      "delta": -0.3303896907216496,
+      "n_samples": 1485,
+      "n_actives": 485
+    },
+    "esr1": {
+      "with_l1": 0.6034370015948963,
+      "without_l1": 0.7753572567783094,
+      "delta": -0.17192025518341303,
+      "n_samples": 1627,
+      "n_actives": 627
+    },
+    "hdac2": {
+      "with_l1": 0.6953823529411765,
+      "without_l1": 0.8299117647058823,
+      "delta": -0.1345294117647059,
+      "n_samples": 1238,
+      "n_actives": 238
+    },
+    "jak2": {
+      "with_l1": 0.8162222222222222,
+      "without_l1": 0.8551045751633987,
+      "delta": -0.03888235294117648,
+      "n_samples": 1153,
+      "n_actives": 153
+    },
+    "pparg": {
+      "with_l1": 0.6752793914246196,
+      "without_l1": 0.760716459197787,
+      "delta": -0.0854370677731674,
+      "n_samples": 1723,
+      "n_actives": 723
+    },
+    "cyp3a4": {
+      "with_l1": 0.7459639639639639,
+      "without_l1": 0.6382252252252252,
+      "delta": 0.10773873873873874,
+      "n_samples": 1333,
+      "n_actives": 333
+    },
+    "fxa": {
+      "with_l1": 0.8158224719101124,
+      "without_l1": 0.8257056179775281,
+      "delta": -0.009883146067415693,
+      "n_samples": 1445,
+      "n_actives": 445
+    }
+  },
+  "summary": {
+    "mean_with_l1": 0.705088752393983,
+    "mean_without_l1": 0.7906770383030695,
+    "mean_delta": -0.08558828590908651,
+    "std_delta": 0.11415496061391714,
+    "targets_improved": 1,
+    "total_targets": 10
+  }
+}

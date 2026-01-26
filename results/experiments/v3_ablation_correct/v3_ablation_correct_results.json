@@ -1,0 +1,113 @@
+{
+  "checkpoint": "results/v3/best_model.pt",
+  "config": {
+    "n_programs": 5123,
+    "n_assays": 100,
+    "n_rounds": 20,
+    "use_l1": true,
+    "use_l2": false,
+    "use_l3": false
+  },
+  "program_id_mapping": {
+    "egfr": 1606,
+    "drd2": 1448,
+    "adrb2": 580,
+    "bace1": 516,
+    "esr1": 1628,
+    "hdac2": 2177,
+    "jak2": 4780,
+    "pparg": 3307,
+    "cyp3a4": 810,
+    "fxa": 1103
+  },
+  "per_target": {
+    "egfr": {
+      "correct_l1_id": 1606,
+      "with_correct_l1": 0.9606620000000001,
+      "with_generic_l1": 0.825588,
+      "delta": 0.13507400000000014,
+      "n_samples": 2000,
+      "n_actives": 1000
+    },
+    "drd2": {
+      "correct_l1_id": 1448,
+      "with_correct_l1": 0.986998,
+      "with_generic_l1": 0.9053760000000001,
+      "delta": 0.08162199999999997,
+      "n_samples": 2000,
+      "n_actives": 1000
+    },
+    "adrb2": {
+      "correct_l1_id": 580,
+      "with_correct_l1": 0.7864742729306489,
+      "with_generic_l1": 0.7149463087248321,
+      "delta": 0.07152796420581675,
+      "n_samples": 1447,
+      "n_actives": 447
+    },
+    "bace1": {
+      "correct_l1_id": 516,
+      "with_correct_l1": 0.6555649484536081,
+      "with_generic_l1": 0.7758391752577319,
+      "delta": -0.12027422680412381,
+      "n_samples": 1485,
+      "n_actives": 485
+    },
+    "esr1": {
+      "correct_l1_id": 1628,
+      "with_correct_l1": 0.8994625199362042,
+      "with_generic_l1": 0.7753572567783094,
+      "delta": 0.12410526315789483,
+      "n_samples": 1627,
+      "n_actives": 627
+    },
+    "hdac2": {
+      "correct_l1_id": 2177,
+      "with_correct_l1": 0.9287773109243698,
+      "with_generic_l1": 0.8299117647058823,
+      "delta": 0.09886554621848742,
+      "n_samples": 1238,
+      "n_actives": 238
+    },
+    "jak2": {
+      "correct_l1_id": 4780,
+      "with_correct_l1": 0.9083921568627451,
+      "with_generic_l1": 0.8551045751633987,
+      "delta": 0.05328758169934644,
+      "n_samples": 1153,
+      "n_actives": 153
+    },
+    "pparg": {
+      "correct_l1_id": 3307,
+      "with_correct_l1": 0.8421659751037344,
+      "with_generic_l1": 0.7607164591977871,
+      "delta": 0.08144951590594729,
+      "n_samples": 1723,
+      "n_actives": 723
+    },
+    "cyp3a4": {
+      "correct_l1_id": 810,
+      "with_correct_l1": 0.6894084084084083,
+      "with_generic_l1": 0.6382252252252252,
+      "delta": 0.051183183183183156,
+      "n_samples": 1333,
+      "n_actives": 333
+    },
+    "fxa": {
+      "correct_l1_id": 1103,
+      "with_correct_l1": 0.8464876404494383,
+      "with_generic_l1": 0.8257056179775281,
+      "delta": 0.02078202247191019,
+      "n_samples": 1445,
+      "n_actives": 445
+    }
+  },
+  "summary": {
+    "mean_correct_l1": 0.8504393233069157,
+    "mean_generic_l1": 0.7906770383030695,
+    "mean_delta": 0.05976228500384624,
+    "std_delta": 0.06817307521594074,
+    "targets_improved": 9,
+    "total_targets": 10
+  }
+}

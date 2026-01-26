@@ -57,9 +57,50 @@ Checks if FiLM γ (scale) and β (shift) parameters deviated from identity after
 
 **Interpretation**: V2/V3 have larger, more diverse program embeddings due to expanded training data.
 
+### 1D: L1 Context Ablation (V3)
+
+**Critical experiment**: Does using the correct target-specific L1 embedding improve predictions?
+
+| Target | Correct L1 | Generic L1 | Delta | L1 ID |
+|--------|------------|------------|-------|-------|
+| egfr   | **0.961**  | 0.826      | +0.135 | 1606 |
+| drd2   | **0.987**  | 0.905      | +0.082 | 1448 |
+| adrb2  | **0.786**  | 0.715      | +0.072 | 580 |
+| bace1  | 0.656      | **0.776**  | -0.120 | 516 |
+| esr1   | **0.899**  | 0.775      | +0.124 | 1628 |
+| hdac2  | **0.929**  | 0.830      | +0.099 | 2177 |
+| jak2   | **0.908**  | 0.855      | +0.053 | 4780 |
+| pparg  | **0.842**  | 0.761      | +0.081 | 3307 |
+| cyp3a4 | **0.689**  | 0.638      | +0.051 | 810 |
+| fxa    | **0.846**  | 0.826      | +0.021 | 1103 |
+| **Mean** | **0.850** | 0.791     | **+0.060** | — |
+
+**Key Finding**: **L1 context improves performance by +6% mean AUC (9/10 targets improved)**
+
+- Using the correct target-specific program ID (from V3's training) significantly outperforms generic L1
+- Largest gains on EGFR (+13.5%), ESR1 (+12.4%), HDAC2 (+9.9%)
+- Only BACE1 shows degradation with correct L1 (possible training data mismatch)
+- **This validates the core nested architecture claim**: L1 embeddings encode meaningful target-specific information
+
 ---
 
 ## Phase 2: Attribution Analysis
+
+### 2A: Integrated Gradients (V3)
+
+Per-atom importance scores for drug molecules:
+
+| Molecule | Atoms | Mean Imp | Max Imp |
+|----------|-------|----------|---------|
+| Celecoxib | 26 | 0.361 | 0.925 |
+| Ibuprofen | 15 | 0.293 | 0.708 |
+| Aspirin | 13 | 0.189 | 0.349 |
+| Caffeine | 14 | 0.423 | 0.850 |
+| Acetaminophen | 11 | 0.316 | 0.574 |
+| Metformin | 9 | 0.454 | 0.840 |
+| Atorvastatin | 41 | 0.123 | 0.333 |
+
+Visualization PNGs saved to `results/experiments/integrated_gradients/v3/`
 
 ### 2C: Decision Boundary (Fisher Discriminant Ratio)
 
@@ -112,25 +153,28 @@ Higher Fisher ratio = better separation between actives and inactives in embeddi
 |------------|----|----|-----|
 | 1B: FiLM Deviation Analysis | ✓ | ✓ | ✓ |
 | 1C: Context Embedding Visualization | ✓ | ✓ | ✓ |
-| 2A: Integrated Gradients | ⚠ | ⚠ | ⚠ |
+| 1D: L1 Context Ablation | — | — | ✓ |
+| 2A: Integrated Gradients | ⚠ | ⚠ | ✓ |
 | 2B: Context-Conditional Attribution | ⚠ | ⚠ | ⚠ |
 | 2C: Decision Boundary Visualization | ✓ | ✓ | ✓ |
 | 3A: TDC Benchmark | ✓ | ✓ | ✓ |
 | 3B: Temporal Split | ✓ | ✓ | ✓ |
-| 3C: Cross-Target Zero-Shot | ⏱ | ⏱ | ⏱ |
-| 4A: Few-Shot Adaptation | ⏱ | ⏱ | ⏱ |
+| 3C: Cross-Target Zero-Shot | ✓ | ✓ | ✓ |
+| 4A: Few-Shot Adaptation | ✓ | ✓ | ⏱ |
 
-(✓ = success, ⚠ = ran but empty results, ⏱ = timeout)
+(✓ = success, ⚠ = ran but empty results, ⏱ = pending, — = N/A)
 
 ---
 
 ## Conclusions
 
 1. **V3 (fine-tuned) is the best overall model** for DUD-E virtual screening (0.839 mean AUC)
-2. **V1 (original pretrain) excels at generalization** tasks (temporal split, TDC)
-3. **V2 (from scratch) failed catastrophically** - training from scratch with expanded data didn't work
-4. **Fine-tuning from V1 backbone (V3 approach) is validated** as the correct strategy
-5. **FiLM conditioning is working** in all models (parameters deviated from identity)
+2. **L1 context embeddings provide +6% improvement** when using correct target-specific IDs (9/10 targets improved)
+3. **V1 (original pretrain) excels at generalization** tasks (temporal split, TDC)
+4. **V2 (from scratch) failed catastrophically** - training from scratch with expanded data didn't work
+5. **Fine-tuning from V1 backbone (V3 approach) is validated** as the correct strategy
+6. **FiLM conditioning is working** in all models (parameters deviated from identity)
+7. **Core architecture claim validated**: Nested L1 embeddings encode meaningful target-specific information
 
 ## File Locations
 

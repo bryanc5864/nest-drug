@@ -231,14 +231,14 @@ Testing within protein families (using generic L1=0):
 |------------|----|----|-----|
 | 1B: FiLM Deviation Analysis | ✓ | ✓ | ✓ |
 | 1C: Context Embedding Visualization | ✓ | ✓ | ✓ |
-| 1D: L1 Context Ablation | ✓ | ✓ | ✓ |
+| 1D: L1 Context Ablation | ✓ | ✓ | ✓ (JSON needs re-run) |
 | 2A: Integrated Gradients | ✓ | ✓ | ✓ |
 | 2B: Context-Conditional Attribution | ✓ | — | ✓ |
 | 2C: Decision Boundary Visualization | ✓ | ✓ | ✓ |
 | 3A: TDC Benchmark | ✓ | ✓ | ✓ |
 | 3B: Temporal Split | ✓ | ✓ | ✓ |
 | 3C: Cross-Target Zero-Shot | ✓ | ✓ | ✓ |
-| 4A: Few-Shot Adaptation | ✓ | ✓ | ✓ |
+| 4A: Few-Shot Adaptation | ✓ | ✓ | ⚠ (bug fixed, needs re-run) |
 
 (✓ = complete, — = N/A)
 
@@ -250,7 +250,9 @@ Testing within protein families (using generic L1=0):
 
 **Experiment**: Can we learn a new L1 embedding from a small support set (10-50 examples)?
 
-| Target | N-shot | Zero-shot | Correct L1 | Adapted | Delta |
+> **AUDIT NOTE**: The original few-shot results below were obtained with a **buggy implementation** that bypassed FiLM conditioning entirely for the adapted path (accessed non-existent `model.context_module.film_layers` instead of `model.context_module.film`). The adapted predictions silently fell through to raw molecular embeddings without FiLM modulation, making the comparison unfair. The script has been fixed (`scripts/experiments/few_shot_fixed.py`) and **needs to be re-run** to obtain valid adapted results. Zero-shot and Correct L1 columns are valid (use standard forward pass).
+
+| Target | N-shot | Zero-shot | Correct L1 | Adapted* | Delta* |
 |--------|--------|-----------|------------|---------|-------|
 | EGFR | 10 | 0.829 | **0.959** | 0.731 | -0.098 |
 | EGFR | 25 | 0.828 | **0.959** | 0.730 | -0.098 |
@@ -262,13 +264,12 @@ Testing within protein families (using generic L1=0):
 | BACE1 | 25 | **0.760** | 0.646 | 0.502 | -0.258 |
 | BACE1 | 50 | **0.759** | 0.644 | 0.503 | -0.256 |
 
-**Key Findings**:
+*\*Adapted and Delta columns are INVALID due to bug - need re-running*
+
+**Key Findings** (from valid columns):
 - **Correct L1 best for EGFR/DRD2** - confirms ablation results
 - **BACE1 anomaly**: Zero-shot beats correct L1 (matches ablation where BACE1 correct L1 hurt)
-- **Few-shot adaptation always fails** - adapted L1 is worse than both baselines
-- Increasing n-shots (10→50) doesn't help
-
-**Interpretation**: L1 embeddings require substantial training data (thousands of compounds) to encode useful target information. Few-shot learning of L1 from 10-50 examples doesn't work - the model needs the full training signal to learn meaningful representations.
+- **Few-shot adaptation results pending** - script fixed, awaiting re-run
 
 ---
 
@@ -281,8 +282,60 @@ Testing within protein families (using generic L1=0):
 5. **Fine-tuning from V1 backbone (V3 approach) provides best generalization** while maintaining L1 benefits
 6. **FiLM conditioning produces target-specific attributions** - same molecule gets different atom importance for different targets (V3 KL=0.14 vs V1 KL=0.001)
 7. **Core architecture claim validated**: Target-specific L1 embeddings encode meaningful information that modulates predictions
-8. **Few-shot L1 adaptation fails** - learning L1 from 10-50 examples is worse than zero-shot; L1 requires substantial training data
+8. **Few-shot L1 adaptation**: Results pending re-run after bug fix (original implementation bypassed FiLM)
 9. **Key insight**: Models need correct L1 context to perform well; evaluating with generic L1=0 dramatically underestimates capability
+
+---
+
+## Audit Notes
+
+**Code audit completed 2026-01-27**. Key findings:
+
+1. **Architecture verified correct**: FiLM conditioning, embedding lookups, forward pass all working as designed
+2. **Data loading verified correct**: Labels (actives=1, decoys=0), same samples used for both ablation conditions
+3. **Few-shot bug found and fixed**: `predict_with_custom_embedding()` accessed non-existent `film_layers`/`gamma_proj`, silently bypassed FiLM. Fixed to use actual `context_module.film` with full context pipeline.
+4. **V3 ablation JSON overwritten**: V1 run with same output dir overwrote V3 results file. RESULTS.md numbers are correct (captured from terminal). Re-run V3 ablation to restore JSON.
+
+### Experiments requiring re-run:
+- `python scripts/experiments/v3_ablation_correct.py --checkpoint results/v3/best_model.pt --output results/experiments/v3_ablation_correct --gpu 0` (restore V3 ablation JSON)
+- `python scripts/experiments/few_shot_fixed.py --checkpoint results/v3/best_model.pt --gpu 0` (with fixed FiLM path)
+
+## SOTA Comparison
+
+Comparison of NEST-DRUG (V3, best model) against published methods on DUD-E virtual screening benchmark. All values are mean ROC-AUC across targets.
+
+| Method | Type | Mean AUC | Reference |
+|--------|------|----------|-----------|
+| Random | Baseline | 0.500 | — |
+| Morgan FP + RF | Fingerprint | ~0.72 | Mysinger et al. 2012 |
+| ECFP4 + SVM | Fingerprint | ~0.74 | Riniker & Landrum 2013 |
+| AtomNet | 3D CNN | 0.818 | Wallach et al. 2015 |
+| 3D-CNN | 3D CNN | 0.830 | Ragoza et al. 2017 |
+| GNN-VS | GNN | 0.825 | Lim et al. 2019 |
+| **NEST-DRUG V1** | **GNN+FiLM** | **0.803** | **This work (generic L1)** |
+| **NEST-DRUG V3** | **GNN+FiLM** | **0.839** | **This work (generic L1)** |
+| **NEST-DRUG V3** | **GNN+FiLM** | **0.850** | **This work (correct L1)** |
+
+**Notes**:
+- Direct comparison is approximate since different studies may use different DUD-E subsets and evaluation protocols
+- NEST-DRUG results use 10 DUD-E targets with standard actives vs decoys evaluation
+- "Generic L1" = program_id=0 (no target context); "Correct L1" = target-specific program ID
+- Published methods are target-specific by design; NEST-DRUG with generic L1 is a single model for all targets
+
+## Publication Figures
+
+Generated figures in `results/figures/`:
+
+| Figure | Description | File |
+|--------|-------------|------|
+| Fig 1 | L1 Ablation: Correct vs Generic L1 (V2 + V3) | `fig1_l1_ablation.png/pdf` |
+| Fig 2a-c | Context-Conditional Attribution Heatmaps | `fig2_attribution_*.png/pdf` |
+| Fig 2d | Attribution Divergence Summary | `fig2_attribution_divergence.png/pdf` |
+| Fig 3 | Radar Chart: V1 vs V2 vs V3 | `fig3_radar_comparison.png/pdf` |
+| Fig 4 | DUD-E Per-Target: V1 vs V3 | `fig4_dude_comparison.png/pdf` |
+| Fig 5 | V2 Rehabilitation: L1 Context Effect | `fig5_v2_rehabilitation.png/pdf` |
+
+Generate with: `python scripts/generate_publication_figures.py`
 
 ## File Locations
 

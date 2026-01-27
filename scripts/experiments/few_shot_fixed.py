@@ -136,46 +136,46 @@ def predict_with_program_id(model, graphs, device, program_id=0):
 
 
 def predict_with_custom_embedding(model, graphs, device, custom_embedding):
-    """Run inference with a custom L1 embedding (bypassing the lookup)."""
+    """Run inference with a custom L1 embedding (bypassing the lookup).
+
+    Replicates the full NestedContextModule forward pass:
+    1. custom L1 embedding (128d) + L2=0 (64d) + L3=0 (32d) → concat (224d)
+    2. context_interaction MLP (224d → 224d)
+    3. FiLM: gamma_net/beta_net → h_mod = gamma * h_mol + beta
+    4. prediction_heads(h_mod)
+    """
     model.eval()
     predictions = []
 
+    ctx = model.context_module
+
     with torch.no_grad():
+        # Get default L2 and L3 embeddings (id=0)
+        assay_ids = torch.zeros(1, dtype=torch.long, device=device)
+        round_ids = torch.zeros(1, dtype=torch.long, device=device)
+        z_assay = ctx.assay_embeddings(assay_ids)   # [1, 64]
+        z_round = ctx.round_embeddings(round_ids)    # [1, 32]
+
         for g in graphs:
             node_features = g['node_features'].to(device)
             edge_index = g['edge_index'].to(device)
             edge_features = g['edge_features'].to(device)
             batch = torch.zeros(g['num_atoms'], dtype=torch.long, device=device)
 
-            # Get molecular embedding
+            # Get molecular embedding from MPNN
             h_mol = model.mpnn(node_features, edge_index, edge_features, batch)
 
-            # Manually apply FiLM with custom embedding
-            # The context_module uses the embedding to modulate h_mol
-            # We need to replicate this with our custom embedding
+            # Build full context vector: L1 (custom) + L2 (zero) + L3 (zero)
+            context = torch.cat([custom_embedding, z_assay, z_round], dim=-1)  # [1, 224]
 
-            # Get the FiLM parameters from the custom embedding
-            program_emb = custom_embedding  # [1, 128]
+            # Apply context_interaction MLP
+            context = ctx.context_interaction(context)  # [1, 224]
 
-            # Apply L1 FiLM (assuming L1 is at index 0 in film_layers)
-            if hasattr(model.context_module, 'film_layers') and len(model.context_module.film_layers) > 0:
-                film = model.context_module.film_layers[0]
-                gamma = film.gamma_proj(program_emb)  # [1, 512]
-                beta = film.beta_proj(program_emb)    # [1, 512]
-                h_ctx = gamma * h_mol + beta
-            else:
-                h_ctx = h_mol
+            # Apply FiLM modulation
+            h_mod = ctx.film(h_mol, context)  # [1, 512]
 
-            # Apply remaining context (L2, L3) with zeros
-            assay_ids = torch.zeros(1, dtype=torch.long, device=device)
-            round_ids = torch.zeros(1, dtype=torch.long, device=device)
-
-            # For simplicity, just use the model's forward with program_id=0
-            # and then adjust - this is approximate
-            # Actually let's do full forward but override program embedding
-
-            # Simpler: just use prediction heads on h_ctx
-            preds = model.prediction_heads(h_ctx)
+            # Prediction heads
+            preds = model.prediction_heads(h_mod)
             pred = list(preds.values())[0].squeeze().cpu().numpy()
             predictions.append(float(pred) if np.ndim(pred) == 0 else float(pred[0]))
 
@@ -186,11 +186,14 @@ def adapt_l1_embedding(model, support_graphs, support_labels, device, n_steps=10
     """
     Adapt a new L1 embedding using the support set.
 
-    This learns a new 128-dim embedding that minimizes BCE loss on the support set.
+    Learns a new 128-dim L1 embedding that minimizes BCE loss on the support set,
+    using the full context pipeline: L1 + L2(0) + L3(0) → context_interaction → FiLM.
     """
+    ctx = model.context_module
+
     # Initialize from mean of existing embeddings
     with torch.no_grad():
-        existing_emb = model.context_module.program_embeddings.embeddings.weight.data
+        existing_emb = ctx.program_embeddings.embeddings.weight.data
         new_emb = existing_emb.mean(dim=0, keepdim=True).clone().to(device)
 
     new_emb = new_emb.requires_grad_(True)
@@ -200,6 +203,13 @@ def adapt_l1_embedding(model, support_graphs, support_labels, device, n_steps=10
     labels_tensor = torch.tensor(support_labels, dtype=torch.float32, device=device)
 
     model.eval()  # Keep model frozen
+
+    # Get default L2 and L3 embeddings (id=0) - these are constant
+    with torch.no_grad():
+        assay_ids = torch.zeros(1, dtype=torch.long, device=device)
+        round_ids = torch.zeros(1, dtype=torch.long, device=device)
+        z_assay = ctx.assay_embeddings(assay_ids)   # [1, 64]
+        z_round = ctx.round_embeddings(round_ids)    # [1, 32]
 
     for step in range(n_steps):
         optimizer.zero_grad()
@@ -211,25 +221,25 @@ def adapt_l1_embedding(model, support_graphs, support_labels, device, n_steps=10
             edge_features = g['edge_features'].to(device)
             batch = torch.zeros(g['num_atoms'], dtype=torch.long, device=device)
 
-            # Forward through MPNN
-            h_mol = model.mpnn(node_features, edge_index, edge_features, batch)
+            # Forward through MPNN (frozen)
+            with torch.no_grad():
+                h_mol = model.mpnn(node_features, edge_index, edge_features, batch)
 
-            # Apply FiLM with our new embedding
-            if hasattr(model.context_module, 'film_layers') and len(model.context_module.film_layers) > 0:
-                film = model.context_module.film_layers[0]
-                gamma = film.gamma_proj(new_emb)
-                beta = film.beta_proj(new_emb)
-                h_ctx = gamma * h_mol + beta
-            else:
-                h_ctx = h_mol
+            # Build full context: custom L1 + default L2 + default L3
+            context = torch.cat([new_emb, z_assay, z_round], dim=-1)  # [1, 224]
+
+            # Apply context_interaction (frozen weights, but grad flows through new_emb)
+            context = ctx.context_interaction(context)  # [1, 224]
+
+            # Apply FiLM (frozen weights, grad flows through context)
+            h_mod = ctx.film(h_mol, context)  # [1, 512]
 
             # Prediction
-            preds = model.prediction_heads(h_ctx)
+            preds = model.prediction_heads(h_mod)
             pred = list(preds.values())[0].squeeze()
 
             # Binary cross-entropy loss
             target = labels_tensor[i]
-            # Treat prediction as logit, target as binary
             loss = nn.functional.binary_cross_entropy_with_logits(
                 pred.unsqueeze(0),
                 target.unsqueeze(0)

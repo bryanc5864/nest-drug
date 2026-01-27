@@ -97,7 +97,28 @@ Checks if FiLM γ (scale) and β (shift) parameters deviated from identity after
 
 **V1 Key Finding**: Changing L1 has **no effect** - expected because V1 only has 5 generic programs (not target-specific)
 
-**Interpretation**: V3's +6% improvement comes from target-specific L1 training, not just the architecture. V1's generic L1 embeddings don't encode target information.
+#### V2 Results (5123 programs, trained from scratch)
+
+| Target | Correct L1 | Generic L1 | Delta | L1 ID |
+|--------|------------|------------|-------|-------|
+| egfr   | **0.880**  | 0.639      | +0.241 | 1606 |
+| drd2   | **0.981**  | 0.545      | +0.436 | 1448 |
+| adrb2  | **0.815**  | 0.375      | +0.441 | 580 |
+| bace1  | **0.667**  | 0.651      | +0.016 | 516 |
+| esr1   | **0.905**  | 0.407      | +0.497 | 1628 |
+| hdac2  | **0.921**  | 0.337      | +0.584 | 2177 |
+| jak2   | **0.965**  | 0.493      | +0.472 | 4780 |
+| pparg  | **0.825**  | 0.490      | +0.334 | 3307 |
+| cyp3a4 | 0.693      | **0.800**  | -0.106 | 810 |
+| fxa    | **0.850**  | 0.835      | +0.015 | 1103 |
+| **Mean** | **0.850** | 0.557     | **+0.293** | — |
+
+**V2 Key Finding**: **V2 is NOT broken!** With correct L1 IDs, V2 achieves 0.850 mean AUC (+29% over generic L1)
+
+**Interpretation**:
+- V3's +6% improvement comes from target-specific L1 training, not just the architecture
+- V1's generic L1 embeddings don't encode target information (delta=0)
+- **V2 learned meaningful L1 embeddings but the default L1=0 is useless** - this explains why V2 appeared "broken" in benchmarks using generic context
 
 ---
 
@@ -118,6 +139,25 @@ Per-atom importance scores for drug molecules:
 | Atorvastatin | 41 | 0.279 | 1.101 | 0.123 | 0.333 |
 
 Visualization PNGs saved to `results/experiments/integrated_gradients/` (V1) and `results/experiments/integrated_gradients/v3/` (V3)
+
+### 2B: Context-Conditional Attribution
+
+**Experiment**: Does the same molecule get different atom attributions for different targets?
+
+| Model | Mean KL Divergence | Mean Cosine Similarity | Interpretation |
+|-------|-------------------|------------------------|----------------|
+| V1 | 0.001 | 0.999 | Attributions nearly identical across L1 IDs |
+| V3 | **0.144** | 0.878 | Attributions differ significantly by target |
+
+**V3 Per-Molecule Results** (comparing EGFR vs DRD2 vs BACE1 vs ESR1 vs HDAC2):
+
+| Molecule | Mean KL | Mean Cosine | Interpretation |
+|----------|---------|-------------|----------------|
+| Celecoxib | 0.146 | 0.872 | Different atoms important for different targets |
+| Erlotinib | 0.142 | 0.881 | Target-specific modulation |
+| Donepezil | 0.143 | 0.882 | Context changes attribution pattern |
+
+**Key Finding**: V3's FiLM conditioning produces **target-specific atom attributions** - the same molecule has different important atoms depending on which target is being predicted. V1 shows no such effect (attributions identical regardless of L1 ID).
 
 ### 2C: Decision Boundary (Fisher Discriminant Ratio)
 
@@ -170,16 +210,16 @@ Higher Fisher ratio = better separation between actives and inactives in embeddi
 |------------|----|----|-----|
 | 1B: FiLM Deviation Analysis | ✓ | ✓ | ✓ |
 | 1C: Context Embedding Visualization | ✓ | ✓ | ✓ |
-| 1D: L1 Context Ablation | ✓ | — | ✓ |
-| 2A: Integrated Gradients | ✓ | — | ✓ |
-| 2B: Context-Conditional Attribution | ⚠ | ⚠ | ⚠ |
+| 1D: L1 Context Ablation | ✓ | ✓ | ✓ |
+| 2A: Integrated Gradients | ✓ | ✓ | ✓ |
+| 2B: Context-Conditional Attribution | ✓ | — | ✓ |
 | 2C: Decision Boundary Visualization | ✓ | ✓ | ✓ |
 | 3A: TDC Benchmark | ✓ | ✓ | ✓ |
 | 3B: Temporal Split | ✓ | ✓ | ✓ |
 | 3C: Cross-Target Zero-Shot | ✓ | ✓ | ✓ |
 | 4A: Few-Shot Adaptation | ✓ | ✓ | ✓ |
 
-(✓ = success, ⚠ = ran but empty results, — = N/A)
+(✓ = complete, — = N/A)
 
 ---
 
@@ -214,13 +254,14 @@ Higher Fisher ratio = better separation between actives and inactives in embeddi
 ## Conclusions
 
 1. **V3 (fine-tuned) is the best overall model** for DUD-E virtual screening (0.839 mean AUC)
-2. **L1 context embeddings provide +6% improvement** when using correct target-specific IDs (9/10 targets improved)
+2. **L1 context embeddings are critical**: V3 +6%, V2 +29% improvement with correct target IDs
 3. **V1 (original pretrain) excels at generalization** tasks (temporal split, TDC)
-4. **V2 (from scratch) failed catastrophically** - training from scratch with expanded data didn't work
-5. **Fine-tuning from V1 backbone (V3 approach) is validated** as the correct strategy
-6. **FiLM conditioning is working** in all models (parameters deviated from identity)
-7. **Core architecture claim validated**: V3's target-specific L1 embeddings encode meaningful information; V1's generic L1s show no effect
+4. **V2 is NOT broken** - it achieves 0.850 AUC with correct L1 IDs (same as V3); the default L1=0 is useless
+5. **Fine-tuning from V1 backbone (V3 approach) provides best generalization** while maintaining L1 benefits
+6. **FiLM conditioning produces target-specific attributions** - same molecule gets different atom importance for different targets (V3 KL=0.14 vs V1 KL=0.001)
+7. **Core architecture claim validated**: Target-specific L1 embeddings encode meaningful information that modulates predictions
 8. **Few-shot L1 adaptation fails** - learning L1 from 10-50 examples is worse than zero-shot; L1 requires substantial training data
+9. **Key insight**: Models need correct L1 context to perform well; evaluating with generic L1=0 dramatically underestimates capability
 
 ## File Locations
 

@@ -47,9 +47,13 @@ def load_model(checkpoint_path, device):
     config = checkpoint.get('config', {})
     program_mapping = checkpoint.get('program_mapping', {})
 
-    num_programs = config.get('n_programs', 5123)
-    num_assays = config.get('n_assays', 100)
-    num_rounds = config.get('n_rounds', 20)
+    # Infer dimensions from state_dict if not in config
+    num_programs = config.get('n_programs', config.get('num_programs',
+        state_dict['context_module.program_embeddings.embeddings.weight'].shape[0]))
+    num_assays = config.get('n_assays', config.get('num_assays',
+        state_dict['context_module.assay_embeddings.embeddings.weight'].shape[0]))
+    num_rounds = config.get('n_rounds', config.get('num_rounds',
+        state_dict['context_module.round_embeddings.embeddings.weight'].shape[0]))
 
     endpoint_names = []
     for key in state_dict.keys():
@@ -132,7 +136,7 @@ def predict_batch(model, smiles_list, device, program_id=0, max_samples=2000):
     return predictions, smiles_list
 
 
-def run_ablation(model, data_dir, device, targets, max_samples=2000):
+def run_ablation(model, data_dir, device, targets, max_samples=2000, num_programs=5123):
     """Run L1 ablation with CORRECT program IDs."""
     results = {}
 
@@ -142,8 +146,13 @@ def run_ablation(model, data_dir, device, targets, max_samples=2000):
             print(f"  Skipping {target} - no data")
             continue
 
-        # Get correct program ID
-        correct_program_id = DUDE_TO_V3_PROGRAM_ID.get(target, 0)
+        # Get correct program ID (only valid for V3 with 5123 programs)
+        if num_programs >= 5123:
+            correct_program_id = DUDE_TO_V3_PROGRAM_ID.get(target, 0)
+        else:
+            # V1 only has 5 programs - test different IDs (1-4) vs baseline (0)
+            # This tests if L1 affects predictions, not if "correct" helps
+            correct_program_id = (list(DUDE_TO_V3_PROGRAM_ID.keys()).index(target) % (num_programs - 1)) + 1
 
         # Subsample for speed
         n_actives = min(len(actives), max_samples // 2)
@@ -238,7 +247,13 @@ def main():
     print("V3 L1 ABLATION: CORRECT L1 vs GENERIC L1")
     print("="*70)
 
-    results = run_ablation(model, args.data_dir, device, targets, args.max_samples)
+    num_programs = state_dict['context_module.program_embeddings.embeddings.weight'].shape[0] if 'state_dict' in dir() else config.get('n_programs', 5123)
+    # Re-read to get num_programs
+    checkpoint = torch.load(args.checkpoint, map_location=device, weights_only=False)
+    num_programs = checkpoint['model_state_dict']['context_module.program_embeddings.embeddings.weight'].shape[0]
+    print(f"Model has {num_programs} programs")
+
+    results = run_ablation(model, args.data_dir, device, targets, args.max_samples, num_programs)
 
     # Summary
     print("\n" + "="*70)

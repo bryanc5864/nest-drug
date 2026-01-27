@@ -128,17 +128,17 @@ Checks if FiLM γ (scale) and β (shift) parameters deviated from identity after
 
 Per-atom importance scores for drug molecules:
 
-| Molecule | Atoms | V1 Mean | V1 Max | V3 Mean | V3 Max |
-|----------|-------|---------|--------|---------|--------|
-| Celecoxib | 26 | 0.270 | 0.545 | 0.361 | 0.925 |
-| Ibuprofen | 15 | 0.250 | 0.539 | 0.293 | 0.708 |
-| Aspirin | 13 | 0.423 | 0.905 | 0.189 | 0.349 |
-| Caffeine | 14 | 0.319 | 0.658 | 0.423 | 0.850 |
-| Acetaminophen | 11 | 0.321 | 0.841 | 0.316 | 0.574 |
-| Metformin | 9 | 0.456 | 1.054 | 0.454 | 0.840 |
-| Atorvastatin | 41 | 0.279 | 1.101 | 0.123 | 0.333 |
+| Molecule | Atoms | V1 Mean | V1 Max | V2 Mean | V2 Max | V3 Mean | V3 Max |
+|----------|-------|---------|--------|---------|--------|---------|--------|
+| Celecoxib | 26 | 0.270 | 0.545 | 0.175 | 0.333 | 0.361 | 0.925 |
+| Ibuprofen | 15 | 0.250 | 0.539 | 0.237 | 0.494 | 0.293 | 0.708 |
+| Aspirin | 13 | 0.423 | 0.905 | 0.189 | 0.322 | 0.189 | 0.349 |
+| Caffeine | 14 | 0.319 | 0.658 | 0.169 | 0.311 | 0.423 | 0.850 |
+| Acetaminophen | 11 | 0.321 | 0.841 | 0.190 | 0.408 | 0.316 | 0.574 |
+| Metformin | 9 | 0.456 | 1.054 | 0.671 | 1.201 | 0.454 | 0.840 |
+| Atorvastatin | 41 | 0.279 | 1.101 | 0.226 | 0.635 | 0.123 | 0.333 |
 
-Visualization PNGs saved to `results/experiments/integrated_gradients/` (V1) and `results/experiments/integrated_gradients/v3/` (V3)
+Visualization PNGs saved to `results/experiments/integrated_gradients/`
 
 ### 2B: Context-Conditional Attribution
 
@@ -201,6 +201,27 @@ Higher Fisher ratio = better separation between actives and inactives in embeddi
 - V1 shows strong temporal generalization to future chemistry (2020+)
 - V2 has negative R² indicating predictions worse than mean baseline
 - V3 maintains reasonable generalization but underperforms V1
+
+### 3C: Cross-Target Zero-Shot Transfer
+
+**Experiment**: Can models predict on related targets without target-specific training?
+
+Testing within protein families (using generic L1=0):
+
+| Target | Family | V3 AUC | Notes |
+|--------|--------|--------|-------|
+| egfr | Kinase | 0.825 | Baseline |
+| jak2 | Kinase | 0.858 | Same family transfer |
+| drd2 | GPCR | 0.904 | Baseline |
+| adrb2 | GPCR | 0.710 | Same family transfer |
+| esr1 | Nuclear receptor | 0.776 | Baseline |
+| pparg | Nuclear receptor | 0.765 | Same family transfer |
+| bace1 | Protease | 0.763 | Baseline |
+| fxa | Protease | 0.831 | Same family transfer |
+
+**Mean baseline AUC**: 0.790 (using generic L1=0)
+
+**Key Finding**: Models show reasonable zero-shot transfer within protein families even without target-specific L1 context. Performance improves significantly when correct L1 IDs are used (see ablation results).
 
 ---
 

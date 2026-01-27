@@ -194,13 +194,17 @@ Higher Fisher ratio = better separation between actives and inactives in embeddi
 | EGFR | 10 | 0.829 | **0.959** | 0.731 | -0.098 |
 | EGFR | 25 | 0.828 | **0.959** | 0.730 | -0.098 |
 | EGFR | 50 | 0.830 | **0.959** | 0.731 | -0.099 |
-| DRD2 | 10 | 0.905 | **0.987** | 0.803 | -0.102 |
-| DRD2 | 25 | 0.905 | **0.987** | 0.805 | -0.100 |
-| DRD2 | 50 | 0.905 | **0.987** | 0.808 | -0.097 |
+| DRD2 | 10 | 0.905 | **0.984** | 0.795 | -0.110 |
+| DRD2 | 25 | 0.906 | **0.984** | 0.795 | -0.111 |
+| DRD2 | 50 | 0.908 | **0.984** | 0.796 | -0.112 |
+| BACE1 | 10 | **0.761** | 0.647 | 0.504 | -0.257 |
+| BACE1 | 25 | **0.760** | 0.646 | 0.502 | -0.258 |
+| BACE1 | 50 | **0.759** | 0.644 | 0.503 | -0.256 |
 
 **Key Findings**:
-- **Correct L1 (from training) is always best** - confirms ablation results
-- **Few-shot adaptation fails** - adapted L1 is worse than zero-shot baseline
+- **Correct L1 best for EGFR/DRD2** - confirms ablation results
+- **BACE1 anomaly**: Zero-shot beats correct L1 (matches ablation where BACE1 correct L1 hurt)
+- **Few-shot adaptation always fails** - adapted L1 is worse than both baselines
 - Increasing n-shots (10→50) doesn't help
 
 **Interpretation**: L1 embeddings require substantial training data (thousands of compounds) to encode useful target information. Few-shot learning of L1 from 10-50 examples doesn't work - the model needs the full training signal to learn meaningful representations.

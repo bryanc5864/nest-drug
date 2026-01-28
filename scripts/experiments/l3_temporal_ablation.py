@@ -149,6 +149,7 @@ def main():
 
         program_data = pd.read_csv(data_file)
         program_id = DUDE_TO_V3_PROGRAM_ID.get(target, 0)
+        program_id = min(program_id, config['num_programs'] - 1)
 
         # Group rounds into temporal bins (5 bins)
         rounds = sorted(program_data['round_id'].unique())

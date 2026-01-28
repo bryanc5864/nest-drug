@@ -106,7 +106,7 @@ def predict_compounds(model, smiles_list, device, program_id=0, assay_id=0, roun
 
 
 def run_dmta_replay(model, program_data, device, program_id, num_rounds_model,
-                    n_select=100, activity_threshold=7.0, seed_rounds=3):
+                    n_select=100, select_fraction=0.3, activity_threshold=7.0, seed_rounds=3):
     """
     Run DMTA replay simulation comparing:
     1. Random selection
@@ -143,7 +143,8 @@ def run_dmta_replay(model, program_data, device, program_id, num_rounds_model,
         n_available = len(available)
         base_rate = n_active_available / max(n_available, 1)
 
-        n_sel = min(n_select, n_available)
+        # Select a fraction of available compounds so model ranking matters
+        n_sel = min(n_select, max(int(n_available * select_fraction), 5))
 
         # === 1. Random selection ===
         np.random.seed(round_idx)
@@ -206,7 +207,8 @@ def main():
     parser.add_argument('--output', type=str, default='results/experiments/dmta_replay')
     parser.add_argument('--gpu', type=int, default=0)
     parser.add_argument('--targets', type=str, nargs='+', default=['egfr', 'drd2', 'fxa'])
-    parser.add_argument('--n-select', type=int, default=100, help='Compounds to select per round')
+    parser.add_argument('--n-select', type=int, default=100, help='Max compounds to select per round')
+    parser.add_argument('--select-fraction', type=float, default=0.3, help='Fraction of available compounds to select per round')
     parser.add_argument('--activity-threshold', type=float, default=7.0, help='pActivity threshold for hits')
     parser.add_argument('--seed-rounds', type=int, default=3, help='Number of seed rounds to skip')
     args = parser.parse_args()
@@ -237,6 +239,7 @@ def main():
         print(f"  Active (pActivity > {args.activity_threshold}): {(program_data['pActivity'] > args.activity_threshold).sum()}")
 
         program_id = DUDE_TO_V3_PROGRAM_ID.get(target, 0)
+        program_id = min(program_id, config['num_programs'] - 1)
         print(f"  L1 program ID: {program_id}")
 
         results = run_dmta_replay(
@@ -244,6 +247,7 @@ def main():
             program_id=program_id,
             num_rounds_model=config['num_rounds'],
             n_select=args.n_select,
+            select_fraction=args.select_fraction,
             activity_threshold=args.activity_threshold,
             seed_rounds=args.seed_rounds,
         )
@@ -299,6 +303,7 @@ def main():
             'config': config,
             'activity_threshold': args.activity_threshold,
             'n_select': args.n_select,
+            'select_fraction': args.select_fraction,
             'results': all_target_results,
         }, f, indent=2)
 

@@ -54,12 +54,28 @@ class ChEMBLDataset(Dataset):
         self.program_mapping = program_mapping
         self.assay_mapping = assay_mapping or {}
 
-        # Pre-filter valid SMILES
-        valid_idx = []
-        for i in tqdm(range(len(self.data)), desc="Validating SMILES", leave=False):
-            smi = self.data.iloc[i]['smiles']
-            if smiles_to_graph(smi) is not None:
-                valid_idx.append(i)
+        # Pre-filter valid SMILES (with disk cache to avoid re-validating)
+        import hashlib, json
+        cache_dir = Path('data/cache')
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        smiles_hash = hashlib.md5(pd.util.hash_pandas_object(self.data['smiles']).values.tobytes()).hexdigest()[:12]
+        cache_file = cache_dir / f'valid_smiles_{smiles_hash}.json'
+
+        if cache_file.exists():
+            with open(cache_file) as f:
+                valid_idx = json.load(f)
+            # Ensure indices are still in range (e.g. if max_samples changed)
+            valid_idx = [i for i in valid_idx if i < len(self.data)]
+            print(f"  Loaded {len(valid_idx)} valid SMILES from cache ({cache_file.name})")
+        else:
+            valid_idx = []
+            for i in tqdm(range(len(self.data)), desc="Validating SMILES", leave=False):
+                smi = self.data.iloc[i]['smiles']
+                if smiles_to_graph(smi) is not None:
+                    valid_idx.append(i)
+            with open(cache_file, 'w') as f:
+                json.dump(valid_idx, f)
+            print(f"  Validated SMILES and saved cache ({cache_file.name})")
 
         self.data = self.data.iloc[valid_idx].reset_index(drop=True)
         print(f"  Valid molecules: {len(self.data)}")
@@ -77,10 +93,21 @@ class ChEMBLDataset(Dataset):
         target_name = row.get('target_name', 'unknown')
         program_id = self.program_mapping.get(target_name, 0)
 
-        # Get assay ID if available
+        # L2: Get assay type ID from standard_type or assay_mapping
         assay_id = 0
-        if 'assay_id' in row and row['assay_id'] in self.assay_mapping:
+        if 'assay_type_id' in row.index:
+            val = row['assay_type_id']
+            if pd.notna(val):
+                assay_id = int(val)
+        elif 'assay_id' in row and row['assay_id'] in self.assay_mapping:
             assay_id = self.assay_mapping[row['assay_id']]
+
+        # L3: Get round ID from data (temporal context)
+        round_id = 0
+        if 'round_id' in row.index:
+            val = row['round_id']
+            if pd.notna(val):
+                round_id = int(val)
 
         # Convert to graph
         graph = smiles_to_graph(smiles)
@@ -90,7 +117,7 @@ class ChEMBLDataset(Dataset):
             'pActivity': torch.tensor([pActivity], dtype=torch.float32),
             'program_id': torch.tensor([program_id], dtype=torch.long),
             'assay_id': torch.tensor([assay_id], dtype=torch.long),
-            'round_id': torch.tensor([0], dtype=torch.long),
+            'round_id': torch.tensor([round_id], dtype=torch.long),
         }
 
 
@@ -177,6 +204,12 @@ def load_data(data_dir: Path, v2_data_dir: Path = None) -> pd.DataFrame:
 
     combined = pd.concat(all_data, ignore_index=True)
     print(f"\nTotal combined records: {len(combined)}")
+
+    # Add L2 (assay_type_id) from standard_type if not already present
+    if 'assay_type_id' not in combined.columns and 'standard_type' in combined.columns:
+        st_mapping = {'IC50': 1, 'Ki': 2, 'EC50': 3, 'Kd': 4}
+        combined['assay_type_id'] = combined['standard_type'].map(st_mapping).fillna(0).astype(int)
+        print(f"  L2 auto-mapped from standard_type: {combined['assay_type_id'].value_counts().to_dict()}")
 
     return combined
 
@@ -353,6 +386,10 @@ def main():
                         help='Use L2 (assay) context')
     parser.add_argument('--use-l3', action='store_true', default=False,
                         help='Use L3 (round) context')
+    parser.add_argument('--num-assays', type=int, default=None,
+                        help='Number of assay embeddings (auto-detected if None)')
+    parser.add_argument('--num-rounds', type=int, default=None,
+                        help='Number of round embeddings (auto-detected if None)')
     # Note: DataParallel doesn't work with PyTorch Geometric (graph batching issue)
     # Use single GPU training - it's fast enough with mixed precision
     args = parser.parse_args()
@@ -387,6 +424,16 @@ def main():
     train_dataset = ChEMBLDataset(train_df, program_mapping, max_samples=args.max_samples)
     val_dataset = ChEMBLDataset(val_df, program_mapping, max_samples=args.max_samples // 10 if args.max_samples else None)
 
+    # Diagnostic: check L2/L3 distributions in training data
+    if 'assay_type_id' in train_df.columns:
+        print(f"\n  L2 (assay_type_id) distribution: {train_df['assay_type_id'].value_counts().to_dict()}")
+    else:
+        print(f"\n  L2: no assay_type_id column — all samples will use assay_id=0")
+    if 'round_id' in train_df.columns:
+        print(f"  L3 (round_id) distribution: min={train_df['round_id'].min()}, max={train_df['round_id'].max()}, unique={train_df['round_id'].nunique()}")
+    else:
+        print(f"  L3: no round_id column — all samples will use round_id=0")
+
     # Create data loaders
     train_loader = DataLoader(
         train_dataset,
@@ -405,12 +452,27 @@ def main():
         pin_memory=True,
     )
 
+    # Determine num_assays and num_rounds from data or defaults
+    n_assays = args.num_assays
+    n_rounds = args.num_rounds
+    if n_assays is None:
+        if 'assay_type_id' in df.columns:
+            n_assays = int(df['assay_type_id'].max()) + 1
+        else:
+            n_assays = 100
+    if n_rounds is None:
+        if 'round_id' in df.columns:
+            n_rounds = int(df['round_id'].max()) + 1
+        else:
+            n_rounds = 20
+    print(f"\n  Model dimensions: programs={n_programs}, assays={n_assays}, rounds={n_rounds}")
+
     # Create model
     print("\nCreating model...")
     model = create_nest_drug(
         num_programs=n_programs,
-        num_assays=100,
-        num_rounds=20,
+        num_assays=n_assays,
+        num_rounds=n_rounds,
     )
     model = model.to(device)
 
@@ -518,8 +580,8 @@ def main():
                 'val_auc': val_metrics['roc_auc'],
                 'config': {
                     'n_programs': n_programs,
-                    'n_assays': 100,
-                    'n_rounds': 20,
+                    'n_assays': n_assays,
+                    'n_rounds': n_rounds,
                     'use_l1': args.use_l1,
                     'use_l2': args.use_l2,
                     'use_l3': args.use_l3,
@@ -546,8 +608,8 @@ def main():
         'history': history,
         'config': {
             'n_programs': n_programs,
-            'n_assays': 100,
-            'n_rounds': 20,
+            'n_assays': n_assays,
+            'n_rounds': n_rounds,
             'use_l1': args.use_l1,
             'use_l2': args.use_l2,
             'use_l3': args.use_l3,

@@ -155,6 +155,7 @@ def main():
 
         program_data = pd.read_csv(data_file)
         program_id = DUDE_TO_V3_PROGRAM_ID.get(target, 0)
+        program_id = min(program_id, config['num_programs'] - 1)
 
         # Classify assays
         program_data['assay_category'] = program_data['activity_type'].apply(classify_assay_type)

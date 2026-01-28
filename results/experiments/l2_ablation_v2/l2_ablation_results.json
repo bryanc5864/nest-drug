@@ -1,0 +1,200 @@
+{
+  "checkpoint": "results/v2_full/best_model.pt",
+  "config": {
+    "num_programs": 5123,
+    "num_assays": 100,
+    "num_rounds": 20
+  },
+  "threshold": 7.0,
+  "results": {
+    "egfr": {
+      "program_id": 1606,
+      "per_category": [
+        {
+          "category": "binding",
+          "n_samples": 300,
+          "n_active": 150,
+          "representative_assay_id": 99,
+          "conditions": {
+            "correct": {
+              "assay_id": 99,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 1.3187894975404348,
+                "correlation": 0.46642076050255077,
+                "roc_auc": 0.7157777777777778
+              }
+            },
+            "generic": {
+              "assay_id": 0,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 1.3207810759697114,
+                "correlation": 0.46618532014452313,
+                "roc_auc": 0.7158222222222221
+              }
+            },
+            "random_0": {
+              "assay_id": 8,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 1.3187559196558754,
+                "correlation": 0.46782109442097025,
+                "roc_auc": 0.7166222222222222
+              }
+            },
+            "random_1": {
+              "assay_id": 70,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 1.3240356879634831,
+                "correlation": 0.4635886894671945,
+                "roc_auc": 0.7144444444444444
+              }
+            },
+            "random_2": {
+              "assay_id": 82,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 1.3193113195772934,
+                "correlation": 0.4676081396607371,
+                "roc_auc": 0.7167111111111112
+              }
+            }
+          }
+        }
+      ],
+      "summary": {
+        "mean_rmse_correct_l2": 1.3187894975404348,
+        "mean_rmse_generic_l2": 1.3207810759697114,
+        "l2_rmse_benefit": 0.0019915784292765526
+      }
+    },
+    "drd2": {
+      "program_id": 1448,
+      "per_category": [
+        {
+          "category": "binding",
+          "n_samples": 300,
+          "n_active": 127,
+          "representative_assay_id": 56,
+          "conditions": {
+            "correct": {
+              "assay_id": 56,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 0.5472671310573475,
+                "correlation": 0.8839193096827345,
+                "roc_auc": 0.9473396750261709
+              }
+            },
+            "generic": {
+              "assay_id": 0,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 0.5473308025872449,
+                "correlation": 0.8839038064352406,
+                "roc_auc": 0.9472941604842747
+              }
+            },
+            "random_0": {
+              "assay_id": 8,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 0.5473770855044925,
+                "correlation": 0.883903010273505,
+                "roc_auc": 0.9467479859815211
+              }
+            },
+            "random_1": {
+              "assay_id": 70,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 0.5473866517285217,
+                "correlation": 0.8838980238741925,
+                "roc_auc": 0.9472258886714305
+              }
+            },
+            "random_2": {
+              "assay_id": 82,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 0.5473356429297597,
+                "correlation": 0.8838939459359546,
+                "roc_auc": 0.9473396750261709
+              }
+            }
+          }
+        }
+      ],
+      "summary": {
+        "mean_rmse_correct_l2": 0.5472671310573475,
+        "mean_rmse_generic_l2": 0.5473308025872449,
+        "l2_rmse_benefit": 6.367152989739111e-05
+      }
+    },
+    "fxa": {
+      "program_id": 1103,
+      "per_category": [
+        {
+          "category": "binding",
+          "n_samples": 300,
+          "n_active": 154,
+          "representative_assay_id": 2,
+          "conditions": {
+            "correct": {
+              "assay_id": 2,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 0.5675220691958862,
+                "correlation": 0.9385818500103131,
+                "roc_auc": 0.9812978117772638
+              }
+            },
+            "generic": {
+              "assay_id": 0,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 0.5671559149879694,
+                "correlation": 0.9386665130361954,
+                "roc_auc": 0.9813867639210105
+              }
+            },
+            "random_0": {
+              "assay_id": 8,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 0.5672754872935933,
+                "correlation": 0.9386859257160715,
+                "roc_auc": 0.9813200498132004
+              }
+            },
+            "random_1": {
+              "assay_id": 70,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 0.5669187593970401,
+                "correlation": 0.9387443258077305,
+                "roc_auc": 0.9813422878491371
+              }
+            },
+            "random_2": {
+              "assay_id": 82,
+              "metrics": {
+                "n_samples": 300,
+                "rmse": 0.5676232890986148,
+                "correlation": 0.9385413031201094,
+                "roc_auc": 0.9811866215975805
+              }
+            }
+          }
+        }
+      ],
+      "summary": {
+        "mean_rmse_correct_l2": 0.5675220691958862,
+        "mean_rmse_generic_l2": 0.5671559149879694,
+        "l2_rmse_benefit": -0.0003661542079168578
+      }
+    }
+  }
+}

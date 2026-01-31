@@ -1,0 +1,11 @@
+{
+  "checkpoint": "results/v4/best_model.pt",
+  "config": {
+    "num_programs": 5123,
+    "num_assays": 5,
+    "num_rounds": 20
+  },
+  "program_id": 0,
+  "n_steps": 50,
+  "results": []
+}

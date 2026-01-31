@@ -1,0 +1,191 @@
+{
+  "checkpoint": "results/v4/best_model.pt",
+  "config": {
+    "num_programs": 5123,
+    "num_assays": 5,
+    "num_rounds": 20
+  },
+  "film_parameters": {
+    "context_module.film.gamma_net.0.weight": {
+      "shape": [
+        256,
+        224
+      ],
+      "mean": 0.03125683218240738,
+      "std": 0.0730060413479805,
+      "min": -0.3347162902355194,
+      "max": 0.42413803935050964,
+      "deviation_from_1": 0.9687432050704956,
+      "is_learning": true,
+      "type": "gamma"
+    },
+    "context_module.film.gamma_net.0.bias": {
+      "shape": [
+        256
+      ],
+      "mean": 0.06480313837528229,
+      "std": 0.04129048436880112,
+      "min": -0.02568054385483265,
+      "max": 0.21884708106517792,
+      "deviation_from_1": 0.9351968765258789,
+      "is_learning": true,
+      "type": "gamma"
+    },
+    "context_module.film.gamma_net.1.weight": {
+      "shape": [
+        256
+      ],
+      "mean": 1.0563840866088867,
+      "std": 0.09190104901790619,
+      "min": 0.5435076951980591,
+      "max": 1.3269072771072388,
+      "deviation_from_1": 0.08223983645439148,
+      "is_learning": false,
+      "type": "gamma"
+    },
+    "context_module.film.gamma_net.1.bias": {
+      "shape": [
+        256
+      ],
+      "mean": -0.16805708408355713,
+      "std": 0.0395873598754406,
+      "min": -0.41858264803886414,
+      "max": -0.03759637102484703,
+      "deviation_from_1": 1.1680570840835571,
+      "is_learning": true,
+      "type": "gamma"
+    },
+    "context_module.film.gamma_net.3.weight": {
+      "shape": [
+        512,
+        256
+      ],
+      "mean": 0.0027438015677034855,
+      "std": 0.06139225512742996,
+      "min": -0.3282226622104645,
+      "max": 0.32171812653541565,
+      "deviation_from_1": 0.9972561597824097,
+      "is_learning": true,
+      "type": "gamma"
+    },
+    "context_module.film.gamma_net.3.bias": {
+      "shape": [
+        512
+      ],
+      "mean": 1.0181338787078857,
+      "std": 0.029223870486021042,
+      "min": 0.9524906277656555,
+      "max": 1.1208096742630005,
+      "deviation_from_1": 0.026366904377937317,
+      "is_learning": false,
+      "type": "gamma"
+    },
+    "context_module.film.beta_net.0.weight": {
+      "shape": [
+        256,
+        224
+      ],
+      "mean": 0.0247582346200943,
+      "std": 0.07312139868736267,
+      "min": -0.4723353087902069,
+      "max": 0.2379009872674942,
+      "deviation_from_0": 0.05813475325703621,
+      "is_learning": true,
+      "type": "beta"
+    },
+    "context_module.film.beta_net.0.bias": {
+      "shape": [
+        256
+      ],
+      "mean": 0.05315100774168968,
+      "std": 0.09226371347904205,
+      "min": -0.5478076934814453,
+      "max": 0.14390766620635986,
+      "deviation_from_0": 0.07627998292446136,
+      "is_learning": true,
+      "type": "beta"
+    },
+    "context_module.film.beta_net.1.weight": {
+      "shape": [
+        256
+      ],
+      "mean": 0.75873202085495,
+      "std": 0.052323613315820694,
+      "min": 0.6372499465942383,
+      "max": 1.0,
+      "deviation_from_0": 0.75873202085495,
+      "is_learning": true,
+      "type": "beta"
+    },
+    "context_module.film.beta_net.1.bias": {
+      "shape": [
+        256
+      ],
+      "mean": -0.2015625536441803,
+      "std": 0.05034225434064865,
+      "min": -0.33531567454338074,
+      "max": 0.0,
+      "deviation_from_0": 0.2015625536441803,
+      "is_learning": true,
+      "type": "beta"
+    },
+    "context_module.film.beta_net.3.weight": {
+      "shape": [
+        512,
+        256
+      ],
+      "mean": -0.0009134879801422358,
+      "std": 0.041955143213272095,
+      "min": -0.2034478336572647,
+      "max": 0.22324138879776,
+      "deviation_from_0": 0.03253389149904251,
+      "is_learning": false,
+      "type": "beta"
+    },
+    "context_module.film.beta_net.3.bias": {
+      "shape": [
+        512
+      ],
+      "mean": -0.025660574436187744,
+      "std": 0.017463859170675278,
+      "min": -0.07145553827285767,
+      "max": 0.022549856454133987,
+      "deviation_from_0": 0.026740320026874542,
+      "is_learning": false,
+      "type": "beta"
+    }
+  },
+  "context_embeddings": {
+    "program_embeddings": {
+      "shape": [
+        5123,
+        128
+      ],
+      "mean_norm": 0.43660467863082886,
+      "std_norm": 0.10480774939060211,
+      "variance_across_programs": 0.0015352749032899737
+    },
+    "assay_embeddings": {
+      "shape": [
+        5,
+        64
+      ],
+      "mean_norm": 0.3027644157409668,
+      "variance_across_assays": 0.0014785458333790302
+    },
+    "round_embeddings": {
+      "shape": [
+        20,
+        32
+      ],
+      "mean_norm": 0.41174617409706116,
+      "variance_across_rounds": 0.005088373553007841
+    }
+  },
+  "summary": {
+    "gamma_learning": 4,
+    "gamma_total": 6,
+    "beta_learning": 4,
+    "beta_total": 6
+  }
+}

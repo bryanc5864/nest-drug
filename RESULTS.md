@@ -2,47 +2,54 @@
 
 ## Overview
 
-This document summarizes experimental results comparing three model versions:
+This document summarizes experimental results comparing four model versions:
 - **V1-Original**: Original pretrained model (5 programs, 50 assays, 150 rounds)
 - **V2-Expanded**: Trained from scratch with expanded data (5123 programs, 100 assays, 20 rounds)
 - **V3-FineTuned**: Fine-tuned from V1 backbone (5123 programs, 100 assays, 20 rounds)
+- **V4-RealL2L3**: Fine-tuned from V1 with real L2/L3 data (5123 programs, 5 assays, 20 rounds)
 
-> **Important: Context Levels Actually Used in V1–V3**
+> **Important: Context Levels by Model Version**
 >
 > The NEST-DRUG architecture defines three hierarchical context levels:
 > - **L1 (Program)**: 128-dim embedding identifying the drug discovery program/target
 > - **L2 (Assay)**: 64-dim embedding identifying the assay type (e.g. IC50, Ki, EC50, Kd)
 > - **L3 (Round)**: 32-dim embedding identifying the temporal DMTA round
 >
-> However, **only L1 was ever functional in V1, V2, and V3**. Due to implementation gaps in the training pipeline, L2 and L3 were dead code:
-> - **L2**: `assay_mapping` was never constructed or passed to the dataset — all training samples received `assay_id=0`
-> - **L3**: `round_id` was hardcoded to `0` — no temporal data existed in the training parquets
+> | Model | L1 Functional | L2 Functional | L3 Functional |
+> |-------|---------------|---------------|---------------|
+> | V1    | Yes (5 generic) | No (dead code) | No (dead code) |
+> | V2    | Yes (5123 targets) | No (dead code) | No (dead code) |
+> | V3    | Yes (5123 targets) | No (dead code) | No (dead code) |
+> | V4    | Yes (5123 targets) | **Yes (5 types)** | **Yes (20 bins)** |
 >
-> This means V1–V3 are effectively **L1-only models**. All L2/L3 ablation experiments confirm zero effect (see Phase 5B/5C). V4 (in progress) is the first model to train with real L2 and L3 data.
+> V1–V3 had L2/L3 dead code: `assay_mapping` never constructed, `round_id` hardcoded to 0.
+> V4 was trained with real L2 (assay_type from standard_type) and L3 (temporal bins from ChEMBL).
+> **However, V4's L2/L3 showed negative effects** — generic L2/L3 outperforms correct values (see Phase 6).
 
 ## DUD-E Virtual Screening Benchmark
 
 ### Per-Target ROC-AUC Comparison
 
-| Target | V1-Original | V2-Expanded | V3-E20 (Best) |
-|--------|-------------|-------------|---------------|
-| egfr   | **0.943**   | 0.553       | 0.899         |
-| drd2   | **0.960**   | 0.553       | 0.934         |
-| adrb2  | **0.745**   | 0.553       | 0.763         |
-| bace1  | 0.672       | 0.553       | **0.842**     |
-| esr1   | **0.864**   | 0.553       | 0.817         |
-| hdac2  | **0.866**   | 0.553       | 0.901         |
-| jak2   | **0.865**   | 0.553       | 0.862         |
-| pparg  | **0.787**   | 0.553       | 0.748         |
-| cyp3a4 | 0.497       | 0.553       | **0.782**     |
-| fxa    | **0.833**   | 0.553       | 0.846         |
-| **Mean** | **0.803** | 0.553       | **0.839**     |
+| Target | V1-Original | V2-Expanded | V3-FineTuned | V4-RealL2L3 |
+|--------|-------------|-------------|--------------|-------------|
+| egfr   | **0.943**   | 0.553       | 0.899        | 0.886       |
+| drd2   | **0.960**   | 0.553       | 0.934        | 0.884       |
+| adrb2  | 0.745       | 0.553       | **0.763**    | 0.688       |
+| bace1  | 0.672       | 0.553       | **0.857**    | **0.857**   |
+| esr1   | **0.864**   | 0.553       | 0.817        | 0.680       |
+| hdac2  | 0.866       | 0.553       | **0.901**    | 0.891       |
+| jak2   | **0.865**   | 0.553       | 0.862        | 0.848       |
+| pparg  | **0.787**   | 0.553       | 0.748        | 0.672       |
+| cyp3a4 | 0.497       | 0.553       | **0.782**    | 0.778       |
+| fxa    | 0.833       | 0.553       | 0.846        | **0.902**   |
+| **Mean** | 0.803     | 0.553       | **0.839**    | 0.809       |
 
 ### Key Findings
-- **V3-E20 achieves highest mean AUC (0.839)**, surpassing V1-Original (0.803)
-- **V2 catastrophically failed** (0.553 mean AUC, near random)
-- V3 improves on V1's weak targets (bace1: 0.672→0.842, cyp3a4: 0.497→0.782)
-- V1 maintains advantage on some targets (egfr, drd2, pparg)
+- **V3-FineTuned achieves highest mean AUC (0.839)**, surpassing V1-Original (0.803)
+- **V2 catastrophically failed** (0.553 mean AUC, near random) — evaluated with generic L1
+- **V4 underperforms V3 (0.809 vs 0.839)** — adding real L2/L3 hurt performance
+- V3 improves on V1's weak targets (bace1: 0.672→0.857, cyp3a4: 0.497→0.782)
+- V4 wins only on FXA (0.902 vs V3's 0.846)
 
 ---
 
@@ -57,6 +64,7 @@ Checks if FiLM γ (scale) and β (shift) parameters deviated from identity after
 | V1    | 4/6           | 2/6           | FiLM actively modulating |
 | V2    | 4/6           | 4/6           | More beta deviation |
 | V3    | 4/6           | 4/6           | Similar to V2 |
+| V4    | 4/6           | 4/6           | Same as V3 |
 
 **Interpretation**: All models show FiLM is learning meaningful modulation (not stuck at identity).
 
@@ -67,8 +75,15 @@ Checks if FiLM γ (scale) and β (shift) parameters deviated from identity after
 | V1    | 5           | 0.130        | 0.00011     |
 | V2    | 5123        | 0.422        | 0.00145     |
 | V3    | 5123        | 0.423        | 0.00145     |
+| V4    | 5123        | 0.437        | 0.00153     |
 
-**Interpretation**: V2/V3 have larger, more diverse program embeddings due to expanded training data.
+**V4 Additional Context Levels**:
+| Level | Embeddings | Dim | Mean Norm |
+|-------|-----------|-----|-----------|
+| L2 (Assay) | 5 | 64 | 0.303 |
+| L3 (Round) | 20 | 32 | 0.412 |
+
+**Interpretation**: V2/V3/V4 have larger, more diverse program embeddings due to expanded training data. V4's L2/L3 embeddings show learned structure (non-zero norms).
 
 ### 1D: L1 Context Ablation
 
@@ -161,6 +176,7 @@ Visualization PNGs saved to `results/experiments/integrated_gradients/`
 |-------|-------------------|------------------------|----------------|
 | V1 | 0.001 | 0.999 | Attributions nearly identical across L1 IDs |
 | V3 | **0.144** | 0.878 | Attributions differ significantly by target |
+| V4 | 0.111 | 0.904 | Less target-specific than V3 |
 
 **V3 Per-Molecule Results** (comparing EGFR vs DRD2 vs BACE1 vs ESR1 vs HDAC2):
 
@@ -176,13 +192,13 @@ Visualization PNGs saved to `results/experiments/integrated_gradients/`
 
 Higher Fisher ratio = better separation between actives and inactives in embedding space.
 
-| Target | V1 Fisher | V2 Fisher | V3 Fisher |
-|--------|-----------|-----------|-----------|
-| egfr   | 68.7      | **76.9**  | 66.5      |
-| drd2   | **58.2**  | 52.6      | 61.8      |
-| bace1  | **39.7**  | 36.7      | 39.0      |
+| Target | V1 Fisher | V2 Fisher | V3 Fisher | V4 Fisher |
+|--------|-----------|-----------|-----------|-----------|
+| egfr   | 68.7      | 76.9      | 66.5      | **94.8**  |
+| drd2   | 58.2      | 52.6      | 61.8      | **79.8**  |
+| bace1  | 39.7      | 36.7      | 39.0      | **41.2**  |
 
-**Interpretation**: V1 generally maintains better class separation, though V2 leads on EGFR.
+**Interpretation**: V4 achieves the best class separation despite lower DUD-E AUC. This suggests V4's embeddings are well-structured but the L2/L3 context may be adding noise at prediction time.
 
 ---
 
@@ -190,30 +206,34 @@ Higher Fisher ratio = better separation between actives and inactives in embeddi
 
 ### 3A: TDC Benchmark
 
-| Dataset | V1 AUC | V2 AUC | V3 AUC | Target |
-|---------|--------|--------|--------|--------|
-| hERG    | **0.727** | 0.450 | 0.628  | 0.85   |
-| AMES    | 0.509  | **0.548** | 0.515  | 0.83   |
-| BBB     | **0.605** | 0.371 | 0.570  | 0.90   |
+| Dataset | V1 AUC | V2 AUC | V3 AUC | V4 AUC | Target |
+|---------|--------|--------|--------|--------|--------|
+| hERG    | **0.727** | 0.450 | 0.628 | 0.649 | 0.85   |
+| AMES    | 0.509  | **0.548** | 0.515 | 0.474 | 0.83   |
+| BBB     | **0.605** | 0.371 | 0.570 | 0.473 | 0.90   |
+| CYP2D6  | — | — | — | 0.530 | 0.75   |
+| Solubility | — | — | — | R²=-10.3 | 0.80   |
 
 **Interpretation**:
 - V1 outperforms on hERG and BBB toxicity prediction
 - All models fail to meet TDC target benchmarks
 - V2 shows reversed predictions on some tasks (AUC < 0.5)
+- V4 performs worse than V3 on most TDC tasks despite real L2/L3 training
 
 ### 3B: Temporal Split (ChEMBL 2020+ Test Set)
 
-| Metric | V1 | V2 | V3 |
-|--------|-----|-----|-----|
-| ROC-AUC | **0.912** | 0.644 | 0.843 |
-| R² | **0.689** | -0.676 | 0.388 |
-| Correlation | **0.830** | 0.302 | 0.692 |
-| RMSE | **0.744** | 1.726 | 1.043 |
+| Metric | V1 | V2 | V3 | V4 |
+|--------|-----|-----|-----|-----|
+| ROC-AUC | **0.912** | 0.644 | 0.843 | 0.793 |
+| R² | **0.689** | -0.676 | 0.388 | -0.227 |
+| Correlation | **0.830** | 0.302 | 0.692 | 0.577 |
+| RMSE | **0.744** | 1.726 | 1.043 | 1.477 |
 
 **Interpretation**:
 - V1 shows strong temporal generalization to future chemistry (2020+)
 - V2 has negative R² indicating predictions worse than mean baseline
 - V3 maintains reasonable generalization but underperforms V1
+- V4 performs worse than V3 on temporal generalization (R²=-0.227)
 
 ### 3C: Cross-Target Zero-Shot Transfer
 
@@ -221,43 +241,46 @@ Higher Fisher ratio = better separation between actives and inactives in embeddi
 
 Testing within protein families (using generic L1=0):
 
-| Target | Family | V3 AUC | Notes |
-|--------|--------|--------|-------|
-| egfr | Kinase | 0.825 | Baseline |
-| jak2 | Kinase | 0.858 | Same family transfer |
-| drd2 | GPCR | 0.904 | Baseline |
-| adrb2 | GPCR | 0.710 | Same family transfer |
-| esr1 | Nuclear receptor | 0.776 | Baseline |
-| pparg | Nuclear receptor | 0.765 | Same family transfer |
-| bace1 | Protease | 0.763 | Baseline |
-| fxa | Protease | 0.831 | Same family transfer |
+| Target | Family | V3 AUC | V4 AUC | Notes |
+|--------|--------|--------|--------|-------|
+| egfr | Kinase | 0.825 | 0.886 | Baseline |
+| jak2 | Kinase | 0.858 | 0.848 | Same family transfer |
+| drd2 | GPCR | 0.904 | 0.884 | Baseline |
+| adrb2 | GPCR | 0.710 | 0.688 | Same family transfer |
+| esr1 | Nuclear receptor | 0.776 | 0.680 | Baseline |
+| pparg | Nuclear receptor | 0.765 | 0.672 | Same family transfer |
+| bace1 | Protease | 0.763 | 0.857 | Baseline |
+| fxa | Protease | 0.831 | 0.902 | Same family transfer |
+| hdac2 | Enzyme | — | 0.891 | Baseline |
+| cyp3a4 | CYP | — | 0.778 | Same family transfer |
 
-**Mean baseline AUC**: 0.790 (using generic L1=0)
+**Mean baseline AUC**: V3=0.790, V4=0.808 (using generic L1=0)
 
-**Key Finding**: Models show reasonable zero-shot transfer within protein families even without target-specific L1 context. Performance improves significantly when correct L1 IDs are used (see ablation results).
+**Key Finding**: Models show reasonable zero-shot transfer within protein families even without target-specific L1 context. Performance improves significantly when correct L1 IDs are used (see ablation results). V4 shows similar zero-shot capability to V3.
 
 ---
 
 ## Experiment Status Summary
 
-| Experiment | V1 | V2 | V3 |
-|------------|----|----|-----|
-| 1B: FiLM Deviation Analysis | ✓ | ✓ | ✓ |
-| 1C: Context Embedding Visualization | ✓ | ✓ | ✓ |
-| 1D: L1 Context Ablation | ✓ | ✓ | ✓ |
-| 2A: Integrated Gradients | ✓ | ✓ | ✓ |
-| 2B: Context-Conditional Attribution | ✓ | — | ✓ |
-| 2C: Decision Boundary Visualization | ✓ | ✓ | ✓ |
-| 3A: TDC Benchmark | ✓ | ✓ | ✓ |
-| 3B: Temporal Split | ✓ | ✓ | ✓ |
-| 3C: Cross-Target Zero-Shot | ✓ | ✓ | ✓ |
-| 4A: Few-Shot Adaptation | ✓ | ✓ | ✓ (re-run with fix) |
-| 5A: Statistical Significance (L1) | — | ✓ | ✓ |
-| 5B: L2 Assay Ablation | ✓ | ✓ | ✓ |
-| 5C: L3 Temporal Ablation | ✓ | ✓ | ✓ |
-| 5D: DMTA Replay | ✓ | ✓ | ✓ |
+| Experiment | V1 | V2 | V3 | V4 |
+|------------|----|----|-----|-----|
+| 1B: FiLM Deviation Analysis | ✓ | ✓ | ✓ | ✓ |
+| 1C: Context Embedding Visualization | ✓ | ✓ | ✓ | ✓ |
+| 1D: L1 Context Ablation | ✓ | ✓ | ✓ | ✓ |
+| 2A: Integrated Gradients | ✓ | ✓ | ✓ | ✓ |
+| 2B: Context-Conditional Attribution | ✓ | — | ✓ | ✓ |
+| 2C: Decision Boundary Visualization | ✓ | ✓ | ✓ | ✓ |
+| 3A: TDC Benchmark | ✓ | ✓ | ✓ | ✓ |
+| 3B: Temporal Split | ✓ | ✓ | ✓ | ✓ |
+| 3C: Cross-Target Zero-Shot | ✓ | ✓ | ✓ | ✓ |
+| 4A: Few-Shot Adaptation | ✓ | ✓ | ✓ | ✓ |
+| 5A: Statistical Significance (L1) | — | ✓ | ✓ | ✓ |
+| 5B: L2 Assay Ablation | ✓ | ✓ | ✓ | ✓ |
+| 5C: L3 Temporal Ablation | ✓ | ✓ | ✓ | ✓ |
+| 5D: DMTA Replay | ✓ | ✓ | ✓ | ✓ |
+| 6A: DUD-E Benchmark | — | — | — | ✓ |
 
-(✓ = complete, — = N/A or not applicable)
+(✓ = complete, — = N/A or not run)
 
 ---
 
@@ -431,9 +454,10 @@ Even V1, which had `use_l2: true` and `use_l3: true` in its config, received all
 
 The embedding tables for L2 and L3 exist in all models but contain only untrained random weights. This is confirmed by ablation experiments across all three models showing exactly zero L2/L3 effect.
 
-**V4** (in progress) is the first model to receive real L2/L3 data:
+**V4** is the first model to receive real L2/L3 data:
 - L2: `assay_type_id` mapped from `standard_type` (IC50→1, Ki→2, EC50→3, Kd→4)
 - L3: `round_id` from ChEMBL temporal data (20 quantile bins of document year)
+- **Result**: L2/L3 showed negative effects — see Phase 6 for details
 
 ### 5D: DMTA Replay Simulation
 
@@ -475,20 +499,142 @@ The embedding tables for L2 and L3 exist in all models but contain only untraine
 
 ---
 
+## Phase 6: V4 — Real L2/L3 Training
+
+V4 is the first model trained with actual L2 and L3 data:
+- **L2**: `assay_type_id` mapped from `standard_type` (IC50→1, Ki→2, EC50→3, Kd→4, other→0)
+- **L3**: `round_id` from ChEMBL temporal data (20 quantile bins of document year)
+- **Training**: Fine-tuned from V1 backbone, 100 epochs on enriched ChEMBL V2 data
+
+### 6A: V4 DUD-E Benchmark
+
+See main DUD-E table above. V4 achieves **0.809 mean AUC**, lower than V3's 0.839.
+
+### 6B: V4 Statistical Significance (L1 Ablation, 5 seeds)
+
+| Target | Mean Correct L1 | Mean Generic L1 | Mean Delta | 95% CI | p-value | Significant |
+|--------|-----------------|-----------------|------------|--------|---------|-------------|
+| egfr   | 0.975 | 0.885 | **+0.090** | [0.086, 0.094] | 3.8e-06 | Yes |
+| drd2   | 0.974 | 0.882 | **+0.092** | [0.086, 0.098] | 1.1e-05 | Yes |
+| adrb2  | 0.857 | 0.689 | **+0.167** | [0.162, 0.173] | 8.4e-07 | Yes |
+| bace1  | 0.726 | **0.854** | **-0.128** | [-0.130, -0.126] | 5.9e-08 | Yes (negative) |
+| esr1   | 0.934 | 0.674 | **+0.259** | [0.254, 0.264] | 8.0e-08 | Yes |
+| hdac2  | 0.900 | 0.892 | +0.008 | [0.006, 0.010] | 0.002 | Yes |
+| jak2   | 0.901 | 0.853 | +0.048 | [0.044, 0.052] | 3.6e-05 | Yes |
+| pparg  | 0.781 | 0.669 | **+0.112** | [0.109, 0.114] | 2.2e-07 | Yes |
+| cyp3a4 | 0.741 | **0.783** | **-0.042** | [-0.051, -0.034] | 0.001 | Yes (negative) |
+| fxa    | 0.855 | **0.901** | **-0.045** | [-0.048, -0.043] | 6.0e-06 | Yes (negative) |
+| **Mean** | — | — | **+0.056** | — | — | **10/10** |
+
+**V4 L1 Finding**: Mean delta +5.6% (same as V3's +5.7%), but **3 targets show negative L1 effect** (bace1, cyp3a4, fxa) vs V3's 1 (bace1 only).
+
+### 6C: V4 L2 Ablation
+
+| Target | Correct L2 AUC | Generic L2 AUC | Delta |
+|--------|----------------|----------------|-------|
+| egfr   | 0.734 | **0.849** | **-0.115** |
+| drd2   | 0.890 | **0.931** | **-0.041** |
+| fxa    | 0.964 | **0.969** | **-0.005** |
+
+**V4 L2 Finding**: **Generic L2 outperforms correct L2 on all targets!** This is the opposite of the expected result. The model learned that L2=0 is a better default than the "correct" assay type.
+
+### 6D: V4 L3 Ablation
+
+| Target | Mean Correct L3 AUC | Mean Generic L3 AUC | Delta | Bins Improved |
+|--------|---------------------|---------------------|-------|---------------|
+| egfr   | 0.761 | **0.813** | **-0.052** | 0/5 |
+| drd2   | 0.895 | **0.923** | **-0.028** | 0/5 |
+| fxa    | 0.954 | **0.974** | **-0.020** | 0/5 |
+
+**V4 L3 Finding**: **Generic L3 outperforms correct L3 on all targets!** Same pattern as L2 — the temporal round context hurts rather than helps.
+
+### 6E: V4 DMTA Replay
+
+| Target | Enrichment (no L3) | Enrichment (with L3) | L3 Benefit | Expts to 50 Hits |
+|--------|-------------------|---------------------|------------|------------------|
+| egfr   | **1.52x** | 1.45x | **-4.8%** | 159 (vs 225 random) |
+
+**V4 DMTA Finding**: V4 achieves 1.52x enrichment (similar to V3's 1.53x), but **L3 context hurts** rather than helps (-4.8% vs no L3). This confirms the L3 negative effect seen in ablation experiments.
+
+### 6F: V4 TDC Benchmark
+
+| Dataset | V4 AUC | Target | Meets Target |
+|---------|--------|--------|--------------|
+| hERG    | 0.649  | 0.85   | No |
+| AMES    | 0.474  | 0.83   | No |
+| BBB     | 0.473  | 0.90   | No |
+| CYP2D6  | 0.530  | 0.75   | No |
+| Solubility (R²) | -10.3 | 0.80 | No |
+
+**V4 TDC Finding**: 0/5 benchmarks passed. V4 performs worse than V1 on TDC generalization tasks.
+
+### 6G: V4 Context Attribution
+
+| Model | Mean KL Divergence | Mean Cosine Similarity |
+|-------|-------------------|------------------------|
+| V3    | 0.144 | 0.878 |
+| V4    | **0.111** | **0.904** |
+
+**V4 Attribution Finding**: V4 shows slightly lower KL divergence (0.111 vs 0.144), meaning attributions are more similar across targets. V4's FiLM conditioning is less target-specific than V3's.
+
+### 6H: V4 FiLM Analysis
+
+| Model | Gamma Learning | Beta Learning |
+|-------|---------------|---------------|
+| V3    | 4/6 | 4/6 |
+| V4    | 4/6 | 4/6 |
+
+**V4 FiLM Finding**: Same learning pattern as V3 — 4/6 gamma and 4/6 beta parameters show deviation from identity.
+
+### 6I: V4 Few-Shot Adaptation
+
+| Target | N-shot | Zero-shot | Correct L1 | Adapted |
+|--------|--------|-----------|------------|---------|
+| EGFR | 10 | 0.867 | **0.961** | 0.823 |
+| EGFR | 50 | 0.864 | **0.961** | 0.774 |
+| DRD2 | 10 | 0.884 | **0.969** | 0.819 |
+| DRD2 | 50 | 0.884 | **0.968** | 0.821 |
+| BACE1 | 10 | **0.846** | 0.714 | 0.605 |
+| BACE1 | 50 | **0.847** | 0.716 | 0.546 |
+
+**V4 Few-Shot Finding**: Same pattern as V3 — adapted L1 underperforms both zero-shot and correct L1. BACE1 anomaly persists (zero-shot beats correct L1).
+
+### 6J: V4 Summary
+
+| Metric | V3 (L1-only) | V4 (Real L2/L3) | Difference |
+|--------|--------------|-----------------|------------|
+| DUD-E Mean AUC | **0.839** | 0.809 | -0.030 |
+| L1 Mean Delta | +0.057 | +0.056 | -0.001 |
+| Targets w/ negative L1 | 1 | 3 | +2 |
+| L2 Effect | 0 (dead code) | **Negative** | — |
+| L3 Effect | 0 (dead code) | **Negative** | — |
+| DMTA Enrichment (EGFR) | 1.53x | 1.52x | -0.01 |
+| TDC Passed | 0/3 | 0/5 | — |
+| Context Attribution KL | 0.144 | 0.111 | -0.033 |
+
+**Conclusion**: Adding real L2/L3 data to training **hurt model performance**. The 3-level context hierarchy appears overparameterized — the model learned to rely on L2=0 and L3=0 as defaults, and providing "correct" context during evaluation degrades predictions. **V3 (L1-only, fine-tuned from V1) remains the best model.**
+
+Possible explanations:
+1. **Training/eval distribution mismatch**: Most training samples had L2=0 or L3=0 (due to missing data), so the model learned these as "safe" defaults
+2. **L2/L3 semantic mismatch**: The assay_type_id and round_id assignments in training don't match evaluation semantics
+3. **Overparameterization**: The additional context dimensions add noise rather than signal for this task
+
+---
+
 ## Conclusions
 
 1. **V3 (fine-tuned) is the best overall model** for DUD-E virtual screening (0.839 mean AUC)
-2. **L1 context embeddings are critical**: V3 +5.7% (p < 0.01, 10/10 targets); V2 +29.5% (p < 0.05, 9/10 targets)
-3. **L2 and L3 context levels were never implemented in training** — confirmed dead code across all model versions. `assay_mapping` never passed (L2), `round_id` hardcoded to 0 (L3)
+2. **L1 context embeddings are critical**: V3 +5.7% (p < 0.01, 10/10 targets); V2 +29.5% (p < 0.05, 9/10 targets); V4 +5.6% (10/10 targets)
+3. **L2 and L3 do not help — even when properly implemented**: V4 trained with real L2/L3 performed worse than V3 (0.809 vs 0.839), and correct L2/L3 hurt predictions vs generic
 4. **V1 (original pretrain) excels at generalization** tasks (temporal split, TDC)
 5. **V2 is NOT broken** - it achieves 0.850 AUC with correct L1 IDs (same as V3); the default L1=0 is useless
 6. **Fine-tuning from V1 backbone (V3 approach) provides best generalization** while maintaining L1 benefits
 7. **FiLM conditioning produces target-specific attributions** - same molecule gets different atom importance for different targets (V3 KL=0.14 vs V1 KL=0.001)
 8. **Core architecture claim validated**: Target-specific L1 embeddings encode meaningful information that modulates predictions via FiLM
-9. **Statistical robustness confirmed**: L1 ablation results hold across 5 random seeds with tight confidence intervals for both V2 and V3
+9. **Statistical robustness confirmed**: L1 ablation results hold across 5 random seeds with tight confidence intervals for V2, V3, and V4
 10. **Key insight**: Models need correct L1 context to perform well; evaluating with generic L1=0 dramatically underestimates capability
 11. **All models provide DMTA enrichment**: 1.3-1.9x over random selection across V1/V2/V3, reducing experiments to find 50 hits by 29-55%
-12. **V4 in progress**: Training with real L2 (assay_type from standard_type) and L3 (round_id from ChEMBL temporal data) to test whether these context levels add value when properly implemented
+12. **3-level hierarchy is overparameterized**: L1 (program/target) captures the important signal; L2 (assay type) and L3 (temporal round) add noise rather than value
 
 ---
 
@@ -542,6 +688,6 @@ Generate with: `python scripts/generate_publication_figures.py`
 
 ## File Locations
 
-- Model checkpoints: `checkpoints/pretrain/`, `results/v2_full/`, `results/v3/`
-- DUD-E benchmarks: `results/v3/dude_epoch*/`
-- Experiment results: `results/experiments/`
+- Model checkpoints: `checkpoints/pretrain/`, `results/v2_full/`, `results/v3/`, `results/v4/`
+- DUD-E benchmarks: `results/v3/dude_epoch*/`, `results/v4/dude_benchmark/`
+- Experiment results: `results/experiments/` (V4 experiments in `*_v4/` subdirectories)

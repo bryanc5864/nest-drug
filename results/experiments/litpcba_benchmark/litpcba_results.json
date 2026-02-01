@@ -1,0 +1,273 @@
+{
+  "timestamp": "2026-02-01T05:15:17.584535",
+  "description": "LIT-PCBA benchmark with L1 ablation",
+  "note": "Real inactives benchmark \u2014 no DUD-E structural bias or decoy issues",
+  "config": {
+    "checkpoint": "results/v3/best_model.pt",
+    "data_dir": "data/external/litpcba",
+    "n_targets_available": 15,
+    "n_targets_with_l1": 4
+  },
+  "per_target": {
+    "ADRB2": {
+      "n_total": 312500,
+      "n_actives": 17,
+      "active_rate": 5.44e-05,
+      "has_l1": true,
+      "generic_l1": {
+        "roc_auc": 0.5244476358337422,
+        "avg_precision": 5.814739831207612e-05,
+        "ef_1pct": 0.0,
+        "ef_5pct": 0.0,
+        "n_valid": 312500
+      },
+      "correct_l1": {
+        "roc_auc": 0.5345269606195989,
+        "avg_precision": 0.0001231396326330193,
+        "ef_1pct": 5.88235294117647,
+        "ef_5pct": 2.3529411764705883,
+        "n_valid": 312500,
+        "program_id": 580
+      },
+      "delta_auc": 0.010079324785856714
+    },
+    "ALDH1": {
+      "n_total": 145133,
+      "n_actives": 7168,
+      "active_rate": 0.04938918095815562,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.49147879029473696,
+        "avg_precision": 0.047414786755359484,
+        "ef_1pct": 1.0744630588818056,
+        "ef_5pct": 0.862242412221659,
+        "n_valid": 145133
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    },
+    "ESR1_ago": {
+      "n_total": 5596,
+      "n_actives": 13,
+      "active_rate": 0.002323087919942816,
+      "has_l1": true,
+      "generic_l1": {
+        "roc_auc": 0.47745904462723376,
+        "avg_precision": 0.0032159895925734034,
+        "ef_1pct": 0.0,
+        "ef_5pct": 1.5428728977116075,
+        "n_valid": 5596
+      },
+      "correct_l1": {
+        "roc_auc": 0.6171344328249218,
+        "avg_precision": 0.007721699234844885,
+        "ef_1pct": 7.826573426573426,
+        "ef_5pct": 3.085745795423215,
+        "n_valid": 5596,
+        "program_id": 1628
+      },
+      "delta_auc": 0.139675388197688
+    },
+    "ESR1_ant": {
+      "n_total": 5050,
+      "n_actives": 102,
+      "active_rate": 0.0201980198019802,
+      "has_l1": true,
+      "generic_l1": {
+        "roc_auc": 0.5583271910219221,
+        "avg_precision": 0.026622592398790793,
+        "ef_1pct": 0.9901960784313726,
+        "ef_5pct": 1.5717398070339246,
+        "n_valid": 5050
+      },
+      "correct_l1": {
+        "roc_auc": 0.5587016738789291,
+        "avg_precision": 0.02803727466091544,
+        "ef_1pct": 0.9901960784313726,
+        "ef_5pct": 2.1611422346716465,
+        "n_valid": 5050,
+        "program_id": 1628
+      },
+      "delta_auc": 0.0003744828570070302
+    },
+    "FEN1": {
+      "n_total": 355771,
+      "n_actives": 369,
+      "active_rate": 0.0010371840313010336,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.5092929577558869,
+        "avg_precision": 0.0010292006949129883,
+        "ef_1pct": 0.5421136078102416,
+        "ef_5pct": 0.6504266144527872,
+        "n_valid": 355771
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    },
+    "GBA": {
+      "n_total": 296218,
+      "n_actives": 166,
+      "active_rate": 0.0005603980851940125,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.5548163225639782,
+        "avg_precision": 0.0007435361975553089,
+        "ef_1pct": 3.0122312341872557,
+        "ef_5pct": 1.3253817430423924,
+        "n_valid": 296218
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    },
+    "IDH1": {
+      "n_total": 362088,
+      "n_actives": 39,
+      "active_rate": 0.00010770862331808842,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.6185075104226931,
+        "avg_precision": 0.0002331276800544564,
+        "ef_1pct": 2.564725881852954,
+        "ef_5pct": 2.0513273734661275,
+        "n_valid": 362088
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    },
+    "KAT2A": {
+      "n_total": 348742,
+      "n_actives": 194,
+      "active_rate": 0.0005562851620969083,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.49619744278739164,
+        "avg_precision": 0.0005311086875220893,
+        "ef_1pct": 1.0310520076040908,
+        "ef_5pct": 0.5154668736760142,
+        "n_valid": 348742
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    },
+    "MAPK1": {
+      "n_total": 62937,
+      "n_actives": 308,
+      "active_rate": 0.004893782671560449,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.5110754519554755,
+        "avg_precision": 0.005033263757201927,
+        "ef_1pct": 0.6497326203208557,
+        "ef_5pct": 1.0392417499855517,
+        "n_valid": 62937
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    },
+    "MTORC1": {
+      "n_total": 33069,
+      "n_actives": 97,
+      "active_rate": 0.002933260757809429,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.5037162115684536,
+        "avg_precision": 0.003029500635876381,
+        "ef_1pct": 2.066166822867854,
+        "ef_5pct": 1.031208486912268,
+        "n_valid": 33069
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    },
+    "OPRK1": {
+      "n_total": 269840,
+      "n_actives": 24,
+      "active_rate": 8.894159501927067e-05,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.5363574157944674,
+        "avg_precision": 0.00013026135146717156,
+        "ef_1pct": 4.167284408203608,
+        "ef_5pct": 0.8333333333333334,
+        "n_valid": 269840
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    },
+    "PKM2": {
+      "n_total": 246069,
+      "n_actives": 546,
+      "active_rate": 0.0022188898235860673,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.45040188859607,
+        "avg_precision": 0.0019064015157984342,
+        "ef_1pct": 0.0,
+        "ef_5pct": 0.43957651711858003,
+        "n_valid": 246069
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    },
+    "PPARG": {
+      "n_total": 5238,
+      "n_actives": 27,
+      "active_rate": 0.005154639175257732,
+      "has_l1": true,
+      "generic_l1": {
+        "roc_auc": 0.5559962188248506,
+        "avg_precision": 0.005789833174284989,
+        "ef_1pct": 0.0,
+        "ef_5pct": 0.0,
+        "n_valid": 5238
+      },
+      "correct_l1": {
+        "roc_auc": 0.7101430734130791,
+        "avg_precision": 0.012998544614298502,
+        "ef_1pct": 0.0,
+        "ef_5pct": 1.4865900383141764,
+        "n_valid": 5238,
+        "program_id": 3307
+      },
+      "delta_auc": 0.15414685458822852
+    },
+    "TP53": {
+      "n_total": 4247,
+      "n_actives": 79,
+      "active_rate": 0.018601365669884625,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.49945333948832576,
+        "avg_precision": 0.017839951261621807,
+        "ef_1pct": 1.2799879445449065,
+        "ef_5pct": 0.25358251731550036,
+        "n_valid": 4247
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    },
+    "VDR": {
+      "n_total": 356272,
+      "n_actives": 884,
+      "active_rate": 0.002481250280684421,
+      "has_l1": false,
+      "generic_l1": {
+        "roc_auc": 0.4664662682484257,
+        "avg_precision": 0.0022426246048902394,
+        "ef_1pct": 0.9051603019301272,
+        "ef_5pct": 0.8145070723425593,
+        "n_valid": 356272
+      },
+      "correct_l1": null,
+      "delta_auc": null
+    }
+  },
+  "summary": {
+    "mean_generic_auc": 0.5169329126522435,
+    "std_generic_auc": 0.041318256909295616,
+    "mean_correct_auc": 0.6051265351841323,
+    "mean_delta": 0.07606901260719506,
+    "n_targets": 15
+  }
+}

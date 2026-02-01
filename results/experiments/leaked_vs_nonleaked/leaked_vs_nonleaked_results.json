@@ -1,0 +1,278 @@
+{
+  "timestamp": "2026-02-01T03:56:50.061233",
+  "description": "Leaked vs non-leaked DUD-E L1 ablation",
+  "note": "Answers: does L1 improvement hold on actives NOT in ChEMBL training?",
+  "config": {
+    "checkpoint": "results/v3/best_model.pt",
+    "n_training_smiles": 790664
+  },
+  "per_target": {
+    "egfr": {
+      "n_actives": 4032,
+      "n_leaked": 3921,
+      "n_nonleaked": 111,
+      "leak_pct": 97.24702380952381,
+      "n_decoys": 201600,
+      "correct_l1": {
+        "auc_all": 0.9625685648246568,
+        "auc_leaked": 0.9646029911688385,
+        "auc_nonleaked": 0.8907038288288288,
+        "mean_score_leaked": 7.601764736355522,
+        "mean_score_nonleaked": 7.14527027027027,
+        "mean_score_decoy": 5.4048790341331845
+      },
+      "generic_l1": {
+        "auc_all": 0.8248312292581963,
+        "auc_leaked": 0.828544802128749,
+        "auc_nonleaked": 0.6936517767767767,
+        "mean_score_leaked": 6.808250047819434,
+        "mean_score_nonleaked": 6.23071509009009,
+        "mean_score_decoy": 5.596476692320809
+      },
+      "delta_all": 0.1377373355664605,
+      "delta_leaked": 0.13605818904008948,
+      "delta_nonleaked": 0.19705205205205212
+    },
+    "drd2": {
+      "n_actives": 3223,
+      "n_leaked": 2899,
+      "n_nonleaked": 324,
+      "leak_pct": 89.94725411107663,
+      "n_decoys": 161150,
+      "correct_l1": {
+        "auc_all": 0.9857014232851088,
+        "auc_leaked": 0.9862996751637532,
+        "auc_nonleaked": 0.9803485461363732,
+        "mean_score_leaked": 7.6027549909451535,
+        "mean_score_nonleaked": 7.509669174382716,
+        "mean_score_decoy": 5.52974952974713
+      },
+      "generic_l1": {
+        "auc_all": 0.9042546960938238,
+        "auc_leaked": 0.9063099689762173,
+        "auc_nonleaked": 0.8858650785442594,
+        "mean_score_leaked": 7.166978376164194,
+        "mean_score_nonleaked": 7.0171682098765435,
+        "mean_score_decoy": 5.596070891832144
+      },
+      "delta_all": 0.08144672719128498,
+      "delta_leaked": 0.07998970618753587,
+      "delta_nonleaked": 0.09448346759211379
+    },
+    "adrb2": {
+      "n_actives": 447,
+      "n_leaked": 17,
+      "n_nonleaked": 430,
+      "leak_pct": 3.803131991051454,
+      "n_decoys": 15255,
+      "correct_l1": {
+        "auc_all": 0.7763870282747359,
+        "auc_leaked": 0.8075038078161452,
+        "auc_nonleaked": 0.7751568300137964,
+        "mean_score_leaked": 6.658318014705882,
+        "mean_score_nonleaked": 6.790125363372093,
+        "mean_score_decoy": 5.711601472877745
+      },
+      "generic_l1": {
+        "auc_all": 0.7096283391149856,
+        "auc_leaked": 0.6023579539977248,
+        "auc_nonleaked": 0.7138692613172959,
+        "mean_score_leaked": 5.869025735294118,
+        "mean_score_nonleaked": 6.288063226744186,
+        "mean_score_decoy": 5.587236254506719
+      },
+      "delta_all": 0.06675868915975036,
+      "delta_leaked": 0.20514585381842032,
+      "delta_nonleaked": 0.06128756869650054
+    },
+    "bace1": {
+      "n_actives": 485,
+      "n_leaked": 57,
+      "n_nonleaked": 428,
+      "leak_pct": 11.752577319587628,
+      "n_decoys": 18221,
+      "correct_l1": {
+        "auc_all": 0.6574584553791734,
+        "auc_leaked": 0.5762624964254662,
+        "auc_nonleaked": 0.6682719358940363,
+        "mean_score_leaked": 5.392955043859649,
+        "mean_score_nonleaked": 5.4829055928738315,
+        "mean_score_decoy": 5.093285220350145
+      },
+      "generic_l1": {
+        "auc_all": 0.7627779094813563,
+        "auc_leaked": 0.7303699124877117,
+        "auc_nonleaked": 0.767093927772566,
+        "mean_score_leaked": 6.437294407894737,
+        "mean_score_nonleaked": 6.450943706191588,
+        "mean_score_decoy": 5.641763581513089
+      },
+      "delta_all": -0.10531945410218291,
+      "delta_leaked": -0.15410741606224543,
+      "delta_nonleaked": -0.09882199187852969
+    },
+    "esr1": {
+      "n_actives": 627,
+      "n_leaked": 116,
+      "n_nonleaked": 511,
+      "leak_pct": 18.50079744816587,
+      "n_decoys": 20818,
+      "correct_l1": {
+        "auc_all": 0.9091048523675148,
+        "auc_leaked": 0.8956512682989853,
+        "auc_nonleaked": 0.9121588949349304,
+        "mean_score_leaked": 7.149952855603448,
+        "mean_score_nonleaked": 7.442935114970646,
+        "mean_score_decoy": 5.594725905766644
+      },
+      "generic_l1": {
+        "auc_all": 0.776539418179244,
+        "auc_leaked": 0.7214003299531904,
+        "auc_nonleaked": 0.7890563149194049,
+        "mean_score_leaked": 6.347925646551724,
+        "mean_score_nonleaked": 6.602319288160469,
+        "mean_score_decoy": 5.533683290902104
+      },
+      "delta_all": 0.13256543418827083,
+      "delta_leaked": 0.17425093834579497,
+      "delta_nonleaked": 0.12310258001552554
+    },
+    "hdac2": {
+      "n_actives": 238,
+      "n_leaked": 111,
+      "n_nonleaked": 127,
+      "leak_pct": 46.63865546218487,
+      "n_decoys": 10366,
+      "correct_l1": {
+        "auc_all": 0.9252308776105465,
+        "auc_leaked": 0.9316215694760939,
+        "auc_nonleaked": 0.9196453122792412,
+        "mean_score_leaked": 6.88453688063063,
+        "mean_score_nonleaked": 6.907080462598425,
+        "mean_score_decoy": 5.507128171425816
+      },
+      "generic_l1": {
+        "auc_all": 0.824143896416371,
+        "auc_leaked": 0.7676169320004936,
+        "auc_nonleaked": 0.8735493535042637,
+        "mean_score_leaked": 6.551379504504505,
+        "mean_score_nonleaked": 6.8748154527559056,
+        "mean_score_decoy": 5.516041023538492
+      },
+      "delta_all": 0.10108698119417547,
+      "delta_leaked": 0.16400463747560023,
+      "delta_nonleaked": 0.04609595877497752
+    },
+    "jak2": {
+      "n_actives": 153,
+      "n_leaked": 58,
+      "n_nonleaked": 95,
+      "leak_pct": 37.908496732026144,
+      "n_decoys": 6590,
+      "correct_l1": {
+        "auc_all": 0.9045915280629198,
+        "auc_leaked": 0.922369316100675,
+        "auc_nonleaked": 0.8937377206293426,
+        "mean_score_leaked": 7.398774245689655,
+        "mean_score_nonleaked": 7.16969572368421,
+        "mean_score_decoy": 5.812929746775417
+      },
+      "generic_l1": {
+        "auc_all": 0.8575560117825582,
+        "auc_leaked": 0.8543652870074827,
+        "auc_nonleaked": 0.8595040332241833,
+        "mean_score_leaked": 6.772427262931035,
+        "mean_score_nonleaked": 6.853330592105263,
+        "mean_score_decoy": 5.55395781961305
+      },
+      "delta_all": 0.04703551628036151,
+      "delta_leaked": 0.06800402909319225,
+      "delta_nonleaked": 0.03423368740515931
+    },
+    "pparg": {
+      "n_actives": 723,
+      "n_leaked": 9,
+      "n_nonleaked": 714,
+      "leak_pct": 1.2448132780082988,
+      "n_decoys": 25866,
+      "correct_l1": {
+        "auc_all": 0.8352255998812477,
+        "auc_leaked": 0.7923163827246407,
+        "auc_nonleaked": 0.8357664723664151,
+        "mean_score_leaked": 6.345486111111111,
+        "mean_score_nonleaked": 6.514973958333333,
+        "mean_score_decoy": 5.602206292768499
+      },
+      "generic_l1": {
+        "auc_all": 0.7648753940807175,
+        "auc_leaked": 0.5736810227067708,
+        "auc_nonleaked": 0.7672854071652631,
+        "mean_score_leaked": 5.287326388888889,
+        "mean_score_nonleaked": 5.947473520658264,
+        "mean_score_decoy": 5.137783431918349
+      },
+      "delta_all": 0.0703502058005302,
+      "delta_leaked": 0.21863536001786987,
+      "delta_nonleaked": 0.06848106520115205
+    },
+    "cyp3a4": {
+      "n_actives": 333,
+      "n_leaked": 330,
+      "n_nonleaked": 3,
+      "leak_pct": 99.09909909909909,
+      "n_decoys": 16650,
+      "correct_l1": {
+        "auc_all": 0.6832323314305296,
+        "auc_leaked": 0.6878504868504869,
+        "auc_nonleaked": 0.1752352352352352,
+        "mean_score_leaked": 5.29615293560606,
+        "mean_score_nonleaked": 4.559895833333333,
+        "mean_score_decoy": 4.970948995870871
+      },
+      "generic_l1": {
+        "auc_all": 0.6411149888627365,
+        "auc_leaked": 0.6419841659841661,
+        "auc_nonleaked": 0.5455055055055055,
+        "mean_score_leaked": 6.130835700757576,
+        "mean_score_nonleaked": 5.60546875,
+        "mean_score_decoy": 5.58307397240991
+      },
+      "delta_all": 0.04211734256779309,
+      "delta_leaked": 0.04586632086632081,
+      "delta_nonleaked": -0.37027027027027026
+    },
+    "fxa": {
+      "n_actives": 445,
+      "n_leaked": 412,
+      "n_nonleaked": 33,
+      "leak_pct": 92.58426966292134,
+      "n_decoys": 22250,
+      "correct_l1": {
+        "auc_all": 0.8502546648150485,
+        "auc_leaked": 0.8475259626922658,
+        "auc_nonleaked": 0.884322097378277,
+        "mean_score_leaked": 7.117054763349515,
+        "mean_score_nonleaked": 6.888020833333333,
+        "mean_score_decoy": 5.347361920646067
+      },
+      "generic_l1": {
+        "auc_all": 0.8309034212851912,
+        "auc_leaked": 0.8289161666848478,
+        "auc_nonleaked": 0.8557139938712972,
+        "mean_score_leaked": 6.979748179611651,
+        "mean_score_nonleaked": 6.895004734848484,
+        "mean_score_decoy": 5.595280723314607
+      },
+      "delta_all": 0.019351243529857287,
+      "delta_leaked": 0.018609796007417967,
+      "delta_nonleaked": 0.028608103506979843
+    }
+  },
+  "summary": {
+    "mean_delta_all": 0.05931300213763013,
+    "mean_delta_leaked": 0.09564574147899964,
+    "mean_delta_nonleaked": 0.018425222109566076,
+    "n_targets_with_nonleaked": 10,
+    "n_positive_nonleaked": 8
+  }
+}

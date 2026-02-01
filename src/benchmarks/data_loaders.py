@@ -55,7 +55,7 @@ def load_litpcba_target(target_name: str, base_path: str = "data/external/litpcb
     actives = None
     for f in actives_files:
         if f.exists():
-            actives = pd.read_csv(f, sep='\t', header=None, names=['smiles', 'id'])
+            actives = pd.read_csv(f, sep=r'\s+', header=None, names=['smiles', 'id'], engine='python')
             break
 
     if actives is None:
@@ -67,7 +67,7 @@ def load_litpcba_target(target_name: str, base_path: str = "data/external/litpcb
     inactives = None
     for f in inactives_files:
         if f.exists():
-            inactives = pd.read_csv(f, sep='\t', header=None, names=['smiles', 'id'])
+            inactives = pd.read_csv(f, sep=r'\s+', header=None, names=['smiles', 'id'], engine='python')
             break
 
     if inactives is None:

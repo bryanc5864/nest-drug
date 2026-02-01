@@ -52,6 +52,8 @@ This document summarizes experimental results comparing four model versions:
 - V4 wins only on FXA (0.902 vs V3's 0.846)
 
 > **Note**: V3 numbers above are from **epoch 20** (early checkpoint) with generic L1=0. The V3 best model (epoch 91, val_auc=0.932) was subsequently benchmarked and scores **0.790 mean AUC** with generic L1 — lower due to increased context-dependence (see Section 7C). V3 BACE1 was previously reported as 0.857 (erroneously copied from V4); corrected to 0.842.
+>
+> V1 numbers in this table are from the original benchmark run and may differ slightly from the ablation study in Section 1D (e.g., EGFR 0.943 vs 0.935) due to different evaluation configurations (program ID assignment, batch ordering).
 
 ---
 
@@ -274,7 +276,7 @@ Testing within protein families (using generic L1=0):
 | 2C: Decision Boundary Visualization | ✓ | ✓ | ✓ | ✓ |
 | 3A: TDC Benchmark | ✓ | ✓ | ✓ | ✓ |
 | 3B: Temporal Split | ✓ | ✓ | ✓ | ✓ |
-| 3C: Cross-Target Zero-Shot | ✓ | ✓ | ✓ | ✓ |
+| 3C: Cross-Target Zero-Shot | — | — | ✓ | ✓ |
 | 4A: Few-Shot Adaptation | ✓ | ✓ | ✓ | ✓ |
 | 5A: Statistical Significance (L1) | — | ✓ | ✓ | ✓ |
 | 5B: L2 Assay Ablation | ✓ | ✓ | ✓ | ✓ |
@@ -303,7 +305,7 @@ Testing within protein families (using generic L1=0):
 
 **Experiment**: Can we learn a new L1 embedding from a small support set (10-50 examples)?
 
-> **AUDIT NOTE**: The original few-shot results below were obtained with a **buggy implementation** that bypassed FiLM conditioning entirely for the adapted path (accessed non-existent `model.context_module.film_layers` instead of `model.context_module.film`). The adapted predictions silently fell through to raw molecular embeddings without FiLM modulation, making the comparison unfair. The script has been fixed (`scripts/experiments/few_shot_fixed.py`) and **needs to be re-run** to obtain valid adapted results. Zero-shot and Correct L1 columns are valid (use standard forward pass).
+> **AUDIT NOTE**: The original few-shot results below were obtained with a **buggy implementation** that bypassed FiLM conditioning entirely for the adapted path (accessed non-existent `model.context_module.film_layers` instead of `model.context_module.film`). The adapted predictions silently fell through to raw molecular embeddings without FiLM modulation, making the comparison unfair. The script has been fixed (`scripts/experiments/few_shot_fixed.py`) and re-run (see below). Zero-shot and Correct L1 columns are valid (use standard forward pass).
 
 | Target | N-shot | Zero-shot | Correct L1 | Adapted* | Delta* |
 |--------|--------|-----------|------------|---------|-------|
@@ -483,7 +485,7 @@ Data split into 5 temporal bins per target, comparing correct round_id vs generi
 - **L2**: `assay_mapping` was never constructed or passed to `ChEMBLDataset` (always empty dict `{}`)
 - **L3**: `round_id` was hardcoded to `0` on line 93 of `train_v2.py`
 - V1's config had `use_l1/l2/l3: true`, but the data pipeline never provided real L2/L3 values
-- This has been fixed in V4 (training in progress) with real `assay_type_id` and `round_id` from ChEMBL enrichment
+- This was fixed in V4 with real `assay_type_id` and `round_id` from ChEMBL enrichment
 
 ### Critical Insight: All V1–V3 Models Are L1-Only
 
@@ -717,9 +719,9 @@ Possible explanations:
 - Concatenation (0.607) performs *worse than no context* (0.724) — naively concatenating context destroys molecular representations
 - CYP3A4 is the only target where FiLM doesn't help (but concatenation is even worse at 0.496)
 
-**Why concatenation fails**: The concatenation projection was randomly initialized (not trained with the model), so it produces random output. This is the fair comparison — one cannot simply swap FiLM for concatenation at inference time. FiLM's advantage is that γ and β are learned to modulate existing features, whereas concatenation would require retraining the entire downstream pathway.
+**Why concatenation fails**: The concatenation projection was randomly initialized (not trained with the model), so it produces random output. This is an inference-time ablation — it tests what happens when swapping context injection strategies without retraining. A properly retrained concatenation baseline would be needed for a fair architecture comparison.
 
-**Interpretation**: FiLM is the clear winner among context fusion strategies. The multiplicative γ component provides ~31% of FiLM's benefit beyond additive shift. Concatenation, the standard multi-task baseline (E2/W9), fails without retraining, confirming that FiLM's inductive bias (feature-wise modulation) is architecturally superior to naive feature concatenation.
+**Interpretation**: FiLM vs No Context (+12.5%) and FiLM vs Additive (+8.6%) are the methodologically sound comparisons, since both use existing trained weights. The multiplicative γ component provides substantial benefit beyond additive shift alone. The concatenation result (0.607) demonstrates that naive feature concatenation cannot be retrofitted onto a FiLM-trained model, but does not constitute evidence that FiLM is architecturally superior to a properly trained concatenation baseline.
 
 ### 7B: BACE1 Error Analysis
 
@@ -907,6 +909,8 @@ Targets where L1 hurts (1/10): CYP3A4
 | fxa    | 445   | **92.6%** | 90.3% | 22,250  | 0.07% |
 | **Mean** | — | **50.0%** | **46.5%** | — | **0.08%** |
 
+> **Note on active counts**: This analysis deduplicates actives by canonical SMILES, yielding slightly fewer actives than the raw DUD-E files for some targets (e.g., BACE1: 426 here vs 485 in Section 7J, which uses the model scoring pipeline without deduplication). Both analyses agree on 57 leaked BACE1 actives; the leakage percentage differs (13.4% vs 11.8%) solely due to the denominator.
+
 **Key Finding**: **SEVERE asymmetric leakage** — 50% of DUD-E actives appear in ChEMBL training data, but only 0.08% of decoys. The asymmetry is ~625:1 (active leakage : decoy leakage).
 
 **Per-target variation is extreme**:
@@ -1067,69 +1071,6 @@ Leave-one-out: for each target, predict its L1 embedding as a softmax-weighted a
 
 **Implication**: ESM-2 protein embeddings provide a useful initialization signal for L1, especially for data-scarce targets where learned L1 may be unreliable. A hybrid approach — initialize L1 from ESM-2 similarities, then fine-tune during training — could combine the best of both. However, the zero correlation between ESM-2 and learned L1 similarity confirms that task-specific training captures patterns beyond sequence homology.
 
----
-
-## Conclusions
-
-1. **V3 (fine-tuned) is the best overall model** for DUD-E virtual screening (0.839 mean AUC)
-2. **L1 context embeddings are critical**: V3 +5.7% (p < 0.01, 10/10 targets); V2 +29.5% (p < 0.05, 9/10 targets); V4 +5.6% (10/10 targets)
-3. **L2 and L3 do not help — even when properly implemented**: V4 trained with real L2/L3 performed worse than V3 (0.809 vs 0.839), and correct L2/L3 hurt predictions vs generic
-4. **V1 (original pretrain) excels at generalization** tasks (temporal split, TDC)
-5. **V2 is NOT broken** - it achieves 0.850 AUC with correct L1 IDs (same as V3); the default L1=0 is useless
-6. **Fine-tuning from V1 backbone (V3 approach) provides best generalization** while maintaining L1 benefits
-7. **FiLM conditioning produces target-specific attributions** - same molecule gets different atom importance for different targets (V3 KL=0.14 vs V1 KL=0.001)
-8. **Core architecture claim validated**: Target-specific L1 embeddings encode meaningful information that modulates predictions via FiLM
-9. **Statistical robustness confirmed**: L1 ablation results hold across 5 random seeds with tight confidence intervals for V2, V3, and V4
-10. **Key insight**: Models need correct L1 context to perform well; evaluating with generic L1=0 dramatically underestimates capability
-11. **All models provide DMTA enrichment**: 1.3-1.9x over random selection across V1/V2/V3, reducing experiments to find 50 hits by 29-55%
-12. **3-level hierarchy is overparameterized**: L1 (program/target) captures the important signal; L2 (assay type) and L3 (temporal round) add noise rather than value
-13. **FiLM is necessary and superior to simpler alternatives**: FiLM beats no-context by +12.5% and additive conditioning by +8.6% mean AUC (9/10 targets). The additive β shift alone accounts for ~31% of FiLM's total benefit; the multiplicative γ component provides the remaining ~69%, confirming that feature-wise scaling is the dominant mechanism.
-14. **BACE1 anomaly explained**: Three converging factors — lowest train-DUD-E chemical similarity (Tanimoto 0.128), outlier L1 embedding (norm z=+1.63), and learned downward score bias that compresses active-decoy separation by 53%. The L1 embedding learned a training-data-specific bias that doesn't transfer to DUD-E.
-15. **Context-dependence increases with training**: V3 best model (epoch 91) scores 0.790 with generic L1 (vs 0.839 at epoch 20), but 0.849 with correct L1. The model progressively shifts representational capacity from molecular features to context-modulated features, making the correct L1 embedding increasingly essential.
-16. **Context benefit is predictable**: Training data quantity is the strongest predictor of L1 benefit (Spearman ρ = 0.65, p = 0.04). Targets with <1,000 training compounds or embedding norm z-scores >+2.0 are at risk of negative context effects. CYP3A4 (541 compounds, z=+2.72) is the only target where FiLM hurts vs no context.
-17. **DUD-E benchmark is structurally biased**: Morgan FP + RF achieves 0.998 mean AUC (near-perfect), proving DUD-E decoys are trivially separable by 2D substructure. NEST-DRUG's 0.849 AUC reflects genuine biological modeling, not a performance deficit vs fingerprint methods.
-18. **Severe asymmetric data leakage in DUD-E**: 50% of DUD-E actives appear in ChEMBL training data, but only 0.08% of decoys (625:1 asymmetry). This inflates AUC for all ChEMBL-pretrained models. However, within-model L1 ablations remain valid since both conditions see identical leaked compounds.
-19. **DUD-E is solvable without ML**: A zero-parameter nearest-neighbor Tanimoto baseline achieves 0.991 AUC, and RF trained on the wrong target still achieves 0.746. The active-decoy structural gap (0.598 mean Tanimoto) makes DUD-E trivially separable by fingerprints. NEST-DRUG's value is in context-conditional predictions, not raw AUC.
-20. **Concatenation fusion fails as context injection**: Concatenation with random-init projection (0.607) performs worse than no context at all (0.724). FiLM's inductive bias of feature-wise modulation (+24.2% over concatenation) is architecturally superior to naive feature concatenation for context fusion.
-21. **Per-target RF baselines beat NEST-DRUG on 8/10 DUD-E targets** (mean 0.875 vs 0.850), confirming DUD-E is fingerprint-solvable. But CYP3A4 (only 67 actives in ChEMBL) causes per-target RF to collapse to 0.238 AUC (worse than random), while NEST-DRUG achieves 0.782 via multi-task transfer. This is the strongest evidence that multi-task context-conditioned models are essential for data-scarce targets.
-22. **ESM-2 protein embeddings partially recover L1 signal**: Zero-shot L1 prediction via ESM-2 similarity-weighted averaging achieves 0.814 mean AUC (vs 0.790 generic, 0.849 correct L1), closing 41% of the gap. However, ESM-2 protein sequence similarity shows zero correlation with learned L1 similarity (Pearson r=0.11, p=0.49), confirming that learned L1 captures dataset-specific patterns beyond sequence homology. CYP3A4 benefits most (0.806 vs 0.641 generic) since ESM-2 bypasses the harmful learned L1.
-23. **L1 benefit transfers to non-leaked compounds**: On DUD-E actives NOT in ChEMBL training, L1 still improves AUC on 8/10 targets (mean delta +0.018). Direction is consistent between leaked and non-leaked subsets for 9/10 targets. This confirms context provides genuine pharmacological transfer signal — not just memorization of training compounds. BACE1's negative L1 effect is consistent across both subsets, ruling out leakage as its cause.
-24. **LIT-PCBA confirms DUD-E inflation and L1 value on unbiased data**: On LIT-PCBA (real inactives, no structural bias), generic L1 achieves only 0.517 mean AUC (near random), proving DUD-E's 0.85+ AUCs reflect benchmark bias. However, correct L1 still provides meaningful improvements on overlapping targets: ESR1_ago +0.140, PPARG +0.154. This is the cleanest evidence that L1 context adds genuine discriminative value beyond DUD-E artifacts.
-
-### 7K: LIT-PCBA Benchmark — Real Inactives, No DUD-E Bias
-
-**Addresses**: Reviewer critique "Evaluate on a benchmark without data leakage and structural bias."
-
-**Benchmark**: LIT-PCBA contains 15 targets with real experimental inactives from PubChem (not property-matched decoys). Active rates are 0.005%–4.9%, reflecting realistic HTS conditions. 4 targets overlap with DUD-E: ADRB2, ESR1 (agonist + antagonist), PPARG.
-
-| Target    | Compounds | Actives | Rate    | Generic AUC | Correct AUC | Delta   |
-|-----------|----------:|--------:|--------:|------------:|------------:|--------:|
-| ADRB2     | 312,500   |      17 | 0.005%  |       0.524 |       0.535 | +0.010  |
-| ALDH1     | 145,133   |   7,168 | 4.94%   |       0.492 |         —   |    —    |
-| ESR1_ago  |   5,596   |      13 | 0.23%   |       0.478 |       0.617 | +0.140  |
-| ESR1_ant  |   5,050   |     102 | 2.02%   |       0.558 |       0.559 | +0.000  |
-| FEN1      | 355,771   |     369 | 0.10%   |       0.509 |         —   |    —    |
-| GBA       | 296,218   |     166 | 0.06%   |       0.555 |         —   |    —    |
-| IDH1      | 362,088   |      39 | 0.01%   |       0.619 |         —   |    —    |
-| KAT2A     | 348,742   |     194 | 0.06%   |       0.496 |         —   |    —    |
-| MAPK1     |  62,937   |     308 | 0.49%   |       0.511 |         —   |    —    |
-| MTORC1    |  33,069   |      97 | 0.29%   |       0.504 |         —   |    —    |
-| OPRK1     | 269,840   |      24 | 0.009%  |       0.536 |         —   |    —    |
-| PKM2      | 246,069   |     546 | 0.22%   |       0.450 |         —   |    —    |
-| PPARG     |   5,238   |      27 | 0.52%   |       0.556 |       0.710 | +0.154  |
-| TP53      |   4,247   |      79 | 1.86%   |       0.499 |         —   |    —    |
-| VDR       | 356,272   |     884 | 0.25%   |       0.466 |         —   |    —    |
-| **Mean**  |           |         |         |   **0.517** |   **0.605** |**+0.076**|
-
-**Key Findings:**
-1. **Generic L1 performs near random on LIT-PCBA** (mean AUC=0.517), confirming LIT-PCBA is genuinely hard — no structural bias to exploit
-2. **Correct L1 substantially improves overlapping targets**: ESR1_ago +0.140, PPARG +0.154, ADRB2 +0.010. Mean delta +0.076 for targets with correct L1
-3. **L1 provides discriminative signal even on unbiased data**: The ESR1_ago and PPARG improvements (0.617, 0.710) are meaningful given the baseline of ~0.5
-4. **LIT-PCBA validates that DUD-E's inflated AUCs (0.85+) reflect benchmark bias, not model quality**: The same model that achieves 0.849 on DUD-E achieves 0.517 on LIT-PCBA — a 0.33 AUC gap entirely due to decoy separability
-5. **ESR1 asymmetry is informative**: The same protein (ESR1, pid=1628) shows strong L1 benefit for agonist assay (+0.140) but not antagonist (+0.000), suggesting L1 captures assay-specific rather than just protein-specific information
-
----
-
 ### 7J: Leaked vs Non-Leaked DUD-E Ablation — Does L1 Work on Unseen Compounds?
 
 **Addresses**: Reviewer critique that DUD-E active leakage (~50%) may invalidate L1 results.
@@ -1160,6 +1101,56 @@ Leave-one-out: for each target, predict its L1 embedding as a softmax-weighted a
 3. **BACE1 negative effect is consistent**: L1 hurts on both leaked (-0.154) and non-leaked (-0.099) — this is a genuine modeling issue, not memorization
 4. **Non-leaked delta is smaller but real**: +0.018 vs +0.096 for leaked — some benefit does come from memorization, but the majority of L1's discriminative value transfers to unseen compounds
 5. **This is the strongest defense against the leakage critique**: The L1 improvement is NOT solely driven by memorization — context provides genuine pharmacological transfer signal
+
+### 7K: LIT-PCBA Benchmark — Real Inactives, No DUD-E Bias
+
+**Addresses**: Reviewer critique "Evaluate on a benchmark without data leakage and structural bias."
+
+**Benchmark**: LIT-PCBA contains 15 targets with real experimental inactives from PubChem (not property-matched decoys). Active rates are 0.005%–4.9%, reflecting realistic HTS conditions. 4 targets overlap with DUD-E: ADRB2, ESR1 (agonist + antagonist), PPARG.
+
+| Target    | Compounds | Actives | Rate    | Generic AUC | Correct AUC | Delta   |
+|-----------|----------:|--------:|--------:|------------:|------------:|--------:|
+| ADRB2     | 312,500   |      17 | 0.005%  |       0.524 |       0.535 | +0.010  |
+| ALDH1     | 145,133   |   7,168 | 4.94%   |       0.492 |         —   |    —    |
+| ESR1_ago  |   5,596   |      13 | 0.23%   |       0.478 |       0.617 | +0.140  |
+| ESR1_ant  |   5,050   |     102 | 2.02%   |       0.558 |       0.559 | +0.000  |
+| FEN1      | 355,771   |     369 | 0.10%   |       0.509 |         —   |    —    |
+| GBA       | 296,218   |     166 | 0.06%   |       0.555 |         —   |    —    |
+| IDH1      | 362,088   |      39 | 0.01%   |       0.619 |         —   |    —    |
+| KAT2A     | 348,742   |     194 | 0.06%   |       0.496 |         —   |    —    |
+| MAPK1     |  62,937   |     308 | 0.49%   |       0.511 |         —   |    —    |
+| MTORC1    |  33,069   |      97 | 0.29%   |       0.504 |         —   |    —    |
+| OPRK1     | 269,840   |      24 | 0.009%  |       0.536 |         —   |    —    |
+| PKM2      | 246,069   |     546 | 0.22%   |       0.450 |         —   |    —    |
+| PPARG     |   5,238   |      27 | 0.52%   |       0.556 |       0.710 | +0.154  |
+| TP53      |   4,247   |      79 | 1.86%   |       0.499 |         —   |    —    |
+| VDR       | 356,272   |     884 | 0.25%   |       0.466 |         —   |    —    |
+| **Mean**  |           |         |         |   **0.517** |   **0.605** |**+0.076**|
+
+**Key Findings:**
+1. **Generic L1 performs near random on LIT-PCBA** (mean AUC=0.517), confirming LIT-PCBA is genuinely hard — no structural bias to exploit
+2. **Correct L1 improves overlapping targets**: ESR1_ago +0.140, PPARG +0.154, ADRB2 +0.010. Mean delta +0.076 for the 4 targets with correct L1
+3. **LIT-PCBA validates that DUD-E AUCs reflect benchmark bias**: The same model achieves 0.849 on DUD-E but 0.517 on LIT-PCBA — a 0.33 gap due to decoy separability
+4. **ESR1 asymmetry**: Same protein (pid=1628) shows +0.140 for agonist but +0.000 for antagonist, suggesting L1 captures assay-specific information
+
+> **Caveat**: Only 4/15 LIT-PCBA targets overlap with DUD-E program IDs; ESR1_ago (13 actives) and PPARG (27 actives) have small active sets, so the L1 improvements, while directionally encouraging, should be interpreted cautiously.
+
+---
+
+## Conclusions
+
+1. **V3 (fine-tuned from V1) is the best model** — 0.849 mean AUC with correct L1; L1 context improves by +5.7% mean AUC (9/10 targets, p < 0.01 after Bonferroni correction, 5 seeds). V2 confirms L1 dependence (+29.5%) but collapses without it.
+2. **Only L1 (target identity) provides value** — V4 trained with real L2/L3 underperforms V3 (0.809 vs 0.839). Correct L2/L3 hurt predictions vs generic defaults. The 3-level hierarchy is overparameterized; only target context matters.
+3. **FiLM conditioning is necessary** — beats no-context by +12.5% and additive-only by +8.6% mean AUC (9/10 targets). Produces target-specific attributions (KL=0.14 vs V1's 0.001). The concatenation comparison in Section 7A is an inference-time ablation with random-init projection, not a retrained architecture comparison.
+4. **BACE1 anomaly explained** — lowest train-DUD-E chemical similarity (Tanimoto 0.128), outlier L1 embedding (norm z=+1.63), and learned downward score bias that compresses active-decoy separation by 53%. Context benefit is predictable from training data quantity (Spearman ρ=0.65, p=0.04); targets with <1,000 compounds risk negative effects.
+5. **DUD-E has severe benchmark limitations** — Morgan FP+RF achieves 0.998 AUC; 1-NN Tanimoto achieves 0.991 without ML; cross-target RF transfer achieves 0.746 from wrong targets. 50% of actives leak from ChEMBL (vs 0.08% of decoys). Within-model L1 ablations remain valid since both conditions see identical leaked compounds.
+6. **L1 benefit transfers beyond memorization** — on non-leaked DUD-E actives, L1 improves 8/10 targets (mean delta +0.018, direction consistent 9/10). The non-leaked effect is smaller than leaked (+0.096), honestly indicating some memorization contribution.
+7. **LIT-PCBA confirms DUD-E inflation** — generic L1 achieves 0.517 (near random) on real inactives. Correct L1 improves ESR1_ago (+0.140) and PPARG (+0.154), though on small active sets.
+8. **Multi-task learning is essential for data-scarce targets** — per-target RF collapses on CYP3A4 (0.238 AUC, 67 training actives); NEST-DRUG achieves 0.782 via cross-target transfer. Per-target RF beats NEST-DRUG on 8/10 well-resourced targets (mean 0.875 vs 0.850).
+9. **ESM-2 protein embeddings partially recover L1** — similarity-weighted averaging achieves 0.814 AUC, closing 41% of the gap to correct L1. ESM-2 similarity shows zero correlation with learned L1 similarity (r=0.11, p=0.49), confirming L1 captures dataset-specific patterns beyond sequence homology.
+10. **DMTA enrichment validated** — 1.5–1.9x over random compound selection (V3), reducing experiments to find 50 hits by 29–55%.
+11. **Context-dependence increases with training** — V3 epoch 91 scores 0.790 with generic L1 (vs 0.839 at epoch 20) but 0.849 with correct L1. The model progressively shifts capacity from molecular features to context-modulated features.
+12. **V1 excels at generalization** (temporal split 0.912 AUC, best TDC scores) while V3 trades some generalization for context-conditional performance.
 
 ---
 

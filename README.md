@@ -1,197 +1,227 @@
-# NEST-DRUG: Nested-Learning Platform for Accelerated Drug Discovery
+# NEST-DRUG: Context-Conditioned Molecular Property Prediction via FiLM
 
-A hierarchical machine learning framework for accelerating Design-Make-Test-Analyze (DMTA) cycles in pharmaceutical development.
+A graph neural network framework for drug discovery that uses Feature-wise Linear Modulation (FiLM) to condition molecular property predictions on target context. Trained on ChEMBL, evaluated on DUD-E and LIT-PCBA virtual screening benchmarks.
 
-## Overview
+## Key Findings
 
-NEST-DRUG addresses key limitations in current ML approaches to drug discovery:
-
-1. **Temporal Distribution Shift**: Standard benchmarks ignore that real DMTA programs evolve over time
-2. **Hierarchical Structure**: Current models collapse organizational context (portfolio → program → assay → round)
-3. **Multi-Objective Optimization**: Drug discovery requires balancing potency, ADMET, and safety endpoints
-4. **Active Learning**: Principled compound selection balancing exploitation vs exploration
+- **Target context (L1) improves virtual screening by +5.7% AUC** (9/10 DUD-E targets, p < 0.01 after Bonferroni correction)
+- **FiLM conditioning outperforms alternatives**: +12.5% over no-context, +8.6% over additive-only conditioning
+- **L1 benefit transfers to unseen compounds**: +0.018 AUC on non-leaked actives (8/10 targets positive)
+- **Multi-task transfer for data-scarce targets**: NEST-DRUG achieves 0.782 AUC on CYP3A4 where per-target RF collapses to 0.238
+- **Honest DUD-E assessment**: Morgan FP+RF achieves 0.998 AUC; the benchmark has severe structural bias and 50% active leakage from ChEMBL
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                     NEST-DRUG Framework                          │
-├─────────────────────────────────────────────────────────────────┤
-│  L0: Portfolio Context (Shared MPNN Backbone)                    │
-│  ├── ~2.5M parameters, update every 4 rounds                     │
-│                                                                  │
-│  L1: Program Context (128-dim embedding per program)             │
-│  ├── Target biology, medicinal chemistry strategy                │
-│                                                                  │
-│  L2: Assay Context (64-dim embedding per assay)                  │
-│  ├── Lab-specific noise, calibration, platform effects           │
-│                                                                  │
-│  L3: Round Context (32-dim embedding per round)                  │
-│  └── Current SAR regime, local distribution shifts               │
-├─────────────────────────────────────────────────────────────────┤
-│  FiLM Conditioning: h_mod = γ ⊙ h_mol + β                        │
-│  Multi-Task Heads: Potency, Solubility, LogD, Clearance, hERG... │
-│  Deep Ensembles: M=5 for calibrated uncertainty                  │
-│  D-Score: Weighted geometric mean of desirabilities              │
-└─────────────────────────────────────────────────────────────────┘
+Molecule (SMILES) ──→ Graph ──→ MPNN (6 layers) ──→ h_mol (512-dim)
+                                                        │
+Context:                                                ↓
+  L1: Target/Program (128-dim embedding)  ──→  FiLM: h_mod = γ(ctx) ⊙ h_mol + β(ctx)
+  L2: Assay Type (64-dim embedding)*                    │
+  L3: Temporal Round (32-dim embedding)*                ↓
+                                              Multi-Task Prediction Heads
+                                                        │
+                                                   pChEMBL, ADMET
 ```
+
+*L2/L3 are implemented but empirically provide no benefit (see RESULTS.md).
+
+## Model Versions
+
+| Version | Description | DUD-E AUC | Notes |
+|---------|-------------|-----------|-------|
+| V1 | Original pretrain (5 generic programs) | 0.803 | Best generalization (temporal split, TDC) |
+| V2 | Trained from scratch (5123 programs) | 0.850* | Collapses to 0.553 without correct L1 |
+| V3 | Fine-tuned from V1 (5123 programs) | **0.849*** | Best overall; primary model |
+| V4 | V1 + real L2/L3 data | 0.809 | L2/L3 hurt performance |
+
+*With correct target-specific L1 context.
 
 ## Installation
 
 ```bash
-# Clone the repository
-cd /home/bcheng/NEST
-
-# Install dependencies
+git clone <repo-url> && cd NEST
 pip install -r requirements.txt
+```
 
-# Download data (TDC only - fastest)
+### Requirements
+
+- Python 3.9+
+- PyTorch >= 2.0 with CUDA
+- PyTorch Geometric >= 2.4
+- RDKit >= 2023.9
+- See `requirements.txt` for full list
+
+### Data Setup
+
+```bash
+# Download TDC benchmark datasets
 python scripts/download_tdc.py
 
-# Download ChEMBL (large, ~5GB)
+# Download and process ChEMBL (~24 GB)
 python scripts/download_chembl.py --method sqlite
-
-# Process ChEMBL after download
 python scripts/process_chembl.py --extract
 python scripts/process_chembl.py --process
+
+# Download DUD-E benchmark data
+python scripts/download_benchmark_data.py --datasets dude
+
+# Download LIT-PCBA (optional, ~52 MB)
+# See scripts/download_benchmark_data.py or download from:
+# https://drugdesign.unistra.fr/LIT-PCBA/
 ```
-
-## Data Status
-
-| Source | Status | Size | Records |
-|--------|--------|------|---------|
-| ChEMBL 35 | ✓ Ready | 24.25 GB | 21.1M activities |
-| TDC ADMET | ✓ Ready | 6.6 MB | 108K samples |
-| BindingDB | ⚠ Manual | ~1.5 GB | ~2.9M records |
-| Historical Programs | ⚠ Required | User-provided | 5 programs |
-
-### BindingDB Manual Download
-
-BindingDB requires manual download from:
-https://www.bindingdb.org/rwd/bind/chemsearch/marvin/Download.jsp
-
-Download `BindingDB_All_*_tsv.zip` and place in `data/raw/bindingdb/`
-
-### Historical Program Data
-
-To run DMTA replay experiments, you need internal program data with:
-- SMILES structures with stereochemistry
-- Endpoint measurements (potency, ADMET)
-- Test dates for round assignment
-- Assay identifiers
-
-See `docs/DATA_SOURCES.md` for detailed format requirements.
-
-## Project Structure
-
-```
-NEST/
-├── data/
-│   ├── raw/              # Downloaded datasets
-│   │   ├── chembl/       # ChEMBL SQLite (24GB)
-│   │   ├── tdc/          # TDC ADMET CSVs (6.6MB)
-│   │   └── bindingdb/    # BindingDB TSV (manual)
-│   └── processed/        # Processed parquet files
-├── src/
-│   ├── data/             # Data loading and processing
-│   ├── models/           # MPNN backbone, context modules
-│   ├── training/         # Training loops
-│   ├── evaluation/       # Metrics and replay
-│   └── design/           # Molecular design module
-├── scripts/              # Data download and processing
-├── configs/              # Model and training configs
-├── checkpoints/          # Saved model weights
-└── results/              # Experiment outputs
-```
-
-## Key Components
-
-### Data Processing (`src/data/`)
-
-- **standardize.py**: SMILES canonicalization, unit harmonization, replicate aggregation
-- **datasets.py**: PortfolioDataset, ProgramDataset, DMTAReplayDataset
-
-### Models (`src/models/`)
-
-- MPNN backbone with configurable message passing
-- FiLM-based context modulation (L1-L3)
-- Multi-task prediction heads
-- Deep ensemble uncertainty estimation
-
-### Training (`src/training/`)
-
-- Phase 1: Global pretraining on portfolio data
-- Phase 2: Program-specific initialization
-- Phase 3: Continual nested updates during replay
-
-### Evaluation (`src/evaluation/`)
-
-- Time-forward prediction metrics
-- DMTA replay efficiency (time-to-candidate, retrieval curves)
-- Drift robustness assessment
-- Continual learning forgetting analysis
 
 ## Usage
 
-### 1. Pretraining
+### Training
 
-```python
-from src.data import PortfolioDataset
-from src.models import NESTDRUG
+```bash
+# Train V2-style model from scratch with expanded ChEMBL data
+python scripts/train_v2.py \
+    --data data/raw/chembl_v2/ \
+    --output results/v2/ \
+    --epochs 100 \
+    --gpu 0
 
-# Load portfolio data
-dataset = PortfolioDataset(
-    data_dir='data/processed/portfolio',
-    endpoints=['pIC50', 'solubility', 'logD', 'clearance', 'hERG']
-)
-
-# Initialize model
-model = NESTDRUG(
-    atom_features=70,
-    hidden_dim=256,
-    num_mpnn_layers=6,
-    context_dims={'L1': 128, 'L2': 64, 'L3': 32},
-    endpoints=dataset.endpoint_columns
-)
-
-# Train
-trainer = Trainer(model, dataset)
-trainer.pretrain(epochs=50)
+# Fine-tune from V1 checkpoint (V3-style)
+python scripts/train_v2.py \
+    --data data/raw/chembl_v2/ \
+    --output results/v3/ \
+    --checkpoint checkpoints/pretrain/best_model.pt \
+    --epochs 100 \
+    --gpu 0
 ```
 
-### 2. DMTA Replay
+### DUD-E Benchmark Evaluation
 
-```python
-from src.data import ProgramDataset, DMTAReplayDataset
-from src.evaluation import replay_experiment
-
-# Load program
-program = ProgramDataset('data/raw/programs/fxa.csv', program_id='fxa')
-
-# Initialize replay
-replay = DMTAReplayDataset(program, seed_rounds=3)
-
-# Run experiment
-results = replay_experiment(
-    model=model,
-    replay=replay,
-    selection_policy='ucb',  # Upper Confidence Bound
-    exploration_weight=0.5
-)
+```bash
+# Evaluate model on DUD-E with L1 context ablation
+python scripts/benchmarks/run_dude.py \
+    --checkpoint results/v3/best_model.pt \
+    --output results/v3/dude_benchmark/ \
+    --gpu 0
 ```
+
+### Running Experiments
+
+All supplementary experiments are in `scripts/experiments/`:
+
+```bash
+# FiLM ablation (FiLM vs No Context vs Additive)
+python scripts/experiments/film_ablation.py --checkpoint results/v3/best_model.pt --gpu 0
+
+# L1 context ablation with statistical significance
+python scripts/experiments/statistical_significance.py --checkpoint results/v3/best_model.pt --gpu 0
+
+# Data leakage analysis
+python scripts/experiments/data_leakage_check.py --checkpoint results/v3/best_model.pt
+
+# LIT-PCBA benchmark (real inactives)
+python scripts/experiments/litpcba_benchmark.py --checkpoint results/v3/best_model.pt --gpu 0
+
+# Leaked vs non-leaked DUD-E ablation
+python scripts/experiments/leaked_vs_nonleaked_ablation.py --checkpoint results/v3/best_model.pt --gpu 0
+
+# Morgan FP + RF baseline
+python scripts/experiments/morgan_rf_baseline.py
+
+# BACE1 error analysis
+python scripts/experiments/bace1_analysis.py --checkpoint results/v3/best_model.pt --gpu 0
+
+# ESM-2 protein embedding analysis
+python scripts/experiments/esm2_embedding_analysis.py --checkpoint results/v3/best_model.pt --gpu 0
+```
+
+## Repository Structure
+
+```
+NEST/
+├── src/                          # Core library
+│   ├── models/
+│   │   ├── nest_drug.py          # Main NESTDRUG model class
+│   │   ├── mpnn.py               # Message-passing neural network backbone
+│   │   ├── context.py            # L1/L2/L3 context modules + FiLM layer
+│   │   ├── heads.py              # Multi-task prediction heads
+│   │   └── ensemble.py           # Deep ensemble wrapper
+│   ├── training/
+│   │   ├── trainer.py            # Training loop
+│   │   ├── data_utils.py         # SMILES-to-graph conversion, batching
+│   │   └── schedulers.py         # Learning rate schedulers
+│   ├── data/
+│   │   ├── datasets.py           # Portfolio/Program/DMTA datasets
+│   │   └── standardize.py        # SMILES canonicalization, unit harmonization
+│   ├── evaluation/
+│   │   ├── dmta_replay.py        # DMTA cycle simulation
+│   │   └── metrics.py            # Evaluation metrics
+│   └── benchmarks/
+│       ├── data_loaders.py       # DUD-E, LIT-PCBA, TDC data loading
+│       └── metrics.py            # Benchmark-specific metrics
+├── scripts/
+│   ├── train_v2.py               # Main training script
+│   ├── benchmarks/               # Benchmark runners (DUD-E, hERG, LIT-PCBA)
+│   ├── experiments/              # All supplementary experiment scripts
+│   ├── download_*.py             # Data download scripts
+│   └── process_chembl.py         # ChEMBL processing pipeline
+├── configs/
+│   └── default.yaml              # Model and training hyperparameters
+├── data/
+│   ├── raw/                      # Downloaded datasets (ChEMBL, TDC, BindingDB)
+│   ├── processed/                # Processed parquet files
+│   └── external/                 # Benchmark datasets (DUD-E, LIT-PCBA)
+├── results/                      # All experiment outputs and model checkpoints
+│   ├── v1_pretrain_dude/         # V1 results
+│   ├── v3/                       # V3 model + DUD-E results
+│   ├── v4/                       # V4 model + DUD-E results
+│   ├── experiments/              # Supplementary experiment outputs
+│   └── figures/                  # Publication figures
+├── docs/
+│   ├── DATA_SOURCES.md           # Detailed data requirements
+│   └── TECHNICAL_IMPLEMENTATION.md
+├── RESULTS.md                    # Comprehensive experimental results
+└── requirements.txt
+```
+
+## Experiment Index
+
+Full results are documented in [RESULTS.md](RESULTS.md). Key experiments:
+
+| ID | Experiment | Section |
+|----|-----------|---------|
+| 1D | L1 Context Ablation (correct vs generic) | Phase 1 |
+| 2B | Context-Conditional Attribution | Phase 2 |
+| 5A | Statistical Significance (5 seeds, Bonferroni) | Phase 5 |
+| 5D | DMTA Replay Simulation | Phase 5 |
+| 7A | FiLM Ablation (FiLM vs No Context vs Additive) | Phase 7 |
+| 7B | BACE1 Error Analysis (4-part investigation) | Phase 7 |
+| 7E | Morgan FP + RF Baseline | Phase 7 |
+| 7F | Data Leakage Check (ChEMBL vs DUD-E overlap) | Phase 7 |
+| 7G | DUD-E Structural Bias Analysis | Phase 7 |
+| 7H | Per-Target ChEMBL RF Baseline | Phase 7 |
+| 7I | ESM-2 Protein Embedding Analysis | Phase 7 |
+| 7J | Leaked vs Non-Leaked DUD-E Ablation | Phase 7 |
+| 7K | LIT-PCBA Benchmark (real inactives) | Phase 7 |
+
+## Known Limitations
+
+- **DUD-E benchmark is structurally biased**: Decoys are trivially separable by 2D fingerprints (0.998 AUC). All reported DUD-E numbers should be interpreted with this caveat.
+- **LIT-PCBA performance is near-random** (0.517 generic AUC): The model does not generalize well to realistic screening conditions without target context.
+- **L2/L3 context levels are ineffective**: Despite architectural support, assay-type and temporal-round context hurt rather than help.
+- **BACE1 is a consistent failure case**: Correct L1 hurts performance due to embedding bias (see Section 7B).
+- **50% active leakage from ChEMBL**: DUD-E AUC numbers are inflated for all ChEMBL-pretrained models.
 
 ## References
 
 - Ghiandoni et al. (2024). Augmenting DMTA using predictive AI modelling at AstraZeneca
 - Retchin et al. (2024). DrugGym: A testbed for the economics of autonomous drug discovery
 - Huang et al. (2021). Therapeutics Data Commons
-- Behrouz et al. (2025). Nested Learning: The Illusion of Deep Learning Architectures
+- Tran-Nguyen et al. (2020). LIT-PCBA: An Unbiased Evaluation of Machine Learning Virtual Screening
+- Mysinger et al. (2012). Directory of Useful Decoys, Enhanced (DUD-E)
 
 ## License
 
-This project is for research purposes. ChEMBL data is under CC BY-SA 3.0. TDC data follows respective dataset licenses.
+Research use only. ChEMBL data is under CC BY-SA 3.0. TDC and LIT-PCBA data follow respective dataset licenses.
 
-## Contact
+## Authors
 
 Bryan Cheng, Jasper Zhang
 Cold Spring Harbor Laboratory

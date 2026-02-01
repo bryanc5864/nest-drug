@@ -219,9 +219,4 @@ Full results are documented in [RESULTS.md](RESULTS.md). Key experiments:
 
 ## License
 
-Research use only. ChEMBL data is under CC BY-SA 3.0. TDC and LIT-PCBA data follow respective dataset licenses.
-
-## Authors
-
-Bryan Cheng, Jasper Zhang
-Cold Spring Harbor Laboratory
+MIT License. See [LICENSE](LICENSE) for details. ChEMBL data is under CC BY-SA 3.0. TDC and LIT-PCBA data follow respective dataset licenses.

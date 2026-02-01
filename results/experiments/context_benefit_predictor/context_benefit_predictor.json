@@ -1,0 +1,381 @@
+{
+  "timestamp": "2026-01-31T22:41:14.033520",
+  "description": "Context benefit predictor: correlating L1 delta with target properties",
+  "note": "Addresses reviewer critique E4: when does context help vs hurt?",
+  "l1_deltas": {
+    "egfr": 0.19608063136278808,
+    "drd2": 0.19757804521084443,
+    "adrb2": 0.05547431179273754,
+    "bace1": 0.16214705248334155,
+    "esr1": 0.16247165569361444,
+    "hdac2": 0.16720427318139286,
+    "jak2": 0.13841133823281448,
+    "pparg": 0.07477750795433735,
+    "cyp3a4": -0.014941157373589808,
+    "fxa": 0.10786032066658247
+  },
+  "training_stats": {
+    "egfr": {
+      "n_compounds": 8133,
+      "n_unique_smiles": 7845,
+      "n_assays": 1028,
+      "mean_pactivity": 6.8507727775728515,
+      "std_pactivity": 1.3137659808341315,
+      "active_fraction": 0.6035903110783228,
+      "median_pactivity": 6.93
+    },
+    "drd2": {
+      "n_compounds": 12134,
+      "n_unique_smiles": 11284,
+      "n_assays": 1291,
+      "mean_pactivity": 6.827110598318774,
+      "std_pactivity": 1.0838698558715032,
+      "active_fraction": 0.597577056205703,
+      "median_pactivity": 6.75
+    },
+    "adrb2": {
+      "n_compounds": 1641,
+      "n_unique_smiles": 1429,
+      "n_assays": 192,
+      "mean_pactivity": 6.622388787324802,
+      "std_pactivity": 1.490188232085105,
+      "active_fraction": 0.47592931139549055,
+      "median_pactivity": 6.39
+    },
+    "bace1": {
+      "n_compounds": 8505,
+      "n_unique_smiles": 7831,
+      "n_assays": 599,
+      "mean_pactivity": 6.7040934744268075,
+      "std_pactivity": 1.2265387800479077,
+      "active_fraction": 0.5817754262198707,
+      "median_pactivity": 6.79
+    },
+    "esr1": {
+      "n_compounds": 3903,
+      "n_unique_smiles": 3541,
+      "n_assays": 414,
+      "mean_pactivity": 7.020785293364079,
+      "std_pactivity": 1.4854987511750573,
+      "active_fraction": 0.6169613118114271,
+      "median_pactivity": 6.98
+    },
+    "hdac2": {
+      "n_compounds": 2108,
+      "n_unique_smiles": 2065,
+      "n_assays": 438,
+      "mean_pactivity": 6.555500474383301,
+      "std_pactivity": 1.1339364984157014,
+      "active_fraction": 0.5023719165085389,
+      "median_pactivity": 6.5
+    },
+    "jak2": {
+      "n_compounds": 6230,
+      "n_unique_smiles": 6013,
+      "n_assays": 398,
+      "mean_pactivity": 7.428846709470306,
+      "std_pactivity": 1.20183420174503,
+      "active_fraction": 0.7719101123595505,
+      "median_pactivity": 7.38
+    },
+    "pparg": {
+      "n_compounds": 3917,
+      "n_unique_smiles": 3409,
+      "n_assays": 393,
+      "mean_pactivity": 6.43003063569058,
+      "std_pactivity": 1.1409943377310647,
+      "active_fraction": 0.4334950217002808,
+      "median_pactivity": 6.22
+    },
+    "cyp3a4": {
+      "n_compounds": 541,
+      "n_unique_smiles": 541,
+      "n_assays": 45,
+      "mean_pactivity": 5.236164510166359,
+      "std_pactivity": 0.7627372325049109,
+      "active_fraction": 0.06469500924214418,
+      "median_pactivity": 5.15
+    },
+    "fxa": {
+      "n_compounds": 6294,
+      "n_unique_smiles": 5969,
+      "n_assays": 440,
+      "mean_pactivity": 7.072954401016842,
+      "std_pactivity": 1.5312995173929091,
+      "active_fraction": 0.6166190022243406,
+      "median_pactivity": 7.07
+    }
+  },
+  "embedding_stats": {
+    "egfr": {
+      "program_id": 1606,
+      "norm": 0.45160913467407227,
+      "norm_zscore": 0.28908247290713407,
+      "centroid_dist": 0.4558577239513397,
+      "centroid_dist_zscore": 0.3313003827875817,
+      "mean_cosine_to_dude_targets": 0.009248769221206507
+    },
+    "drd2": {
+      "program_id": 1448,
+      "norm": 0.4919999837875366,
+      "norm_zscore": 0.6904432815385895,
+      "centroid_dist": 0.5064560770988464,
+      "centroid_dist_zscore": 0.8340923859379554,
+      "mean_cosine_to_dude_targets": -0.01506049320515659
+    },
+    "adrb2": {
+      "program_id": 580,
+      "norm": 0.4985921382904053,
+      "norm_zscore": 0.7559490215754548,
+      "centroid_dist": 0.5026266574859619,
+      "centroid_dist_zscore": 0.7960397332665826,
+      "mean_cosine_to_dude_targets": 0.026131213332215946
+    },
+    "bace1": {
+      "program_id": 516,
+      "norm": 0.5868380665779114,
+      "norm_zscore": 1.632842127645366,
+      "centroid_dist": 0.5858525037765503,
+      "centroid_dist_zscore": 1.6230486647300368,
+      "mean_cosine_to_dude_targets": -0.007247990100748009
+    },
+    "esr1": {
+      "program_id": 1628,
+      "norm": 0.5269460082054138,
+      "norm_zscore": 1.0376992795348832,
+      "centroid_dist": 0.5205830931663513,
+      "centroid_dist_zscore": 0.9744714746883627,
+      "mean_cosine_to_dude_targets": 0.02145565373616086
+    },
+    "hdac2": {
+      "program_id": 2177,
+      "norm": 0.4488863945007324,
+      "norm_zscore": 0.2620268100119279,
+      "centroid_dist": 0.46047377586364746,
+      "centroid_dist_zscore": 0.37716974104256845,
+      "mean_cosine_to_dude_targets": 0.020269554522302415
+    },
+    "jak2": {
+      "program_id": 4780,
+      "norm": 0.5139339566230774,
+      "norm_zscore": 0.9083995084315364,
+      "centroid_dist": 0.5279714465141296,
+      "centroid_dist_zscore": 1.0478889823468167,
+      "mean_cosine_to_dude_targets": 0.006417637897862328
+    },
+    "pparg": {
+      "program_id": 3307,
+      "norm": 0.4793744683265686,
+      "norm_zscore": 0.5649844905988901,
+      "centroid_dist": 0.4969095289707184,
+      "centroid_dist_zscore": 0.7392290601984798,
+      "mean_cosine_to_dude_targets": -0.02159948605630133
+    },
+    "cyp3a4": {
+      "program_id": 810,
+      "norm": 0.6963547468185425,
+      "norm_zscore": 2.7211010849288244,
+      "centroid_dist": 0.6844047904014587,
+      "centroid_dist_zscore": 2.602355273044604,
+      "mean_cosine_to_dude_targets": -0.052562490933471255
+    },
+    "fxa": {
+      "program_id": 1103,
+      "norm": 0.5077611207962036,
+      "norm_zscore": 0.8470605063208482,
+      "centroid_dist": 0.5191159844398499,
+      "centroid_dist_zscore": 0.9598929263848907,
+      "mean_cosine_to_dude_targets": 0.027933235590656597
+    }
+  },
+  "correlation_analysis": {
+    "targets": [
+      "egfr",
+      "drd2",
+      "adrb2",
+      "bace1",
+      "esr1",
+      "hdac2",
+      "jak2",
+      "pparg",
+      "cyp3a4",
+      "fxa"
+    ],
+    "l1_deltas": [
+      0.19608063136278808,
+      0.19757804521084443,
+      0.05547431179273754,
+      0.16214705248334155,
+      0.16247165569361444,
+      0.16720427318139286,
+      0.13841133823281448,
+      0.07477750795433735,
+      -0.014941157373589808,
+      0.10786032066658247
+    ],
+    "correlations": {
+      "n_train_compounds": {
+        "pearson_r": 0.7260868946193358,
+        "pearson_p": 0.017420635002761024,
+        "spearman_rho": 0.6484848484848483,
+        "spearman_p": 0.04254012768448945,
+        "values": [
+          8133.0,
+          12134.0,
+          1641.0,
+          8505.0,
+          3903.0,
+          2108.0,
+          6230.0,
+          3917.0,
+          541.0,
+          6294.0
+        ]
+      },
+      "mean_pactivity": {
+        "pearson_r": 0.7049360185442761,
+        "pearson_p": 0.022802955436808475,
+        "spearman_rho": 0.38181818181818183,
+        "spearman_p": 0.27625533338543595,
+        "values": [
+          6.8507727775728515,
+          6.827110598318774,
+          6.622388787324802,
+          6.7040934744268075,
+          7.020785293364079,
+          6.555500474383301,
+          7.428846709470306,
+          6.43003063569058,
+          5.236164510166359,
+          7.072954401016842
+        ]
+      },
+      "std_pactivity": {
+        "pearson_r": 0.32707905622381594,
+        "pearson_p": 0.35626966674657,
+        "spearman_rho": -0.09090909090909088,
+        "spearman_p": 0.8027717312071619,
+        "values": [
+          1.3137659808341315,
+          1.0838698558715032,
+          1.490188232085105,
+          1.2265387800479077,
+          1.4854987511750573,
+          1.1339364984157014,
+          1.20183420174503,
+          1.1409943377310647,
+          0.7627372325049109,
+          1.5312995173929091
+        ]
+      },
+      "active_fraction": {
+        "pearson_r": 0.7756479044607609,
+        "pearson_p": 0.00836998721065101,
+        "spearman_rho": 0.49090909090909085,
+        "spearman_p": 0.14965567342083677,
+        "values": [
+          0.6035903110783228,
+          0.597577056205703,
+          0.47592931139549055,
+          0.5817754262198707,
+          0.6169613118114271,
+          0.5023719165085389,
+          0.7719101123595505,
+          0.4334950217002808,
+          0.06469500924214418,
+          0.6166190022243406
+        ]
+      },
+      "embedding_norm": {
+        "pearson_r": -0.622472642413111,
+        "pearson_p": 0.05460267710859751,
+        "spearman_rho": -0.4666666666666666,
+        "spearman_p": 0.17393859716506632,
+        "values": [
+          0.45160913467407227,
+          0.4919999837875366,
+          0.4985921382904053,
+          0.5868380665779114,
+          0.5269460082054138,
+          0.4488863945007324,
+          0.5139339566230774,
+          0.4793744683265686,
+          0.6963547468185425,
+          0.5077611207962036
+        ]
+      },
+      "embedding_norm_zscore": {
+        "pearson_r": -0.622472642413111,
+        "pearson_p": 0.05460267710859751,
+        "spearman_rho": -0.4666666666666666,
+        "spearman_p": 0.17393859716506632,
+        "values": [
+          0.28908247290713407,
+          0.6904432815385895,
+          0.7559490215754548,
+          1.632842127645366,
+          1.0376992795348832,
+          0.2620268100119279,
+          0.9083995084315364,
+          0.5649844905988901,
+          2.7211010849288244,
+          0.8470605063208482
+        ]
+      },
+      "centroid_dist": {
+        "pearson_r": -0.6362390959518052,
+        "pearson_p": 0.04796914746060112,
+        "spearman_rho": -0.406060606060606,
+        "spearman_p": 0.24428229408662638,
+        "values": [
+          0.4558577239513397,
+          0.5064560770988464,
+          0.5026266574859619,
+          0.5858525037765503,
+          0.5205830931663513,
+          0.46047377586364746,
+          0.5279714465141296,
+          0.4969095289707184,
+          0.6844047904014587,
+          0.5191159844398499
+        ]
+      },
+      "mean_cosine_to_others": {
+        "pearson_r": 0.45332016321656443,
+        "pearson_p": 0.18824621155367377,
+        "spearman_rho": 0.09090909090909088,
+        "spearman_p": 0.8027717312071619,
+        "values": [
+          0.009248769221206507,
+          -0.01506049320515659,
+          0.026131213332215946,
+          -0.007247990100748009,
+          0.02145565373616086,
+          0.020269554522302415,
+          0.006417637897862328,
+          -0.02159948605630133,
+          -0.052562490933471255,
+          0.027933235590656597
+        ]
+      }
+    },
+    "best_predictor": "n_train_compounds",
+    "best_predictor_p": 0.04254012768448945,
+    "n_positive": 9,
+    "n_negative": 1,
+    "positive_targets": [
+      "egfr",
+      "drd2",
+      "adrb2",
+      "bace1",
+      "esr1",
+      "hdac2",
+      "jak2",
+      "pparg",
+      "fxa"
+    ],
+    "negative_targets": [
+      "cyp3a4"
+    ]
+  }
+}

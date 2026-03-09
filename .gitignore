@@ -8,11 +8,10 @@ data/external/litpcba/
 data/external/dude/
 
 # =========================
-# Model checkpoints (tracked via Git LFS in .gitattributes)
-# Uncomment to exclude from git entirely:
-# *.pt
-# *.pth
+# Model checkpoints
 # =========================
+*.pt
+*.pth
 
 # =========================
 # Python
@@ -76,8 +75,8 @@ temp/
 nohup.out
 
 # =========================
-# Experiment outputs (large, reproducible)
+# Results (reproducible)
 # =========================
-# Uncomment these if you don't want to track results:
-# results/v4/checkpoint_epoch_*.pt
-# results/**/*.parquet
+results/
+checkpoints/
+.claude/

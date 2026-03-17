@@ -1,7 +1,21 @@
-# Exclude large raw ChEMBL data (can be re-downloaded)
+# =========================
+# Large data (re-downloadable)
+# =========================
 data/raw/chembl/
+data/raw/bindingdb/
+data/cache/
+data/external/litpcba/
+data/external/dude/
 
+# =========================
+# Model checkpoints
+# =========================
+*.pt
+*.pth
+
+# =========================
 # Python
+# =========================
 __pycache__/
 *.py[cod]
 *$py.class
@@ -23,30 +37,46 @@ wheels/
 .installed.cfg
 *.egg
 
+# =========================
 # Virtual environments
+# =========================
 venv/
 ENV/
 env/
 .venv/
 
+# =========================
 # IDE
+# =========================
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
 
+# =========================
 # Jupyter
+# =========================
 .ipynb_checkpoints/
 
+# =========================
 # OS
+# =========================
 .DS_Store
 Thumbs.db
 
-# Logs
+# =========================
+# Logs and temporary files
+# =========================
 *.log
 logs/
-
-# Temporary files
 tmp/
 temp/
+nohup.out
+
+# =========================
+# Results (reproducible)
+# =========================
+results/
+checkpoints/
+.claude/

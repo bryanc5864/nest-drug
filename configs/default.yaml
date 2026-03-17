@@ -17,7 +17,7 @@ dropout: 0.1
 # Endpoints (null = use default ADMET panel)
 endpoints: null
 
-# Phase 1: Portfolio Pretraining
+# Stage 1: Portfolio Pretraining
 # ------------------------------
 pretrain_data: "data/portfolio.parquet"
 pretrain_val_data: null
@@ -28,8 +28,8 @@ pretrain_warmup_ratio: 0.1
 pretrain_weight_decay: 0.00001
 pretrain_checkpoint_dir: "checkpoints/pretrain"
 
-# Phase 2: Program Initialization
-# -------------------------------
+# Stage 2: Program Initialization
+# --------------------------------
 program_data: "data/programs/program_{program_id}.parquet"
 program_batch_size: 64
 program_epochs: 50
@@ -40,8 +40,8 @@ head_lr: 0.0001
 drift_weight: 0.01
 program_checkpoint_dir: "checkpoints/program"
 
-# Phase 3: Continual Learning
-# ---------------------------
+# Stage 3: Continual Learning
+# ----------------------------
 continual_epochs_per_round: 20
 continual_batch_size: 32
 l1_lr: 0.0005

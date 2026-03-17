@@ -1,0 +1,210 @@
+\begin{thebibliography}{25}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Chithrananda et~al.(2020)Chithrananda, Grand, and
+  Ramsundar]{chithrananda_2020_chemberta}
+Seyone Chithrananda, Gabriel Grand, and Bharath Ramsundar.
+\newblock {ChemBERTa}: Large-scale self-supervised pretraining for molecular
+  property prediction.
+\newblock \emph{arXiv preprint arXiv:2010.09885}, 2020.
+
+\bibitem[Fabian et~al.(2020)Fabian, Edlich, Gaspar, Segler, Meyers, Fiscato,
+  and Ahmed]{fabian_2020_molbert}
+Benedek Fabian, Thomas Edlich, H{\'e}l{\'e}na Gaspar, Marwin Segler, Joshua
+  Meyers, Marco Fiscato, and Mohamed Ahmed.
+\newblock Molecular representation learning with language models and
+  domain-relevant auxiliary tasks.
+\newblock \emph{arXiv preprint arXiv:2011.13230}, 2020.
+
+\bibitem[Gasteiger et~al.(2020)Gasteiger, Gro{\ss}, and
+  G{\"u}nnemann]{gasteiger_2020_dimenet}
+Johannes Gasteiger, Janek Gro{\ss}, and Stephan G{\"u}nnemann.
+\newblock Directional message passing for molecular graphs.
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations}, 2020.
+
+\bibitem[Gilmer et~al.(2017)Gilmer, Schoenholz, Riley, Vinyals, and
+  Dahl]{gilmer_2017_mpnn}
+Justin Gilmer, Samuel~S Schoenholz, Patrick~F Riley, Oriol Vinyals, and
+  George~E Dahl.
+\newblock Neural message passing for quantum chemistry.
+\newblock In \emph{Proceedings of the International Conference on Machine
+  Learning}, pp.\  1263--1272, 2017.
+
+\bibitem[Ha et~al.(2017)Ha, Dai, and Le]{ha_2017_hypernetworks}
+David Ha, Andrew Dai, and Quoc~V Le.
+\newblock Hypernetworks.
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations}, 2017.
+
+\bibitem[Hu et~al.(2020)Hu, Liu, Gomes, Zitnik, Liang, Pande, and
+  Leskovec]{hu_2020_gnn_pretrain}
+Weihua Hu, Bowen Liu, Joseph Gomes, Marinka Zitnik, Percy Liang, Vijay Pande,
+  and Jure Leskovec.
+\newblock Strategies for pre-training graph neural networks.
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations}, 2020.
+
+\bibitem[Landrum et~al.(2023)]{landrum_rdkit}
+Greg Landrum et~al.
+\newblock {RDKit}: Open-source cheminformatics, 2023.
+\newblock URL \url{https://www.rdkit.org}.
+\newblock Version 2023.03.
+
+\bibitem[Li et~al.(2016)Li, Tarlow, Brockschmidt, and Zemel]{li_2016_gru_gnn}
+Yujia Li, Daniel Tarlow, Marc Brockschmidt, and Richard Zemel.
+\newblock Gated graph sequence neural networks.
+\newblock \emph{Proceedings of the International Conference on Learning
+  Representations}, 2016.
+
+\bibitem[Lim et~al.(2019)Lim, Ryu, Park, Choe, Ham, and Kim]{lim_2019_gnn_vs}
+Jaechang Lim, Seongok Ryu, Kyubyong Park, Yo~Joong Choe, Jiyeon Ham, and
+  Woo~Youn Kim.
+\newblock Predicting drug-target interaction using a novel graph neural network
+  with {3D} structure-embedded graph representation.
+\newblock In \emph{Journal of Chemical Information and Modeling}, volume~59,
+  pp.\  3981--3988, 2019.
+
+\bibitem[Lin et~al.(2023)Lin, Akin, Rao, Hie, Zhu, Lu, Smetanin, Verkuil,
+  Kabeli, Shmueli, dos Santos~Costa, Fazel-Zarandi, Sercu, Candber, and
+  Rives]{lin_2023_esm2}
+Zeming Lin, Halil Akin, Roshan Rao, Brian Hie, Zhongkai Zhu, Wenting Lu, Nikita
+  Smetanin, Robert Verkuil, Ori Kabeli, Yaniv Shmueli, Allan dos Santos~Costa,
+  Maryam Fazel-Zarandi, Tom Sercu, Salvatore Candber, and Alexander Rives.
+\newblock Evolutionary-scale prediction of atomic-level protein structure with
+  a language model.
+\newblock \emph{Science}, 379\penalty0 (6637):\penalty0 1123--1130, 2023.
+\newblock \doi{10.1126/science.ade2574}.
+
+\bibitem[Martin et~al.(2019)Martin, Polyakov, Zhu, Tian, Mukherjee, and
+  Liu]{martin_2019_temporal}
+Eric~J Martin, Valery~R Polyakov, Xiang-Wei Zhu, Li~Tian, Prasenjit Mukherjee,
+  and Xin Liu.
+\newblock All-assay-max2 {pQSAR}: Activity predictions as accurate as
+  four-concentration {IC50s} for 8558 {Novartis} assays.
+\newblock \emph{Journal of Chemical Information and Modeling}, 59\penalty0
+  (10):\penalty0 4450--4459, 2019.
+\newblock \doi{10.1021/acs.jcim.9b00375}.
+
+\bibitem[Mysinger et~al.(2012)Mysinger, Carchia, Irwin, and
+  Shoichet]{mysinger_2012_dude}
+Michael~M Mysinger, Michael Carchia, John~J Irwin, and Brian~K Shoichet.
+\newblock Directory of useful decoys, enhanced ({DUD-E}): Better ligands and
+  decoys for better benchmarking.
+\newblock \emph{Journal of Medicinal Chemistry}, 55\penalty0 (14):\penalty0
+  6582--6594, 2012.
+\newblock \doi{10.1021/jm300687e}.
+
+\bibitem[Perez et~al.(2018)Perez, Strub, de~Vries, Dumoulin, and
+  Courville]{perez_2018_film}
+Ethan Perez, Florian Strub, Harm de~Vries, Vincent Dumoulin, and Aaron
+  Courville.
+\newblock {FiLM}: Visual reasoning with a general conditioning layer.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~32, 2018.
+
+\bibitem[Ragoza et~al.(2017)Ragoza, Hochuli, Idrobo, Sunseri, and
+  Koes]{ragoza_2017_3dcnn}
+Matthew Ragoza, Joshua Hochuli, Elisa Idrobo, Jocelyn Sunseri, and David~Ryan
+  Koes.
+\newblock Protein-ligand scoring with convolutional neural networks.
+\newblock \emph{Journal of Chemical Information and Modeling}, 57\penalty0
+  (4):\penalty0 942--957, 2017.
+\newblock \doi{10.1021/acs.jcim.6b00740}.
+
+\bibitem[Rong et~al.(2020)Rong, Bian, Xu, Xie, Wei, Huang, and
+  Huang]{rong_2020_grover}
+Yu~Rong, Yatao Bian, Tingyang Xu, Weiyang Xie, Ying Wei, Wenbing Huang, and
+  Junzhou Huang.
+\newblock Self-supervised graph transformer on large-scale molecular data.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~33, pp.\  12559--12571, 2020.
+
+\bibitem[Sch{\"u}tt et~al.(2017)Sch{\"u}tt, Kindermans, Sauceda, Chmiela,
+  Tkatchenko, and M{\"u}ller]{schutt_2017_schnet}
+Kristof~T Sch{\"u}tt, Pieter-Jan Kindermans, Huziel~E Sauceda, Stefan Chmiela,
+  Alexandre Tkatchenko, and Klaus-Robert M{\"u}ller.
+\newblock {SchNet}: A continuous-filter convolutional neural network for
+  modeling quantum interactions.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~30, 2017.
+
+\bibitem[Sheridan(2013)]{sheridan_2013_time_split}
+Robert~P Sheridan.
+\newblock Time-split cross-validation as a method for estimating the goodness
+  of prospective prediction.
+\newblock \emph{Journal of Chemical Information and Modeling}, 53\penalty0
+  (4):\penalty0 783--790, 2013.
+\newblock \doi{10.1021/ci400084k}.
+
+\bibitem[Sundararajan et~al.(2017)Sundararajan, Taly, and
+  Yan]{sundararajan_2017_ig}
+Mukund Sundararajan, Ankur Taly, and Qiqi Yan.
+\newblock Axiomatic attribution for deep networks.
+\newblock In \emph{Proceedings of the International Conference on Machine
+  Learning}, pp.\  3319--3328, 2017.
+
+\bibitem[Tran-Nguyen et~al.(2020)Tran-Nguyen, Jacquemard, and
+  Rognan]{tran_2020_litpcba}
+Viet-Khoa Tran-Nguyen, Christophe Jacquemard, and Didier Rognan.
+\newblock {LIT-PCBA}: An unbiased data set for machine learning and virtual
+  screening.
+\newblock \emph{Journal of Chemical Information and Modeling}, 60\penalty0
+  (9):\penalty0 4263--4273, 2020.
+\newblock \doi{10.1021/acs.jcim.0c00155}.
+
+\bibitem[Wallach \& Heifets(2018)Wallach and Heifets]{wallach_2018_dude_bias}
+Izhar Wallach and Abraham Heifets.
+\newblock Most ligand-based classification benchmarks reward memorization
+  rather than generalization.
+\newblock \emph{Journal of Chemical Information and Modeling}, 58\penalty0
+  (5):\penalty0 916--932, 2018.
+\newblock \doi{10.1021/acs.jcim.7b00403}.
+
+\bibitem[Wallach et~al.(2015)Wallach, Dzamba, and
+  Heifets]{wallach_2015_atomnet}
+Izhar Wallach, Michael Dzamba, and Abraham Heifets.
+\newblock {AtomNet}: A deep convolutional neural network for bioactivity
+  prediction in structure-based drug discovery.
+\newblock \emph{arXiv preprint arXiv:1510.02855}, 2015.
+
+\bibitem[Xiong et~al.(2019)Xiong, Wang, Liu, Zhong, Wan, Li, Li, Luo, Chen,
+  Jiang, and Zheng]{xiong_2019_attentivefp}
+Zhaoping Xiong, Dingyan Wang, Xiaohong Liu, Feisheng Zhong, Xiaozhe Wan, Xutong
+  Li, Zhaojun Li, Xiaomin Luo, Kaixian Chen, Hualiang Jiang, and Mingyue Zheng.
+\newblock Pushing the boundaries of molecular representation for drug discovery
+  with the graph attention mechanism.
+\newblock \emph{Journal of Medicinal Chemistry}, 63\penalty0 (16):\penalty0
+  8749--8760, 2019.
+\newblock \doi{10.1021/acs.jmedchem.9b00959}.
+
+\bibitem[Xu et~al.(2019)Xu, Hu, Leskovec, and Jegelka]{xu_2019_gnn_power}
+Keyulu Xu, Weihua Hu, Jure Leskovec, and Stefanie Jegelka.
+\newblock How powerful are graph neural networks?
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations}, 2019.
+
+\bibitem[Zdrazil et~al.(2024)Zdrazil, Felix, Hunter, Manber, Nowotka, Patiny,
+  Steiner, Munro, Sheridan, Papadatos, Hersey, and Leach]{zdrazil_2024_chembl}
+Barbara Zdrazil, Eloy Felix, Fiona Hunter, Emma~J Manber, Micha{\l} Nowotka,
+  Luc Patiny, Ryan Steiner, Ricardo Munro, Robert~P Sheridan, George Papadatos,
+  Anne Hersey, and Andrew~R Leach.
+\newblock {The ChEMBL Database in 2023}: A drug discovery platform spanning
+  genomics and chemical biology.
+\newblock \emph{Nucleic Acids Research}, 52\penalty0 (D1):\penalty0
+  D1180--D1192, 2024.
+\newblock \doi{10.1093/nar/gkad1004}.
+
+\bibitem[Zhou et~al.(2023)Zhou, Gao, Ding, Zheng, Xu, Wei, Zhang, and
+  Ke]{zhou_2023_unimol}
+Gengmo Zhou, Zhifeng Gao, Qiankun Ding, Hang Zheng, Hongteng Xu, Zhewei Wei,
+  Linfeng Zhang, and Guolin Ke.
+\newblock Uni-mol: A universal 3d molecular representation learning framework.
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations}, 2023.
+
+\end{thebibliography}

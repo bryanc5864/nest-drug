@@ -1,0 +1,410 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{28}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Ben-David et~al\mbox{.}(2010)]%
+        {ben_david_2010_theory}
+\bibfield{author}{\bibinfo{person}{Shai Ben-David}, \bibinfo{person}{John
+  Blitzer}, \bibinfo{person}{Koby Crammer}, \bibinfo{person}{Alex Kulesza},
+  \bibinfo{person}{Fernando Pereira}, {and} \bibinfo{person}{Jennifer~Wortman
+  Vaughan}.} \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{A Theory of Learning from Different Domains}.
+\newblock \bibinfo{journal}{\emph{Machine Learning}} \bibinfo{volume}{79},
+  \bibinfo{number}{1} (\bibinfo{year}{2010}), \bibinfo{pages}{151--175}.
+\newblock
+\href{https://doi.org/10.1007/s10994-009-5152-4}{doi:\nolinkurl{10.1007/s10994-009-5152-4}}
+
+
+\bibitem[Chithrananda et~al\mbox{.}(2020)]%
+        {chithrananda_2020_chemberta}
+\bibfield{author}{\bibinfo{person}{Seyone Chithrananda},
+  \bibinfo{person}{Gabriel Grand}, {and} \bibinfo{person}{Bharath Ramsundar}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{ChemBERTa}: Large-Scale Self-Supervised
+  Pretraining for Molecular Property Prediction}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2010.09885}}
+  (\bibinfo{year}{2020}).
+\newblock
+
+
+\bibitem[Fabian et~al\mbox{.}(2020)]%
+        {fabian_2020_molbert}
+\bibfield{author}{\bibinfo{person}{Benedek Fabian}, \bibinfo{person}{Thomas
+  Edber}, \bibinfo{person}{Gisbert Schneider}, {and} \bibinfo{person}{Peter
+  Mezey}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Molecular Representation Learning with Language
+  Models and Domain-Relevant Auxiliary Tasks}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2011.13230}}
+  (\bibinfo{year}{2020}).
+\newblock
+
+
+\bibitem[Gasteiger et~al\mbox{.}(2020)]%
+        {gasteiger_2020_dimenet}
+\bibfield{author}{\bibinfo{person}{Johannes Gasteiger}, \bibinfo{person}{Janek
+  Gro{\ss}}, {and} \bibinfo{person}{Stephan G{\"u}nnemann}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Directional Message Passing for Molecular Graphs}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the International Conference on
+  Learning Representations}}.
+\newblock
+
+
+\bibitem[Gilmer et~al\mbox{.}(2017)]%
+        {gilmer_2017_mpnn}
+\bibfield{author}{\bibinfo{person}{Justin Gilmer}, \bibinfo{person}{Samuel~S
+  Schoenholz}, \bibinfo{person}{Patrick~F Riley}, \bibinfo{person}{Oriol
+  Vinyals}, {and} \bibinfo{person}{George~E Dahl}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Neural Message Passing for Quantum Chemistry}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the International Conference on
+  Machine Learning}}. \bibinfo{pages}{1263--1272}.
+\newblock
+
+
+\bibitem[Ha et~al\mbox{.}(2017)]%
+        {ha_2017_hypernetworks}
+\bibfield{author}{\bibinfo{person}{David Ha}, \bibinfo{person}{Andrew Dai},
+  {and} \bibinfo{person}{Quoc~V Le}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Hypernetworks}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the International Conference on
+  Learning Representations}}.
+\newblock
+
+
+\bibitem[Hu et~al\mbox{.}(2020)]%
+        {hu_2020_gnn_pretrain}
+\bibfield{author}{\bibinfo{person}{Weihua Hu}, \bibinfo{person}{Bowen Liu},
+  \bibinfo{person}{Joseph Gomes}, \bibinfo{person}{Marinka Zitnik},
+  \bibinfo{person}{Percy Liang}, \bibinfo{person}{Vijay Pande}, {and}
+  \bibinfo{person}{Jure Leskovec}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Strategies for Pre-training Graph Neural Networks}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the International Conference on
+  Learning Representations}}.
+\newblock
+
+
+\bibitem[Huang et~al\mbox{.}(2021)]%
+        {huang_2021_tdc}
+\bibfield{author}{\bibinfo{person}{Kexin Huang}, \bibinfo{person}{Tianfan Fu},
+  \bibinfo{person}{Wenhao Gao}, \bibinfo{person}{Yue Zhao},
+  \bibinfo{person}{Yusuf Roohani}, \bibinfo{person}{Jure Leskovec},
+  \bibinfo{person}{Connor~W Coley}, \bibinfo{person}{Cao Xiao},
+  \bibinfo{person}{Jimeng Sun}, {and} \bibinfo{person}{Marinka Zitnik}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Therapeutics Data Commons: Machine Learning
+  Datasets and Tasks for Drug Discovery and Development}.
+\newblock \bibinfo{journal}{\emph{Proceedings of Neural Information Processing
+  Systems Datasets and Benchmarks Track}} (\bibinfo{year}{2021}).
+\newblock
+
+
+\bibitem[Landrum et~al\mbox{.}(2023)]%
+        {landrum_rdkit}
+\bibfield{author}{\bibinfo{person}{Greg Landrum} {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{{RDKit}: Open-Source Cheminformatics}.
+\newblock
+\urldef\tempurl%
+\url{https://www.rdkit.org}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Version 2023.03}.
+
+
+\bibitem[Li et~al\mbox{.}(2016)]%
+        {li_2016_gru_gnn}
+\bibfield{author}{\bibinfo{person}{Yujia Li}, \bibinfo{person}{Daniel Tarlow},
+  \bibinfo{person}{Marc Brockschmidt}, {and} \bibinfo{person}{Richard Zemel}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Gated Graph Sequence Neural Networks}.
+\newblock \bibinfo{journal}{\emph{Proceedings of the International Conference
+  on Learning Representations}} (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[Lim et~al\mbox{.}(2019)]%
+        {lim_2019_gnn_vs}
+\bibfield{author}{\bibinfo{person}{Jaechang Lim}, \bibinfo{person}{Seongok
+  Ryu}, \bibinfo{person}{Kyubyong Park}, \bibinfo{person}{Yo~Joong Choe},
+  \bibinfo{person}{Jiyeon Ham}, {and} \bibinfo{person}{Woo~Youn Kim}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Predicting Drug-Target Interaction Using a Novel
+  Graph Neural Network with {3D} Structure-Embedded Graph Representation}. In
+  \bibinfo{booktitle}{\emph{Journal of Chemical Information and Modeling}},
+  Vol.~\bibinfo{volume}{59}. \bibinfo{pages}{3981--3988}.
+\newblock
+
+
+\bibitem[Lin et~al\mbox{.}(2023)]%
+        {lin_2023_esm2}
+\bibfield{author}{\bibinfo{person}{Zeming Lin}, \bibinfo{person}{Halil Akin},
+  \bibinfo{person}{Roshan Rao}, \bibinfo{person}{Brian Hie},
+  \bibinfo{person}{Zhongkai Zhu}, \bibinfo{person}{Wenting Lu},
+  \bibinfo{person}{Nikita Smetanin}, \bibinfo{person}{Robert Verkuil},
+  \bibinfo{person}{Ori Kabeli}, \bibinfo{person}{Yaniv Shmueli},
+  \bibinfo{person}{Allan dos Santos~Costa}, \bibinfo{person}{Maryam
+  Fazel-Zarandi}, \bibinfo{person}{Tom Sercu}, \bibinfo{person}{Salvatore
+  Candber}, {and} \bibinfo{person}{Alexander Rives}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Evolutionary-Scale Prediction of Atomic-Level
+  Protein Structure with a Language Model}.
+\newblock \bibinfo{journal}{\emph{Science}} \bibinfo{volume}{379},
+  \bibinfo{number}{6637} (\bibinfo{year}{2023}), \bibinfo{pages}{1123--1130}.
+\newblock
+\href{https://doi.org/10.1126/science.ade2574}{doi:\nolinkurl{10.1126/science.ade2574}}
+
+
+\bibitem[Martin et~al\mbox{.}(2019)]%
+        {martin_2019_temporal}
+\bibfield{author}{\bibinfo{person}{Eric~J Martin}, \bibinfo{person}{Valery~R
+  Polyakov}, \bibinfo{person}{Xiang-Wei Zhu}, \bibinfo{person}{Li Tian},
+  \bibinfo{person}{Prasenjit Mukherjee}, {and} \bibinfo{person}{Xin Liu}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{All-Assay-Max2 {pQSAR}: Activity Predictions as
+  Accurate as Four-Concentration {IC50s} for 8558 {Novartis} Assays}.
+\newblock \bibinfo{journal}{\emph{Journal of Chemical Information and
+  Modeling}} \bibinfo{volume}{59}, \bibinfo{number}{10} (\bibinfo{year}{2019}),
+  \bibinfo{pages}{4450--4459}.
+\newblock
+\href{https://doi.org/10.1021/acs.jcim.9b00375}{doi:\nolinkurl{10.1021/acs.jcim.9b00375}}
+
+
+\bibitem[Mysinger et~al\mbox{.}(2012)]%
+        {mysinger_2012_dude}
+\bibfield{author}{\bibinfo{person}{Michael~M Mysinger},
+  \bibinfo{person}{Michael Carchia}, \bibinfo{person}{John~J Irwin}, {and}
+  \bibinfo{person}{Brian~K Shoichet}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Directory of Useful Decoys, Enhanced ({DUD-E}):
+  Better Ligands and Decoys for Better Benchmarking}.
+\newblock \bibinfo{journal}{\emph{Journal of Medicinal Chemistry}}
+  \bibinfo{volume}{55}, \bibinfo{number}{14} (\bibinfo{year}{2012}),
+  \bibinfo{pages}{6582--6594}.
+\newblock
+\href{https://doi.org/10.1021/jm300687e}{doi:\nolinkurl{10.1021/jm300687e}}
+
+
+\bibitem[Perez et~al\mbox{.}(2018)]%
+        {perez_2018_film}
+\bibfield{author}{\bibinfo{person}{Ethan Perez}, \bibinfo{person}{Florian
+  Strub}, \bibinfo{person}{Harm de Vries}, \bibinfo{person}{Vincent Dumoulin},
+  {and} \bibinfo{person}{Aaron Courville}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{{FiLM}: Visual Reasoning with a General
+  Conditioning Layer}. In \bibinfo{booktitle}{\emph{Proceedings of the AAAI
+  Conference on Artificial Intelligence}}, Vol.~\bibinfo{volume}{32}.
+\newblock
+
+
+\bibitem[Ragoza et~al\mbox{.}(2017)]%
+        {ragoza_2017_3dcnn}
+\bibfield{author}{\bibinfo{person}{Matthew Ragoza}, \bibinfo{person}{Joshua
+  Hochuli}, \bibinfo{person}{Elisa Idrobo}, \bibinfo{person}{Jocelyn Sunseri},
+  {and} \bibinfo{person}{David~Ryan Koes}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Protein-Ligand Scoring with Convolutional Neural
+  Networks}.
+\newblock \bibinfo{journal}{\emph{Journal of Chemical Information and
+  Modeling}} \bibinfo{volume}{57}, \bibinfo{number}{4} (\bibinfo{year}{2017}),
+  \bibinfo{pages}{942--957}.
+\newblock
+\href{https://doi.org/10.1021/acs.jcim.6b00740}{doi:\nolinkurl{10.1021/acs.jcim.6b00740}}
+
+
+\bibitem[Ramsundar et~al\mbox{.}(2015)]%
+        {ramsundar_2015_massively}
+\bibfield{author}{\bibinfo{person}{Bharath Ramsundar}, \bibinfo{person}{Steven
+  Kearnes}, \bibinfo{person}{Patrick Riley}, \bibinfo{person}{Dale Webster},
+  \bibinfo{person}{David Konerding}, {and} \bibinfo{person}{Vijay Pande}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Massively Multitask Networks for Drug Discovery}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:1502.02072}}
+  (\bibinfo{year}{2015}).
+\newblock
+
+
+\bibitem[Rong et~al\mbox{.}(2020)]%
+        {rong_2020_grover}
+\bibfield{author}{\bibinfo{person}{Yu Rong}, \bibinfo{person}{Yatao Bian},
+  \bibinfo{person}{Tingyang Xu}, \bibinfo{person}{Weiyang Xie},
+  \bibinfo{person}{Ying Wei}, \bibinfo{person}{Wenbing Huang}, {and}
+  \bibinfo{person}{Junzhou Huang}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Self-Supervised Graph Transformer on Large-Scale
+  Molecular Data}. In \bibinfo{booktitle}{\emph{Advances in Neural Information
+  Processing Systems}}, Vol.~\bibinfo{volume}{33}.
+  \bibinfo{pages}{12559--12571}.
+\newblock
+
+
+\bibitem[Sch{\"u}tt et~al\mbox{.}(2017)]%
+        {schutt_2017_schnet}
+\bibfield{author}{\bibinfo{person}{Kristof~T Sch{\"u}tt},
+  \bibinfo{person}{Pieter-Jan Kindermans}, \bibinfo{person}{Huziel~E Sauceda},
+  \bibinfo{person}{Stefan Chmiela}, \bibinfo{person}{Alexandre Tkatchenko},
+  {and} \bibinfo{person}{Klaus-Robert M{\"u}ller}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{{SchNet}: A Continuous-Filter Convolutional Neural
+  Network for Modeling Quantum Interactions}. In
+  \bibinfo{booktitle}{\emph{Advances in Neural Information Processing
+  Systems}}, Vol.~\bibinfo{volume}{30}.
+\newblock
+
+
+\bibitem[Sheridan(2013)]%
+        {sheridan_2013_time_split}
+\bibfield{author}{\bibinfo{person}{Robert~P Sheridan}.}
+  \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Time-Split Cross-Validation as a Method for
+  Estimating the Goodness of Prospective Prediction}.
+\newblock \bibinfo{journal}{\emph{Journal of Chemical Information and
+  Modeling}} \bibinfo{volume}{53}, \bibinfo{number}{4} (\bibinfo{year}{2013}),
+  \bibinfo{pages}{783--790}.
+\newblock
+\href{https://doi.org/10.1021/ci400084k}{doi:\nolinkurl{10.1021/ci400084k}}
+
+
+\bibitem[Sundararajan et~al\mbox{.}(2017)]%
+        {sundararajan_2017_ig}
+\bibfield{author}{\bibinfo{person}{Mukund Sundararajan}, \bibinfo{person}{Ankur
+  Taly}, {and} \bibinfo{person}{Qiqi Yan}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Axiomatic Attribution for Deep Networks}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the International Conference on
+  Machine Learning}}. \bibinfo{pages}{3319--3328}.
+\newblock
+
+
+\bibitem[Tran-Nguyen et~al\mbox{.}(2020)]%
+        {tran_2020_litpcba}
+\bibfield{author}{\bibinfo{person}{Viet-Khoa Tran-Nguyen},
+  \bibinfo{person}{Christophe Jacquemard}, {and} \bibinfo{person}{Didier
+  Rognan}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{LIT-PCBA}: An Unbiased Data Set for Machine
+  Learning and Virtual Screening}.
+\newblock \bibinfo{journal}{\emph{Journal of Chemical Information and
+  Modeling}} \bibinfo{volume}{60}, \bibinfo{number}{9} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{4263--4273}.
+\newblock
+\href{https://doi.org/10.1021/acs.jcim.0c00155}{doi:\nolinkurl{10.1021/acs.jcim.0c00155}}
+
+
+\bibitem[van Tilborg et~al\mbox{.}(2024)]%
+        {van_tilborg_2024_moleculeace}
+\bibfield{author}{\bibinfo{person}{Derek van Tilborg}, \bibinfo{person}{Alisa
+  Alenicheva}, {and} \bibinfo{person}{Francesca Grisoni}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{MoleculeACE}: Activity Cliff Estimation for
+  Molecular Property Prediction}.
+\newblock \bibinfo{journal}{\emph{Journal of Chemical Information and
+  Modeling}} \bibinfo{volume}{64}, \bibinfo{number}{14} (\bibinfo{year}{2024}),
+  \bibinfo{pages}{5521--5534}.
+\newblock
+\href{https://doi.org/10.1021/acs.jcim.4c00422}{doi:\nolinkurl{10.1021/acs.jcim.4c00422}}
+
+
+\bibitem[Wallach et~al\mbox{.}(2015)]%
+        {wallach_2015_atomnet}
+\bibfield{author}{\bibinfo{person}{Izhar Wallach}, \bibinfo{person}{Michael
+  Dzamba}, {and} \bibinfo{person}{Abraham Heifets}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{{AtomNet}: A Deep Convolutional Neural Network for
+  Bioactivity Prediction in Structure-Based Drug Discovery}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:1510.02855}}
+  (\bibinfo{year}{2015}).
+\newblock
+
+
+\bibitem[Wallach and Heifets(2018)]%
+        {wallach_2018_dude_bias}
+\bibfield{author}{\bibinfo{person}{Izhar Wallach} {and}
+  \bibinfo{person}{Abraham Heifets}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Most Ligand-Based Classification Benchmarks Reward
+  Memorization Rather Than Generalization}.
+\newblock \bibinfo{journal}{\emph{Journal of Chemical Information and
+  Modeling}} \bibinfo{volume}{58}, \bibinfo{number}{5} (\bibinfo{year}{2018}),
+  \bibinfo{pages}{916--932}.
+\newblock
+\href{https://doi.org/10.1021/acs.jcim.7b00403}{doi:\nolinkurl{10.1021/acs.jcim.7b00403}}
+
+
+\bibitem[Xiong et~al\mbox{.}(2019)]%
+        {xiong_2019_attentivefp}
+\bibfield{author}{\bibinfo{person}{Zhaoping Xiong}, \bibinfo{person}{Dingyan
+  Wang}, \bibinfo{person}{Xiaohong Liu}, \bibinfo{person}{Feisheng Zhong},
+  \bibinfo{person}{Xiaozhe Wan}, \bibinfo{person}{Xutong Li},
+  \bibinfo{person}{Zhaojun Li}, \bibinfo{person}{Xiaomin Luo},
+  \bibinfo{person}{Kaixian Chen}, \bibinfo{person}{Hualiang Jiang}, {and}
+  \bibinfo{person}{Mingyue Zheng}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Pushing the Boundaries of Molecular Representation
+  for Drug Discovery with the Graph Attention Mechanism}.
+\newblock \bibinfo{journal}{\emph{Journal of Medicinal Chemistry}}
+  \bibinfo{volume}{63}, \bibinfo{number}{16} (\bibinfo{year}{2019}),
+  \bibinfo{pages}{8749--8760}.
+\newblock
+\href{https://doi.org/10.1021/acs.jmedchem.9b00959}{doi:\nolinkurl{10.1021/acs.jmedchem.9b00959}}
+
+
+\bibitem[Zdrazil et~al\mbox{.}(2024)]%
+        {zdrazil_2024_chembl}
+\bibfield{author}{\bibinfo{person}{Barbara Zdrazil}, \bibinfo{person}{Eloy
+  Felix}, \bibinfo{person}{Fiona Hunter}, \bibinfo{person}{Emma~J Manber},
+  \bibinfo{person}{Micha{\l} Nowotka}, \bibinfo{person}{Luc Patiny},
+  \bibinfo{person}{Ryan Steiner}, \bibinfo{person}{Ricardo Munro},
+  \bibinfo{person}{Robert~P Sheridan}, \bibinfo{person}{George Papadatos},
+  \bibinfo{person}{Anne Hersey}, {and} \bibinfo{person}{Andrew~R Leach}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{The ChEMBL Database in 2023}: A Drug Discovery
+  Platform Spanning Genomics and Chemical Biology}.
+\newblock \bibinfo{journal}{\emph{Nucleic Acids Research}}
+  \bibinfo{volume}{52}, \bibinfo{number}{D1} (\bibinfo{year}{2024}),
+  \bibinfo{pages}{D1180--D1192}.
+\newblock
+\href{https://doi.org/10.1093/nar/gkad1004}{doi:\nolinkurl{10.1093/nar/gkad1004}}
+
+
+\bibitem[Zhou et~al\mbox{.}(2023)]%
+        {zhou_2023_unimol}
+\bibfield{author}{\bibinfo{person}{Gengmo Zhou}, \bibinfo{person}{Zhifeng Gao},
+  \bibinfo{person}{Qiankun Ding}, \bibinfo{person}{Hang Zheng},
+  \bibinfo{person}{Hongteng Xu}, \bibinfo{person}{Zhewei Wei},
+  \bibinfo{person}{Linfeng Zhang}, {and} \bibinfo{person}{Guolin Ke}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Uni-Mol: A Universal 3D Molecular Representation
+  Learning Framework}. In \bibinfo{booktitle}{\emph{Proceedings of the
+  International Conference on Learning Representations}}.
+\newblock
+
+
+\end{thebibliography}

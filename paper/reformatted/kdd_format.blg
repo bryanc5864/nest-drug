@@ -1,0 +1,98 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: kdd_format.aux
+Reallocating 'name_of_file' (item size: 1) to 21 items.
+The style file: ACM-Reference-Format.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Database file #1: references.bib
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 9000 items.
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Warning--no number and no volume in chithrananda_2020_chemberta
+Warning--page numbers missing in both pages and numpages fields in chithrananda_2020_chemberta
+Warning--no number and no volume in fabian_2020_molbert
+Warning--page numbers missing in both pages and numpages fields in fabian_2020_molbert
+Warning--empty publisher in gasteiger_2020_dimenet
+Warning--empty address in gasteiger_2020_dimenet
+Warning--page numbers missing in both pages and numpages fields in gasteiger_2020_dimenet
+Warning--empty publisher in gilmer_2017_mpnn
+Warning--empty address in gilmer_2017_mpnn
+Warning--empty publisher in ha_2017_hypernetworks
+Warning--empty address in ha_2017_hypernetworks
+Warning--page numbers missing in both pages and numpages fields in ha_2017_hypernetworks
+Warning--empty publisher in hu_2020_gnn_pretrain
+Warning--empty address in hu_2020_gnn_pretrain
+Warning--page numbers missing in both pages and numpages fields in hu_2020_gnn_pretrain
+Warning--no number and no volume in huang_2021_tdc
+Warning--page numbers missing in both pages and numpages fields in huang_2021_tdc
+Warning--no number and no volume in li_2016_gru_gnn
+Warning--page numbers missing in both pages and numpages fields in li_2016_gru_gnn
+Warning--can't use both volume and number fields in lim_2019_gnn_vs
+Warning--empty publisher in lim_2019_gnn_vs
+Warning--empty address in lim_2019_gnn_vs
+Warning--can't use both volume and number fields in perez_2018_film
+Warning--empty publisher in perez_2018_film
+Warning--empty address in perez_2018_film
+Warning--page numbers missing in both pages and numpages fields in perez_2018_film
+Warning--no number and no volume in ramsundar_2015_massively
+Warning--page numbers missing in both pages and numpages fields in ramsundar_2015_massively
+Warning--empty publisher in rong_2020_grover
+Warning--empty address in rong_2020_grover
+Warning--empty publisher in schutt_2017_schnet
+Warning--empty address in schutt_2017_schnet
+Warning--page numbers missing in both pages and numpages fields in schutt_2017_schnet
+Warning--empty publisher in sundararajan_2017_ig
+Warning--empty address in sundararajan_2017_ig
+Warning--no number and no volume in wallach_2015_atomnet
+Warning--page numbers missing in both pages and numpages fields in wallach_2015_atomnet
+Warning--empty publisher in zhou_2023_unimol
+Warning--empty address in zhou_2023_unimol
+Warning--page numbers missing in both pages and numpages fields in zhou_2023_unimol
+You've used 28 entries,
+            6273 wiz_defined-function locations,
+            1673 strings with 24580 characters,
+and the built_in function-call counts, 35554 in all, are:
+= -- 4726
+> -- 1438
+< -- 0
++ -- 497
+- -- 479
+* -- 2759
+:= -- 3461
+add.period$ -- 134
+call.type$ -- 28
+change.case$ -- 264
+chr.to.int$ -- 28
+cite$ -- 68
+duplicate$ -- 2888
+empty$ -- 2039
+format.name$ -- 583
+if$ -- 8818
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 118
+newline$ -- 269
+num.names$ -- 196
+pop$ -- 1232
+preamble$ -- 1
+purify$ -- 488
+quote$ -- 0
+skip$ -- 1006
+stack$ -- 0
+substring$ -- 2412
+swap$ -- 270
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 602
+warning$ -- 40
+while$ -- 141
+width$ -- 0
+write$ -- 566
+(There were 40 warnings)

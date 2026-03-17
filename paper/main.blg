@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Reallocating 'name_of_file' (item size: 1) to 20 items.
+The style file: iclr2026_conference.bst
+Database file #1: references.bib
+Warning--can't use both volume and number fields in lim_2019_gnn_vs
+Warning--can't use both volume and number fields in perez_2018_film
+You've used 29 entries,
+            2773 wiz_defined-function locations,
+            755 strings with 11470 characters,
+and the built_in function-call counts, 18252 in all, are:
+= -- 1512
+> -- 1524
+< -- 11
++ -- 509
+- -- 480
+* -- 1682
+:= -- 2850
+add.period$ -- 99
+call.type$ -- 29
+change.case$ -- 246
+chr.to.int$ -- 29
+cite$ -- 60
+duplicate$ -- 674
+empty$ -- 1202
+format.name$ -- 512
+if$ -- 3735
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 28
+newline$ -- 165
+num.names$ -- 116
+pop$ -- 497
+preamble$ -- 1
+purify$ -- 217
+quote$ -- 0
+skip$ -- 583
+stack$ -- 0
+substring$ -- 549
+swap$ -- 92
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 319
+warning$ -- 2
+while$ -- 121
+width$ -- 0
+write$ -- 398
+(There were 2 warnings)

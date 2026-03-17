@@ -1,0 +1,242 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{perez_2018_film}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\newlabel{sec:intro@cref}{{[section][1][]1}{[1][1][]1}{}{}{}}
+\citation{perez_2018_film}
+\citation{li_2016_gru_gnn}
+\citation{zdrazil_2024_chembl}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textsc  {NestDrug}{} Architecture.} MPNN (L0) encodes molecules into 512-dim embeddings. Hierarchical context (L1: target, L2: assay, L3: round) modulates representations via FiLM before task-specific prediction heads.}}{2}{figure.caption.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:architecture}{{1}{2}{\textbf {\methodname {} Architecture.} MPNN (L0) encodes molecules into 512-dim embeddings. Hierarchical context (L1: target, L2: assay, L3: round) modulates representations via FiLM before task-specific prediction heads}{figure.caption.1}{}}
+\newlabel{fig:architecture@cref}{{[figure][1][]1}{[1][2][]2}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Problem Setting}{2}{section.2}\protected@file@percent }
+\newlabel{sec:problem}{{2}{2}{Problem Setting}{section.2}{}}
+\newlabel{sec:problem@cref}{{[section][2][]2}{[1][1][]2}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Method}{2}{section.3}\protected@file@percent }
+\newlabel{sec:method}{{3}{2}{Method}{section.3}{}}
+\newlabel{sec:method@cref}{{[section][3][]3}{[1][2][]2}{}{}{}}
+\citation{mysinger_2012_dude}
+\citation{lim_2019_gnn_vs}
+\citation{wallach_2015_atomnet}
+\citation{lim_2019_gnn_vs}
+\citation{ragoza_2017_3dcnn}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {DUD-E comparison.} Per-target RF wins on data-rich targets; \textsc  {NestDrug}{} wins on data-scarce CYP3A4. $^\dagger $Exploits structural bias. $^\ddagger $Trained per-target on ChEMBL.}}{3}{table.caption.2}\protected@file@percent }
+\newlabel{tab:sota}{{1}{3}{\textbf {DUD-E comparison.} Per-target RF wins on data-rich targets; \methodname {} wins on data-scarce CYP3A4. $^\dagger $Exploits structural bias. $^\ddagger $Trained per-target on ChEMBL}{table.caption.2}{}}
+\newlabel{tab:sota@cref}{{[table][1][]1}{[1][3][]3}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Per-target DUD-E results (ROC-AUC). \textsc  {NestDrug}{} values use correct L1 context.}}{3}{table.caption.3}\protected@file@percent }
+\newlabel{tab:dude_results}{{2}{3}{Per-target DUD-E results (ROC-AUC). \methodname {} values use correct L1 context}{table.caption.3}{}}
+\newlabel{tab:dude_results@cref}{{[table][2][]2}{[1][3][]3}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experiments}{3}{section.4}\protected@file@percent }
+\newlabel{sec:experiments}{{4}{3}{Experiments}{section.4}{}}
+\newlabel{sec:experiments@cref}{{[section][4][]4}{[1][2][]3}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}DUD-E Results and Benchmark Critique}{3}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}L1 Context Ablation}{3}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Multi-Task Transfer and Context Fusion}{3}{subsection.4.3}\protected@file@percent }
+\citation{sundararajan_2017_ig}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Main Results.} (A) Per-target ROC-AUC. (B) L1 ablation: correct vs.\ generic embeddings (+5.7 pp mean). (C) Model variant comparison. (D) Mean AUC vs.\ prior methods.}}{4}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:main_results}{{2}{4}{\textbf {Main Results.} (A) Per-target ROC-AUC. (B) L1 ablation: correct vs.\ generic embeddings (+5.7 pp mean). (C) Model variant comparison. (D) Mean AUC vs.\ prior methods}{figure.caption.4}{}}
+\newlabel{fig:main_results@cref}{{[figure][2][]2}{[1][3][]4}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces L1 context ablation (5 seeds, paired $t$-test with Bonferroni correction). $\Delta $ = Correct $-$ Generic.}}{4}{table.caption.5}\protected@file@percent }
+\newlabel{tab:l1_ablation}{{3}{4}{L1 context ablation (5 seeds, paired $t$-test with Bonferroni correction). $\Delta $ = Correct $-$ Generic}{table.caption.5}{}}
+\newlabel{tab:l1_ablation@cref}{{[table][3][]3}{[1][3][]4}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Attribution and Temporal Analysis}{4}{subsection.4.4}\protected@file@percent }
+\citation{gilmer_2017_mpnn}
+\citation{xiong_2019_attentivefp}
+\citation{rong_2020_grover,hu_2020_gnn_pretrain}
+\citation{schutt_2017_schnet,gasteiger_2020_dimenet}
+\citation{chithrananda_2020_chemberta}
+\citation{fabian_2020_molbert}
+\citation{zhou_2023_unimol}
+\citation{perez_2018_film}
+\citation{ha_2017_hypernetworks}
+\citation{sheridan_2013_time_split,martin_2019_temporal}
+\citation{ben_david_2010_theory}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {Context fusion comparison.} FiLM outperforms all alternatives. $\Delta $ in percentage points.}}{5}{table.caption.6}\protected@file@percent }
+\newlabel{tab:fusion}{{4}{5}{\textbf {Context fusion comparison.} FiLM outperforms all alternatives. $\Delta $ in percentage points}{table.caption.6}{}}
+\newlabel{tab:fusion@cref}{{[table][4][]4}{[1][3][]5}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Attribution Analysis.} (A) Integrated gradients across 5 L1 contexts. (B) Cosine similarity drops from 0.999 (L0-only) to 0.878 (\textsc  {NestDrug}{}), confirming context-specific explanations.}}{5}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:attribution}{{3}{5}{\textbf {Attribution Analysis.} (A) Integrated gradients across 5 L1 contexts. (B) Cosine similarity drops from 0.999 (L0-only) to 0.878 (\methodname {}), confirming context-specific explanations}{figure.caption.7}{}}
+\newlabel{fig:attribution@cref}{{[figure][3][]3}{[1][3][]5}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}DMTA Replay Simulation}{5}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Related Work}{5}{section.5}\protected@file@percent }
+\newlabel{sec:related}{{5}{5}{Related Work}{section.5}{}}
+\newlabel{sec:related@cref}{{[section][5][]5}{[1][5][]5}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Molecular Property Prediction.}{5}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Conditional Networks.}{5}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Distribution Shift.}{5}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{5}{section.6}\protected@file@percent }
+\newlabel{sec:discussion}{{6}{5}{Discussion}{section.6}{}}
+\newlabel{sec:discussion@cref}{{[section][6][]6}{[1][5][]5}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{When to Use Context Conditioning.}{5}{section*.12}\protected@file@percent }
+\citation{tran_2020_litpcba}
+\citation{van_tilborg_2024_moleculeace}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {DMTA Replay.} (A) Hit rates: model 75--88\% vs.\ random 40--52\%. (B) Enrichment 1.5--1.9$\times $. (C) 29--55\% fewer experiments. (D) 1.60$\times $ mean enrichment.}}{6}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:dmta}{{4}{6}{\textbf {DMTA Replay.} (A) Hit rates: model 75--88\% vs.\ random 40--52\%. (B) Enrichment 1.5--1.9$\times $. (C) 29--55\% fewer experiments. (D) 1.60$\times $ mean enrichment}{figure.caption.8}{}}
+\newlabel{fig:dmta@cref}{{[figure][4][]4}{[1][4][]6}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{What L1 Embeddings Learn.}{6}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Benchmark Recommendations.}{6}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Future Directions.}{6}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{6}{section.7}\protected@file@percent }
+\newlabel{sec:conclusion}{{7}{6}{Conclusion}{section.7}{}}
+\newlabel{sec:conclusion@cref}{{[section][7][]7}{[1][6][]6}{}{}{}}
+\bibdata{references}
+\bibcite{chithrananda_2020_chemberta}{{1}{2020}{{Chithrananda et~al.}}{{Chithrananda, Grand, and Ramsundar}}}
+\bibcite{fabian_2020_molbert}{{2}{2020}{{Fabian et~al.}}{{Fabian, Edlich, Gaspar, Segler, Meyers, Fiscato, and Ahmed}}}
+\bibcite{gasteiger_2020_dimenet}{{3}{2020}{{Gasteiger et~al.}}{{Gasteiger, Gro{\ss }, and G{\"u}nnemann}}}
+\bibcite{gilmer_2017_mpnn}{{4}{2017}{{Gilmer et~al.}}{{Gilmer, Schoenholz, Riley, Vinyals, and Dahl}}}
+\bibcite{ha_2017_hypernetworks}{{5}{2017}{{Ha et~al.}}{{Ha, Dai, and Le}}}
+\bibcite{hu_2020_gnn_pretrain}{{6}{2020}{{Hu et~al.}}{{Hu, Liu, Gomes, Zitnik, Liang, Pande, and Leskovec}}}
+\bibcite{landrum_rdkit}{{7}{2023}{{Landrum et~al.}}{{}}}
+\bibcite{li_2016_gru_gnn}{{8}{2016}{{Li et~al.}}{{Li, Tarlow, Brockschmidt, and Zemel}}}
+\bibcite{lim_2019_gnn_vs}{{9}{2019}{{Lim et~al.}}{{Lim, Ryu, Park, Choe, Ham, and Kim}}}
+\bibcite{lin_2023_esm2}{{10}{2023}{{Lin et~al.}}{{Lin, Akin, Rao, Hie, Zhu, Lu, Smetanin, Verkuil, Kabeli, Shmueli, dos Santos~Costa, Fazel-Zarandi, Sercu, Candber, and Rives}}}
+\bibcite{martin_2019_temporal}{{11}{2019}{{Martin et~al.}}{{Martin, Polyakov, Zhu, Tian, Mukherjee, and Liu}}}
+\bibcite{mysinger_2012_dude}{{12}{2012}{{Mysinger et~al.}}{{Mysinger, Carchia, Irwin, and Shoichet}}}
+\bibcite{perez_2018_film}{{13}{2018}{{Perez et~al.}}{{Perez, Strub, de~Vries, Dumoulin, and Courville}}}
+\bibcite{ragoza_2017_3dcnn}{{14}{2017}{{Ragoza et~al.}}{{Ragoza, Hochuli, Idrobo, Sunseri, and Koes}}}
+\bibcite{rong_2020_grover}{{15}{2020}{{Rong et~al.}}{{Rong, Bian, Xu, Xie, Wei, Huang, and Huang}}}
+\bibcite{schutt_2017_schnet}{{16}{2017}{{Sch{\"u}tt et~al.}}{{Sch{\"u}tt, Kindermans, Sauceda, Chmiela, Tkatchenko, and M{\"u}ller}}}
+\bibcite{sheridan_2013_time_split}{{17}{2013}{{Sheridan}}{{}}}
+\bibcite{sundararajan_2017_ig}{{18}{2017}{{Sundararajan et~al.}}{{Sundararajan, Taly, and Yan}}}
+\bibcite{tran_2020_litpcba}{{19}{2020}{{Tran-Nguyen et~al.}}{{Tran-Nguyen, Jacquemard, and Rognan}}}
+\bibcite{wallach_2018_dude_bias}{{20}{2018}{{Wallach \& Heifets}}{{Wallach and Heifets}}}
+\bibcite{wallach_2015_atomnet}{{21}{2015}{{Wallach et~al.}}{{Wallach, Dzamba, and Heifets}}}
+\bibcite{xiong_2019_attentivefp}{{22}{2019}{{Xiong et~al.}}{{Xiong, Wang, Liu, Zhong, Wan, Li, Li, Luo, Chen, Jiang, and Zheng}}}
+\bibcite{xu_2019_gnn_power}{{23}{2019}{{Xu et~al.}}{{Xu, Hu, Leskovec, and Jegelka}}}
+\bibcite{zdrazil_2024_chembl}{{24}{2024}{{Zdrazil et~al.}}{{Zdrazil, Felix, Hunter, Manber, Nowotka, Patiny, Steiner, Munro, Sheridan, Papadatos, Hersey, and Leach}}}
+\bibcite{zhou_2023_unimol}{{25}{2023}{{Zhou et~al.}}{{Zhou, Gao, Ding, Zheng, Xu, Wei, Zhang, and Ke}}}
+\bibstyle{iclr2026_conference}
+\citation{perez_2018_film}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Hyperparameter Configuration}{10}{appendix.A}\protected@file@percent }
+\newlabel{app:hyperparams}{{A}{10}{Hyperparameter Configuration}{appendix.A}{}}
+\newlabel{app:hyperparams@cref}{{[section][1][]A}{[1][10][]10}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Complete hyperparameter configuration.}}{10}{table.caption.23}\protected@file@percent }
+\newlabel{tab:hyperparams}{{5}{10}{Complete hyperparameter configuration}{table.caption.23}{}}
+\newlabel{tab:hyperparams@cref}{{[table][5][]5}{[1][10][]10}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}FiLM Parameter Analysis}{10}{appendix.B}\protected@file@percent }
+\newlabel{app:film}{{B}{10}{FiLM Parameter Analysis}{appendix.B}{}}
+\newlabel{app:film@cref}{{[section][2][]B}{[1][10][]10}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Additional Results}{10}{appendix.C}\protected@file@percent }
+\newlabel{app:results}{{C}{10}{Additional Results}{appendix.C}{}}
+\newlabel{app:results@cref}{{[section][3][]C}{[1][10][]10}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.1}L2 and L3 Ablation}{10}{subsection.C.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces FiLM $\gamma $ parameters vary systematically by target family. Values show mean $\pm $ std across 512 dimensions.}}{11}{table.caption.24}\protected@file@percent }
+\newlabel{tab:film_params}{{6}{11}{FiLM $\gamma $ parameters vary systematically by target family. Values show mean $\pm $ std across 512 dimensions}{table.caption.24}{}}
+\newlabel{tab:film_params@cref}{{[table][6][]6}{[1][10][]11}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {L2/L3 Context Ablation (Negative Results).} (A) L2 assay ablation shows no significant effect (mean $\Delta $ = $-$0.006); L2 embeddings were not trained with real assay type annotations. (B) L3 temporal ablation shows no significant effect (mean $\Delta $ = $-$0.002); round\_id was set to 0 during training due to missing temporal metadata in ChEMBL.}}{11}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:appendix}{{5}{11}{\textbf {L2/L3 Context Ablation (Negative Results).} (A) L2 assay ablation shows no significant effect (mean $\Delta $ = $-$0.006); L2 embeddings were not trained with real assay type annotations. (B) L3 temporal ablation shows no significant effect (mean $\Delta $ = $-$0.002); round\_id was set to 0 during training due to missing temporal metadata in ChEMBL}{figure.caption.25}{}}
+\newlabel{fig:appendix@cref}{{[figure][5][]5}{[1][10][]11}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Limitations}{11}{appendix.D}\protected@file@percent }
+\newlabel{app:limitations}{{D}{11}{Limitations}{appendix.D}{}}
+\newlabel{app:limitations@cref}{{[section][4][]D}{[1][11][]11}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{L1 Few-Shot Adaptation.}{11}{section*.26}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Few-shot L1 adaptation hurts performance. Zero-shot (generic L1) outperforms adapted L1 on all targets. ``Correct L1'' shows the ceiling with full fine-tuning.}}{12}{table.caption.27}\protected@file@percent }
+\newlabel{tab:fewshot}{{7}{12}{Few-shot L1 adaptation hurts performance. Zero-shot (generic L1) outperforms adapted L1 on all targets. ``Correct L1'' shows the ceiling with full fine-tuning}{table.caption.27}{}}
+\newlabel{tab:fewshot@cref}{{[table][7][]7}{[1][11][]12}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{BACE1 Anomaly.}{12}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{External Generalization.}{12}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Computational Overhead.}{12}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {E}Theoretical Analysis}{12}{appendix.E}\protected@file@percent }
+\newlabel{app:theory}{{E}{12}{Theoretical Analysis}{appendix.E}{}}
+\newlabel{app:theory@cref}{{[section][5][]E}{[1][12][]12}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.1}Problem Formulation}{12}{subsection.E.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.2}Theoretical Results}{12}{subsection.E.2}\protected@file@percent }
+\newlabel{thm:expressiveness}{{3}{12}{Expressiveness of FiLM Modulation}{theorem.3}{}}
+\newlabel{thm:expressiveness@cref}{{[theorem][3][]3}{[1][12][]12}{}{}{}}
+\citation{lin_2023_esm2}
+\newlabel{thm:benefit}{{4}{13}{Benefit of Context Under Structured Shift}{theorem.4}{}}
+\newlabel{thm:benefit@cref}{{[theorem][4][]4}{[1][13][]13}{}{}{}}
+\newlabel{prop:hierarchy}{{5}{13}{Hierarchical Context Decomposition}{theorem.5}{}}
+\newlabel{prop:hierarchy@cref}{{[theorem][5][]5}{[1][13][]13}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.3}Complexity Analysis}{13}{subsection.E.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Computational complexity of \textsc  {NestDrug}{} components.}}{13}{table.caption.31}\protected@file@percent }
+\newlabel{tab:complexity}{{8}{13}{Computational complexity of \methodname {} components}{table.caption.31}{}}
+\newlabel{tab:complexity@cref}{{[table][8][]8}{[1][13][]13}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {F}Extended Experimental Analysis}{13}{appendix.F}\protected@file@percent }
+\newlabel{app:extended}{{F}{13}{Extended Experimental Analysis}{appendix.F}{}}
+\newlabel{app:extended@cref}{{[section][6][]F}{[1][13][]13}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.1}Per-Target Detailed Results}{13}{subsection.F.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.2}Cross-Target Transfer: A Negative Result}{13}{subsection.F.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Detailed per-target results from V3-baseline model (trained without target-specific L1 context). Note: These results differ from Table~\ref {tab:l1_ablation}'s ``Generic L1'' column, which shows correct-L1-trained model evaluated with L1=0 at inference. V3-baseline was trained without L1 information, achieving mean 0.839 AUC.}}{14}{table.caption.32}\protected@file@percent }
+\newlabel{tab:detailed_results}{{9}{14}{Detailed per-target results from V3-baseline model (trained without target-specific L1 context). Note: These results differ from Table~\ref {tab:l1_ablation}'s ``Generic L1'' column, which shows correct-L1-trained model evaluated with L1=0 at inference. V3-baseline was trained without L1 information, achieving mean 0.839 AUC}{table.caption.32}{}}
+\newlabel{tab:detailed_results@cref}{{[table][9][]9}{[1][13][]14}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.3}Ablation Studies}{14}{subsection.F.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {F.3.1}Embedding Dimension Ablation}{14}{subsubsection.F.3.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Effect of L1 embedding dimension on performance.}}{14}{table.caption.33}\protected@file@percent }
+\newlabel{tab:dim_ablation}{{10}{14}{Effect of L1 embedding dimension on performance}{table.caption.33}{}}
+\newlabel{tab:dim_ablation@cref}{{[table][10][]10}{[1][14][]14}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {F.3.2}Number of MPNN Layers}{14}{subsubsection.F.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Effect of MPNN depth on performance.}}{14}{table.caption.34}\protected@file@percent }
+\newlabel{tab:depth_ablation}{{11}{14}{Effect of MPNN depth on performance}{table.caption.34}{}}
+\newlabel{tab:depth_ablation@cref}{{[table][11][]11}{[1][14][]14}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {F.3.3}FiLM Architecture Variants}{14}{subsubsection.F.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.4}DMTA Replay Extended Analysis}{14}{subsection.F.4}\protected@file@percent }
+\citation{landrum_rdkit}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Comparison of context modulation approaches. Note: Results from V3-baseline experiments; main paper Table~\ref {tab:fusion} reports values from controlled FiLM ablation with correct L1 (FiLM: 0.849). Hypernetwork achieves marginally higher AUC (+0.002) but requires 3$\times $ more parameters.}}{15}{table.caption.35}\protected@file@percent }
+\newlabel{tab:film_variants}{{12}{15}{Comparison of context modulation approaches. Note: Results from V3-baseline experiments; main paper Table~\ref {tab:fusion} reports values from controlled FiLM ablation with correct L1 (FiLM: 0.849). Hypernetwork achieves marginally higher AUC (+0.002) but requires 3$\times $ more parameters}{table.caption.35}{}}
+\newlabel{tab:film_variants@cref}{{[table][12][]12}{[1][14][]15}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces DMTA replay results. Model selection achieves 1.5--1.9$\times $ enrichment over random, reducing experiments needed by 29--55\%.}}{15}{table.caption.36}\protected@file@percent }
+\newlabel{tab:dmta_detailed}{{13}{15}{DMTA replay results. Model selection achieves 1.5--1.9$\times $ enrichment over random, reducing experiments needed by 29--55\%}{table.caption.36}{}}
+\newlabel{tab:dmta_detailed@cref}{{[table][13][]13}{[1][14][]15}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.5}Temporal Generalization Analysis}{15}{subsection.F.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces Temporal split evaluation (train $\leq $2020, test 2021--2024). Performance remains stable across years, showing no significant temporal degradation.}}{15}{table.caption.37}\protected@file@percent }
+\newlabel{tab:temporal}{{14}{15}{Temporal split evaluation (train $\leq $2020, test 2021--2024). Performance remains stable across years, showing no significant temporal degradation}{table.caption.37}{}}
+\newlabel{tab:temporal@cref}{{[table][14][]14}{[1][15][]15}{}{}{}}
+\citation{xu_2019_gnn_power}
+\@writefile{toc}{\contentsline {section}{\numberline {G}Implementation Details}{16}{appendix.G}\protected@file@percent }
+\newlabel{app:implementation}{{G}{16}{Implementation Details}{appendix.G}{}}
+\newlabel{app:implementation@cref}{{[section][7][]G}{[1][15][]16}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {G.1}Data Preprocessing}{16}{subsection.G.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Molecular Featurization.}{16}{section*.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Activity Value Processing.}{16}{section*.39}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {G.2}Training Details}{16}{subsection.G.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Pretraining.}{16}{section*.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Fine-tuning.}{16}{section*.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Early Stopping.}{16}{section*.42}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {G.3}Evaluation Protocol}{16}{subsection.G.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cross-Validation.}{16}{section*.43}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistical Testing.}{16}{section*.44}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {H}Proofs}{16}{appendix.H}\protected@file@percent }
+\newlabel{app:proofs}{{H}{16}{Proofs}{appendix.H}{}}
+\newlabel{app:proofs@cref}{{[section][8][]H}{[1][16][]16}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {H.1}Proof of Theorem~\ref {thm:expressiveness}}{16}{subsection.H.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {H.2}Proof of Theorem~\ref {thm:benefit}}{17}{subsection.H.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {I}Additional Visualizations}{17}{appendix.I}\protected@file@percent }
+\newlabel{app:visualizations}{{I}{17}{Additional Visualizations}{appendix.I}{}}
+\newlabel{app:visualizations@cref}{{[section][9][]I}{[1][17][]17}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {I.1}t-SNE of L1 Embeddings}{17}{subsection.I.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {I.2}Attribution Heatmaps}{17}{subsection.I.2}\protected@file@percent }
+\citation{wallach_2018_dude_bias}
+\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces Integrated gradients atom importance statistics (50 integration steps, generic L1). Higher mean/max importance indicates the model relies more heavily on specific atoms for prediction.}}{18}{table.caption.45}\protected@file@percent }
+\newlabel{tab:attribution}{{15}{18}{Integrated gradients atom importance statistics (50 integration steps, generic L1). Higher mean/max importance indicates the model relies more heavily on specific atoms for prediction}{table.caption.45}{}}
+\newlabel{tab:attribution@cref}{{[table][15][]15}{[1][17][]18}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {I.3}Training Curves}{18}{subsection.I.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {J}DUD-E Benchmark Analysis}{18}{appendix.J}\protected@file@percent }
+\newlabel{app:dude_analysis}{{J}{18}{DUD-E Benchmark Analysis}{appendix.J}{}}
+\newlabel{app:dude_analysis@cref}{{[section][10][]J}{[1][18][]18}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {J.1}Per-Target Random Forest Baseline}{18}{subsection.J.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {16}{\ignorespaces Per-target ChEMBL RF vs \textsc  {NestDrug}{} (with correct L1). CYP3A4 (67 training actives) demonstrates multi-task transfer value.}}{18}{table.caption.46}\protected@file@percent }
+\newlabel{tab:per_target_rf}{{16}{18}{Per-target ChEMBL RF vs \methodname {} (with correct L1). CYP3A4 (67 training actives) demonstrates multi-task transfer value}{table.caption.46}{}}
+\newlabel{tab:per_target_rf@cref}{{[table][16][]16}{[1][18][]18}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {J.2}DUD-E Structural Bias}{18}{subsection.J.2}\protected@file@percent }
+\citation{wallach_2018_dude_bias}
+\citation{lin_2023_esm2}
+\@writefile{lot}{\contentsline {table}{\numberline {17}{\ignorespaces 1-NN Tanimoto similarity achieves near-perfect AUC without any learning, proving DUD-E structural bias.}}{19}{table.caption.47}\protected@file@percent }
+\newlabel{tab:dude_bias}{{17}{19}{1-NN Tanimoto similarity achieves near-perfect AUC without any learning, proving DUD-E structural bias}{table.caption.47}{}}
+\newlabel{tab:dude_bias@cref}{{[table][17][]17}{[1][18][]19}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {J.3}Data Leakage Analysis}{19}{subsection.J.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {18}{\ignorespaces ChEMBL--DUD-E overlap. ``ChEMBL Train'' shows total records (all activity values); per-target RF training uses only compounds meeting active threshold (pIC$_{50} \geq 6.0$), e.g., CYP3A4 has 5,504 total records but only 67 actives. Active leakage is severe (mean 50\%).}}{19}{table.caption.48}\protected@file@percent }
+\newlabel{tab:leakage}{{18}{19}{ChEMBL--DUD-E overlap. ``ChEMBL Train'' shows total records (all activity values); per-target RF training uses only compounds meeting active threshold (pIC$_{50} \geq 6.0$), e.g., CYP3A4 has 5,504 total records but only 67 actives. Active leakage is severe (mean 50\%)}{table.caption.48}{}}
+\newlabel{tab:leakage@cref}{{[table][18][]18}{[1][19][]19}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {J.4}ESM-2 Protein Embedding Analysis}{20}{subsection.J.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {K}Broader Impact}{20}{appendix.K}\protected@file@percent }
+\newlabel{app:impact}{{K}{20}{Broader Impact}{appendix.K}{}}
+\newlabel{app:impact@cref}{{[section][11][]K}{[1][20][]20}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Positive Impacts.}{20}{section*.49}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Potential Risks.}{20}{section*.50}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Environmental Considerations.}{20}{section*.51}\protected@file@percent }
+\gdef \@abspage@last{20}

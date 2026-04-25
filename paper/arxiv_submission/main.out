@@ -1,0 +1,64 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Problem Setting}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Notation and Preliminaries}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{The Structured Distribution Shift Problem}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Method}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Molecular Encoder \(L0\)}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Hierarchical Context Embeddings}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.3}{FiLM Context Modulation}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.4}{Multi-Task Prediction Heads}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.5}{Training Procedure}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{Experiments}{}% 11
+\BOOKMARK [2][-]{subsection.4.1}{Experimental Setup}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.2}{DUD-E Results and Benchmark Critique}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.3}{L1 Context Ablation}{section.4}% 14
+\BOOKMARK [2][-]{subsection.4.4}{Multi-Task Transfer: The CYP3A4 Case}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.5}{Context Fusion Comparison: FiLM vs Alternatives}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.6}{FiLM Modulation Analysis}{section.4}% 17
+\BOOKMARK [2][-]{subsection.4.7}{Context-Conditional Attribution}{section.4}% 18
+\BOOKMARK [2][-]{subsection.4.8}{Leakage-Stratified Re-Analysis of L1 Benefit}{section.4}% 19
+\BOOKMARK [2][-]{subsection.4.9}{Ex-Ante Decision Rule for Enabling Context}{section.4}% 20
+\BOOKMARK [2][-]{subsection.4.10}{Temporal Split Evaluation}{section.4}% 21
+\BOOKMARK [2][-]{subsection.4.11}{DMTA Replay Simulation}{section.4}% 22
+\BOOKMARK [1][-]{section.5}{Related Work}{}% 23
+\BOOKMARK [1][-]{section.6}{Discussion}{}% 24
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 25
+\BOOKMARK [1][-]{appendix.A}{Hyperparameter Configuration}{}% 26
+\BOOKMARK [1][-]{appendix.B}{FiLM Parameter Analysis}{}% 27
+\BOOKMARK [1][-]{appendix.C}{Additional Results}{}% 28
+\BOOKMARK [2][-]{subsection.C.1}{L2 and L3 Ablation}{appendix.C}% 29
+\BOOKMARK [1][-]{appendix.D}{Limitations}{}% 30
+\BOOKMARK [1][-]{appendix.E}{Theoretical Analysis}{}% 31
+\BOOKMARK [2][-]{subsection.E.1}{Problem Formulation}{appendix.E}% 32
+\BOOKMARK [2][-]{subsection.E.2}{Theoretical Results}{appendix.E}% 33
+\BOOKMARK [2][-]{subsection.E.3}{Complexity Analysis}{appendix.E}% 34
+\BOOKMARK [1][-]{appendix.F}{Extended Experimental Analysis}{}% 35
+\BOOKMARK [2][-]{subsection.F.1}{Per-Target Detailed Results}{appendix.F}% 36
+\BOOKMARK [2][-]{subsection.F.2}{Cross-Target Transfer: A Negative Result}{appendix.F}% 37
+\BOOKMARK [2][-]{subsection.F.3}{Ablation Studies}{appendix.F}% 38
+\BOOKMARK [3][-]{subsubsection.F.3.1}{Embedding Dimension Ablation}{subsection.F.3}% 39
+\BOOKMARK [3][-]{subsubsection.F.3.2}{Number of MPNN Layers}{subsection.F.3}% 40
+\BOOKMARK [3][-]{subsubsection.F.3.3}{FiLM Architecture Variants}{subsection.F.3}% 41
+\BOOKMARK [2][-]{subsection.F.4}{DMTA Replay Extended Analysis}{appendix.F}% 42
+\BOOKMARK [2][-]{subsection.F.5}{Temporal Generalization Analysis}{appendix.F}% 43
+\BOOKMARK [1][-]{appendix.G}{Implementation Details}{}% 44
+\BOOKMARK [2][-]{subsection.G.1}{Data Preprocessing}{appendix.G}% 45
+\BOOKMARK [2][-]{subsection.G.2}{Training Details}{appendix.G}% 46
+\BOOKMARK [2][-]{subsection.G.3}{Evaluation Protocol}{appendix.G}% 47
+\BOOKMARK [1][-]{appendix.H}{Proofs}{}% 48
+\BOOKMARK [2][-]{subsection.H.1}{Proof of Theorem 3}{appendix.H}% 49
+\BOOKMARK [2][-]{subsection.H.2}{Proof of Theorem 4}{appendix.H}% 50
+\BOOKMARK [1][-]{appendix.I}{Additional Visualizations}{}% 51
+\BOOKMARK [2][-]{subsection.I.1}{t-SNE of L1 Embeddings}{appendix.I}% 52
+\BOOKMARK [2][-]{subsection.I.2}{Attribution Heatmaps}{appendix.I}% 53
+\BOOKMARK [2][-]{subsection.I.3}{Training Curves}{appendix.I}% 54
+\BOOKMARK [1][-]{appendix.J}{DUD-E Benchmark Analysis}{}% 55
+\BOOKMARK [2][-]{subsection.J.1}{Per-Target Random Forest Baseline}{appendix.J}% 56
+\BOOKMARK [2][-]{subsection.J.2}{DUD-E Structural Bias}{appendix.J}% 57
+\BOOKMARK [2][-]{subsection.J.3}{Data Leakage Analysis}{appendix.J}% 58
+\BOOKMARK [2][-]{subsection.J.4}{ESM-2 Protein Embedding Analysis}{appendix.J}% 59
+\BOOKMARK [1][-]{appendix.K}{Matched-Budget Fair-Fusion Experiment}{}% 60
+\BOOKMARK [1][-]{appendix.L}{Ex-Ante Decision Rule: Implementation}{}% 61
+\BOOKMARK [1][-]{appendix.M}{Scaffold-Split Robustness Check}{}% 62
+\BOOKMARK [1][-]{appendix.N}{Foundation-Model Compatibility Discussion}{}% 63
+\BOOKMARK [1][-]{appendix.O}{Broader Impact}{}% 64

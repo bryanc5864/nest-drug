@@ -1,0 +1,31 @@
+{
+  "high_leakage_targets": [
+    "CYP3A4",
+    "EGFR",
+    "FXA",
+    "DRD2"
+  ],
+  "low_leakage_targets": [
+    "HDAC2",
+    "JAK2",
+    "ESR1",
+    "BACE1",
+    "ADRB2",
+    "PPARG"
+  ],
+  "high_leakage_mean_delta": 0.06775,
+  "high_leakage_std_delta": 0.04372856617818609,
+  "low_leakage_mean_delta": 0.05050000000000001,
+  "low_leakage_std_delta": 0.07426697336860669,
+  "welch_t": 0.41347620932544676,
+  "welch_p": 0.6901227056499293,
+  "pearson_r": 0.19125146268219725,
+  "pearson_p": 0.5966070161975624,
+  "spearman_r": 0.006060606060606061,
+  "spearman_p": 0.9867429111949892,
+  "pearson_no_bace_r": -0.1275761529633608,
+  "pearson_no_bace_p": 0.743603213961389,
+  "low_no_bace_mean_delta": 0.081,
+  "low_no_bace_t": 5.030182714489528,
+  "low_no_bace_p": 0.0073325474242311684
+}

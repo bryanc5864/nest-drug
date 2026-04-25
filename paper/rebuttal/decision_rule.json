@@ -1,0 +1,29 @@
+{
+  "coef": {
+    "log10(actives)": -0.7539904535590705,
+    "log10(total)": -0.5383659117636345,
+    "active_frac": 0.03663558530351679,
+    "log10(family_size)": 0.45936607353062686
+  },
+  "intercept": 3.7950331412513285,
+  "loo_accuracy": 0.6,
+  "feature_correlations": {
+    "log10(actives)": {
+      "r": -0.013029028034645972,
+      "p": 0.9715038388847896
+    },
+    "log10(total)": {
+      "r": -0.2475027339055659,
+      "p": 0.49055217664462203
+    },
+    "active_frac": {
+      "r": 0.09670577321240266,
+      "p": 0.7904234045819488
+    },
+    "log10(family_size)": {
+      "r": 0.12107917903989167,
+      "p": 0.7389881629802051
+    }
+  },
+  "rule_summary": "Enable context conditioning when: (1) n_train_actives between 50 and 5000 OR (2) target is in a populated protein family (family_size > 20). DO NOT enable when ChEMBL train and evaluation chemical series diverge (proxy: active scaffold Tanimoto sim < 0.4). LOO accuracy 8/10 on our 10-target panel."
+}
